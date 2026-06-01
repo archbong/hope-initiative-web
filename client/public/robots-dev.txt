@@ -1,0 +1,6 @@
+# Development environment - Disallow all search engines
+User-agent: *
+Disallow: /
+
+# Sitemap (uncomment when needed)
+# Sitemap: https://dev.hopeforthehopeless.org/sitemap.xml

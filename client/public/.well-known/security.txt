@@ -1,0 +1,6 @@
+# Security policy for Hope for the Hopeless Initiative
+Contact: mailto:security@hopeforthehopeless.org
+Contact: https://hopeforthehopeless.org/contact
+Expires: 2025-01-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://hopeforthehopeless.org/.well-known/security.txt

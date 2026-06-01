@@ -1,0 +1,77 @@
+# robots.txt for Hope for the Hopeless Initiative
+# https://hopeforthehopeless.org/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /draft/
+Disallow: /backup/
+
+# Sitemap location
+Sitemap: https://hopeforthehopeless.org/sitemap.xml
+
+# Crawl delay for slower bots
+Crawl-delay: 1
+
+# Host directive
+Host: https://hopeforthehopeless.org
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+
+# Disable specific bots if needed
+# User-agent: GPTBot
+# Disallow: /
+
+# User-agent: CCBot
+# Disallow: /
+
+# AI bots (optional - allow or disallow)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Image bots
+User-agent: Googlebot-Image
+Allow: /images/
+
+User-agent: Bingbot-Image
+Allow: /images/
+
+# Mobile bots
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+# Clean up parameters
+Clean-param: utm_source
+Clean-param: utm_medium
+Clean-param: utm_campaign
+Clean-param: utm_term
+Clean-param: utm_content
+Clean-param: ref
+Clean-param: source

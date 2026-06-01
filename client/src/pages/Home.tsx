@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Heart, Users, TrendingUp, Award, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
+import SEOHead from '../components/SEO/SEOHead'
 
 const Home = () => {
   const stats = [
@@ -30,6 +31,11 @@ const Home = () => {
 
   return (
     <div>
+      <SEOHead
+        title="Home"
+        description="Hope for the Hopeless Initiative provides humanitarian support, youth empowerment, and community development programs across Nigeria. Join us in restoring hope and transforming lives."
+        url="https://hopeforthehopeless.org"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
         <div className="container-custom">

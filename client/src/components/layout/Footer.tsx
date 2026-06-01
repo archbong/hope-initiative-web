@@ -75,6 +75,11 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-700 pt-6 text-center text-gray-400 text-sm">
           <p>&copy; {currentYear} Hope for the Hopeless Initiative. All rights reserved.</p>
+          <div className="mt-2 space-x-4">
+            <Link to="/privacy" className="hover:text-primary-orange transition">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-primary-orange transition">Terms of Service</Link>
+            <Link to="/cookies" className="hover:text-primary-orange transition">Cookie Policy</Link>
+          </div>
         </div>
       </div>
     </footer>
