@@ -1,0 +1,30 @@
+{
+  "stories": [
+    {
+      "id": "1",
+      "name": "Blessing Okoro",
+      "age": 16,
+      "location": "Abuja, Nigeria",
+      "story": "After losing both parents at age 12, I thought my dreams were over. I was alone, scared, and didn't know where to turn. The future that once seemed bright suddenly looked dark and uncertain.\n\nThat's when Hope for the Hopeless Initiative found me. They didn't just provide food and shelter - they gave me back my hope. The counselors helped me process my grief, the teachers helped me catch up in school, and the community made me feel like I belonged.\n\nToday, I'm in my third year of secondary school with excellent grades. I want to become a doctor so I can help others who have lost hope like I did. This organization showed me that even in the darkest times, there is always hope.",
+      "quote": "They gave me more than food and shelter - they gave me back my future.",
+      "image": "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400",
+      "fullImage": "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=1200",
+      "date": "2024-03-15",
+      "category": "Education",
+      "featured": true
+    },
+    {
+      "id": "2",
+      "name": "Emmanuel Adebayo",
+      "age": 19,
+      "location": "Lagos, Nigeria",
+      "story": "I was caught in the cycle of drug abuse with no way out. Every day was a struggle, and I had lost everything - my family's trust, my education, and my self-respect. I thought there was no hope for someone like me.\n\nThe youth sensitization program changed everything. The counselors didn't judge me; they listened. They helped me understand the root causes of my addiction and gave me tools to overcome it. The mentorship program connected me with someone who had walked the same path and found freedom.\n\nNow, I've been clean for 18 months. I'm back in school, and I mentor other young people who are struggling with addiction. If my story can help even one person find hope, then everything I went through was worth it.",
+      "quote": "From addiction to mentoring - transformation is possible with the right support.",
+      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
+      "fullImage": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1200",
+      "date": "2024-03-10",
+      "category": "Youth Development",
+      "featured": true
+    }
+  ]
+}

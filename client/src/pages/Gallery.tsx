@@ -1,114 +1,25 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, Grid, Image as ImageIcon, Heart, Users, Calendar } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Grid } from 'lucide-react'
+import { useGallery } from '../hooks/useGallery'
+import SEOHead from '../components/SEO/SEOHead'
+import { SEO_CONFIG } from '../config/seo.config'
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [activeCategory, setActiveCategory] = useState('all')
 
-  const categories = [
-    { id: 'all', label: 'All', icon: Grid },
-    { id: 'food', label: 'Food Distribution', icon: Heart },
-    { id: 'youth', label: 'Youth Programs', icon: Users },
-    { id: 'events', label: 'Community Events', icon: Calendar }
-  ]
-
-  const galleryImages = [
-    {
-      id: 1,
-      title: 'Food Distribution Drive',
-      category: 'food',
-      description: 'Distributing nutritious meals to vulnerable families in Abuja',
-      date: '2024-03-15',
-      location: 'Abuja, Nigeria',
-      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400'
-    },
-    {
-      id: 2,
-      title: 'Youth Empowerment Workshop',
-      category: 'youth',
-      description: 'Teaching leadership and life skills to young people',
-      date: '2024-03-10',
-      location: 'Lagos, Nigeria',
-      image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400'
-    },
-    {
-      id: 3,
-      title: 'Community Health Awareness',
-      category: 'events',
-      description: 'Free health screening and awareness campaign',
-      date: '2024-03-05',
-      location: 'Port Harcourt, Nigeria',
-      image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400'
-    },
-    {
-      id: 4,
-      title: 'Orphan Support Program',
-      category: 'food',
-      description: 'Providing care and support to orphaned children',
-      date: '2024-02-28',
-      location: 'Kano, Nigeria',
-      image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400'
-    },
-    {
-      id: 5,
-      title: 'Anti-Cultism Campaign',
-      category: 'youth',
-      description: 'School outreach program educating students',
-      date: '2024-02-20',
-      location: 'Ibadan, Nigeria',
-      image: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=400'
-    },
-    {
-      id: 6,
-      title: 'Mothers Support Group',
-      category: 'events',
-      description: 'Counseling and support for new mothers',
-      date: '2024-02-15',
-      location: 'Benin City, Nigeria',
-      image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400'
-    },
-    {
-      id: 7,
-      title: 'Food Packing Event',
-      category: 'food',
-      description: 'Volunteers preparing food packages for distribution',
-      date: '2024-02-10',
-      location: 'Abuja, Nigeria',
-      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400'
-    },
-    {
-      id: 8,
-      title: 'Leadership Training',
-      category: 'youth',
-      description: 'Developing future leaders',
-      date: '2024-02-05',
-      location: 'Lagos, Nigeria',
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400'
-    },
-    {
-      id: 9,
-      title: 'Community Festival',
-      category: 'events',
-      description: 'Celebrating community spirit and togetherness',
-      date: '2024-01-28',
-      location: 'Abuja, Nigeria',
-      image: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800',
-      thumbnail: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400'
-    }
-  ]
+  const {
+    images,
+    loading,
+    error,
+    categories,
+    fetchImages
+  } = useGallery({ category: activeCategory })
 
   const filteredImages = activeCategory === 'all'
-    ? galleryImages
-    : galleryImages.filter(img => img.category === activeCategory)
+    ? images
+    : images.filter(img => img.category === activeCategory)
 
   const currentImage = selectedImage !== null ? filteredImages[selectedImage] : null
 
@@ -138,8 +49,39 @@ const Gallery = () => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   })
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
+          <p className="text-secondary-gray">Loading gallery...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <button onClick={() => window.location.reload()} className="btn-primary">
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div>
+      <SEOHead
+        title={SEO_CONFIG.pages.gallery.title}
+        description={SEO_CONFIG.pages.gallery.description}
+        keywords={SEO_CONFIG.pages.gallery.keywords}
+        image={SEO_CONFIG.pages.gallery.image}
+        type="website"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
         <div className="container-custom">
@@ -162,22 +104,19 @@ const Gallery = () => {
         <div className="container-custom">
           <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category) => {
-              const Icon = category.icon
               const isActive = activeCategory === category.id
               return (
                 <button
                   key={category.id}
-                  onClick={() => {
-                    setActiveCategory(category.id)
-                    setSelectedImage(null)
-                  }}
+                  onClick={() => setActiveCategory(category.id)}
                   className={`flex items-center space-x-2 px-6 py-2 rounded-full font-semibold transition-all duration-300 ${isActive
-                      ? 'bg-primary-blue text-white shadow-lg transform scale-105'
-                      : 'bg-white text-secondary-gray hover:bg-gray-100'
+                    ? 'bg-primary-blue text-white shadow-lg transform scale-105'
+                    : 'bg-white text-secondary-gray hover:bg-gray-100'
                     }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Grid className="h-4 w-4" />
                   <span>{category.label}</span>
+                  <span className="text-xs ml-1">({category.count})</span>
                 </button>
               )
             })}
@@ -188,39 +127,41 @@ const Gallery = () => {
       {/* Gallery Grid */}
       <section className="py-16">
         <div className="container-custom">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredImages.map((image, index) => (
-              <motion.div
-                key={image.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.05 }}
-                onClick={() => setSelectedImage(index)}
-                className="group cursor-pointer relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
-              >
-                <div className="aspect-w-4 aspect-h-3">
-                  <img
-                    src={image.thumbnail}
-                    alt={image.title}
-                    className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <h3 className="font-semibold text-lg mb-1">{image.title}</h3>
-                    <p className="text-sm opacity-90">{image.location}</p>
-                  </div>
-                </div>
-                <div className="absolute top-4 right-4 bg-primary-orange text-white px-3 py-1 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {categories.find(c => c.id === image.category)?.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {filteredImages.length === 0 && (
+          {filteredImages.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-secondary-gray">No images found in this category.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.05 }}
+                  onClick={() => setSelectedImage(index)}
+                  className="group cursor-pointer relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300"
+                >
+                  <div className="aspect-w-4 aspect-h-3">
+                    <img
+                      src={image.thumbnail}
+                      alt={image.title}
+                      className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                      <h3 className="font-semibold text-lg mb-1">{image.title}</h3>
+                      <p className="text-sm opacity-90">{image.location}</p>
+                      <p className="text-xs opacity-75 mt-1">{image.date}</p>
+                    </div>
+                  </div>
+                  <div className="absolute top-4 right-4 bg-primary-orange text-white px-3 py-1 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {categories.find(c => c.id === image.category)?.label}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           )}
         </div>
@@ -278,6 +219,12 @@ const Gallery = () => {
                   <span>{currentImage.location}</span>
                   <span>•</span>
                   <span>{new Date(currentImage.date).toLocaleDateString()}</span>
+                  {currentImage.photographer && (
+                    <>
+                      <span>•</span>
+                      <span>Photo: {currentImage.photographer}</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

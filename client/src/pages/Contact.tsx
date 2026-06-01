@@ -5,10 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react'
 import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from '../components/ui/SocialIcons'
+import SEOHead from '../components/SEO/SEOHead'
+import { SEO_CONFIG } from '../config/seo.config'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
+  email: z.email('Invalid email address'),
   phone: z.string().optional(),
   subject: z.string().min(5, 'Subject must be at least 5 characters'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
@@ -59,6 +61,13 @@ const Contact = () => {
 
   return (
     <div>
+      <SEOHead
+        title={SEO_CONFIG.pages.contact.title}
+        description={SEO_CONFIG.pages.contact.description}
+        keywords={SEO_CONFIG.pages.contact.keywords}
+        image={SEO_CONFIG.pages.contact.image}
+        type="website"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
         <div className="container-custom">

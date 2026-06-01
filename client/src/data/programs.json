@@ -1,0 +1,148 @@
+{
+  "programs": [
+    {
+      "id": "youth-development",
+      "slug": "youth-development",
+      "title": "Youth Development Program",
+      "description": "Empowering the next generation through education, awareness, and leadership development.",
+      "fullDescription": "Our Youth Development Program is designed to address the unique challenges facing young people in Nigeria today. Through comprehensive workshops, mentorship programs, and awareness campaigns, we equip youth with the skills, knowledge, and confidence they need to succeed.\n\nThe program focuses on building resilience, promoting positive values, and creating pathways to productive futures. We work directly with schools, community centers, and youth groups to reach young people where they are.",
+      "impact": "2,500+ youth reached across 15 communities",
+      "duration": "Year-round program",
+      "eligibility": "Ages 12-25 years",
+      "category": "youth",
+      "featured": true,
+      "order": 1,
+      "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200",
+      "initiatives": [
+        {
+          "name": "Youth Sensitization",
+          "description": "Educational programs raising awareness about social issues and personal development",
+          "achievements": "45 schools visited"
+        },
+        {
+          "name": "Drug Abuse Awareness",
+          "description": "Campaigns and workshops educating about substance abuse dangers",
+          "achievements": "3,000+ students educated"
+        },
+        {
+          "name": "Anti-Cultism Campaigns",
+          "description": "Programs discouraging cult involvement and promoting positive peer pressure",
+          "achievements": "30+ communities engaged"
+        },
+        {
+          "name": "Leadership Development",
+          "description": "Training programs building leadership skills and civic responsibility",
+          "achievements": "500 young leaders trained"
+        }
+      ]
+    },
+    {
+      "id": "humanitarian-services",
+      "slug": "humanitarian-services",
+      "title": "Humanitarian Services",
+      "description": "Providing essential support and care to vulnerable individuals and families.",
+      "fullDescription": "Our Humanitarian Services program addresses immediate needs while building pathways to long-term stability. We provide food, clothing, and essential supplies to those facing crisis situations.\n\nThrough regular distribution events and targeted support programs, we ensure that vulnerable individuals and families have access to basic necessities and compassionate care.",
+      "impact": "8,750+ meals distributed, 1,200+ individuals served",
+      "duration": "Ongoing",
+      "eligibility": "Vulnerable individuals and families",
+      "category": "humanitarian",
+      "featured": true,
+      "order": 2,
+      "image": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1200",
+      "initiatives": [
+        {
+          "name": "Food Distribution",
+          "description": "Regular distribution of nutritious meals and food supplies",
+          "achievements": "8,750+ meals distributed"
+        },
+        {
+          "name": "Clothing Support",
+          "description": "Providing clean clothing to orphans and vulnerable children",
+          "achievements": "1,200+ individuals served"
+        },
+        {
+          "name": "Orphan Support Programs",
+          "description": "Comprehensive care for orphaned children",
+          "achievements": "250+ orphans supported"
+        },
+        {
+          "name": "Motherless Baby Care",
+          "description": "Specialized care for infants without maternal support",
+          "achievements": "50+ babies cared for"
+        }
+      ]
+    },
+    {
+      "id": "family-welfare",
+      "slug": "family-welfare",
+      "title": "Family Welfare Program",
+      "description": "Strengthening families through counseling, education, and support services.",
+      "fullDescription": "The Family Welfare Program provides comprehensive support to families facing challenges. From professional counseling to health education, we help families build resilience and thrive together.\n\nOur approach recognizes that healthy families are the foundation of strong communities. We provide tools, resources, and emotional support to help families overcome obstacles and achieve stability.",
+      "impact": "300+ families counseled, 1,000+ individuals educated",
+      "duration": "Year-round",
+      "eligibility": "Families and individuals in need",
+      "category": "family",
+      "featured": true,
+      "order": 3,
+      "image": "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1200",
+      "initiatives": [
+        {
+          "name": "Counseling Services",
+          "description": "Professional counseling for families facing challenges",
+          "achievements": "300+ families counseled"
+        },
+        {
+          "name": "Family Planning Education",
+          "description": "Education and resources for informed family planning",
+          "achievements": "1,000+ individuals educated"
+        },
+        {
+          "name": "Maternal Support",
+          "description": "Support programs for expectant mothers",
+          "achievements": "150+ mothers supported"
+        },
+        {
+          "name": "Community Health Awareness",
+          "description": "Health education promoting wellness",
+          "achievements": "50+ health workshops"
+        }
+      ]
+    },
+    {
+      "id": "sustainable-development",
+      "slug": "sustainable-development",
+      "title": "Sustainable Development",
+      "description": "Building long-term solutions through partnerships and empowerment programs.",
+      "fullDescription": "Our Sustainable Development program focuses on creating lasting change through strategic partnerships and community empowerment. We work with local and international partners to implement projects that build self-sufficiency.\n\nBy addressing root causes and building local capacity, we create solutions that continue to benefit communities long after our direct involvement ends.",
+      "impact": "25+ partners, 20+ projects completed",
+      "duration": "Long-term projects",
+      "eligibility": "Communities and partner organizations",
+      "category": "sustainable",
+      "featured": true,
+      "order": 4,
+      "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200",
+      "initiatives": [
+        {
+          "name": "Local Partnerships",
+          "description": "Collaborating with local organizations",
+          "achievements": "25+ local partners"
+        },
+        {
+          "name": "International Partnerships",
+          "description": "Global collaborations for local impact",
+          "achievements": "10+ international partners"
+        },
+        {
+          "name": "SDG Initiatives",
+          "description": "Programs aligned with UN SDGs",
+          "achievements": "6 SDGs addressed"
+        },
+        {
+          "name": "Community Empowerment",
+          "description": "Projects building self-sufficiency",
+          "achievements": "20+ projects completed"
+        }
+      ]
+    }
+  ]
+}

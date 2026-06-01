@@ -1,0 +1,136 @@
+{
+  "gallery": [
+    {
+      "id": 1,
+      "title": "Food Distribution Drive",
+      "description": "Distributing nutritious meals to vulnerable families in Abuja",
+      "category": "food",
+      "date": "2024-03-15",
+      "location": "Abuja, Nigeria",
+      "image": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400",
+      "photographer": "John Doe"
+    },
+    {
+      "id": 2,
+      "title": "Youth Empowerment Workshop",
+      "description": "Teaching leadership and life skills to young people",
+      "category": "youth",
+      "date": "2024-03-10",
+      "location": "Lagos, Nigeria",
+      "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400",
+      "photographer": "Jane Smith"
+    },
+    {
+      "id": 3,
+      "title": "Community Health Awareness",
+      "description": "Free health screening and awareness campaign",
+      "category": "events",
+      "date": "2024-03-05",
+      "location": "Port Harcourt, Nigeria",
+      "image": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400",
+      "photographer": "Mike Johnson"
+    },
+    {
+      "id": 4,
+      "title": "Orphan Support Program",
+      "description": "Providing care and support to orphaned children",
+      "category": "outreach",
+      "date": "2024-02-28",
+      "location": "Kano, Nigeria",
+      "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400",
+      "photographer": "Sarah Williams"
+    },
+    {
+      "id": 5,
+      "title": "Anti-Cultism Campaign",
+      "description": "School outreach program educating students",
+      "category": "youth",
+      "date": "2024-02-20",
+      "location": "Ibadan, Nigeria",
+      "image": "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=400",
+      "photographer": "David Brown"
+    },
+    {
+      "id": 6,
+      "title": "Mothers Support Group",
+      "description": "Counseling and support for new mothers",
+      "category": "events",
+      "date": "2024-02-15",
+      "location": "Benin City, Nigeria",
+      "image": "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400",
+      "photographer": "Mary Adebayo"
+    },
+    {
+      "id": 7,
+      "title": "Food Packing Event",
+      "description": "Volunteers preparing food packages for distribution",
+      "category": "food",
+      "date": "2024-02-10",
+      "location": "Abuja, Nigeria",
+      "image": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=400",
+      "photographer": "John Doe"
+    },
+    {
+      "id": 8,
+      "title": "Leadership Training",
+      "description": "Developing future leaders",
+      "category": "youth",
+      "date": "2024-02-05",
+      "location": "Lagos, Nigeria",
+      "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400",
+      "photographer": "Jane Smith"
+    },
+    {
+      "id": 9,
+      "title": "Community Festival",
+      "description": "Celebrating community spirit and togetherness",
+      "category": "events",
+      "date": "2024-01-28",
+      "location": "Abuja, Nigeria",
+      "image": "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400",
+      "photographer": "Mike Johnson"
+    },
+    {
+      "id": 10,
+      "title": "Clothing Donation Drive",
+      "description": "Collecting and distributing clothing to vulnerable families",
+      "category": "food",
+      "date": "2024-01-20",
+      "location": "Abuja, Nigeria",
+      "image": "https://images.unsplash.com/photo-1487901024986-5147c2b8de9d?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1487901024986-5147c2b8de9d?w=400",
+      "photographer": "Sarah Williams"
+    },
+    {
+      "id": 11,
+      "title": "Youth Sports Day",
+      "description": "Promoting healthy living through sports",
+      "category": "youth",
+      "date": "2024-01-15",
+      "location": "Port Harcourt, Nigeria",
+      "image": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400",
+      "photographer": "David Brown"
+    },
+    {
+      "id": 12,
+      "title": "Medical Outreach",
+      "description": "Free medical checkups and treatment",
+      "category": "outreach",
+      "date": "2024-01-10",
+      "location": "Kano, Nigeria",
+      "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200",
+      "thumbnail": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400",
+      "photographer": "Mary Adebayo"
+    }
+  ]
+}

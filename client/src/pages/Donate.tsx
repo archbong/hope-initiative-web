@@ -1,41 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import {
-  Heart,
-  Banknote,
-  Building,
-  CreditCard,
-  Shield,
-  CheckCircle,
-  Copy,
-  Check
-} from 'lucide-react'
+import { Heart, Building, Copy, Check, Shield, Target, Users, GraduationCap, CheckCircle } from 'lucide-react'
+import { useDonation } from '../hooks/useDonation'
+import SEOHead from '../components/SEO/SEOHead'
+import { SEO_CONFIG } from '../config/seo.config'
 
 const Donate = () => {
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null)
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
   const [customAmount, setCustomAmount] = useState('')
 
-  const bankAccounts = [
-    {
-      bank: 'First Bank of Nigeria',
-      accountName: 'Hope for the Hopeless Initiative',
-      accountNumber: '2034567890',
-      sortCode: '011234567'
-    },
-    {
-      bank: 'GTBank',
-      accountName: 'Hope for the Hopeless Initiative',
-      accountNumber: '0589123456',
-      sortCode: '058123456'
-    },
-    {
-      bank: 'Access Bank',
-      accountName: 'Hope for the Hopeless Initiative',
-      accountNumber: '0778945612',
-      sortCode: '044123456'
-    }
-  ]
+  const {
+    bankAccounts,
+    sponsorshipTiers,
+    loading,
+    error,
+    fetchBankAccounts,
+    fetchSponsorshipTiers
+  } = useDonation()
+
+  useEffect(() => {
+    fetchBankAccounts()
+    fetchSponsorshipTiers()
+  }, [fetchBankAccounts, fetchSponsorshipTiers])
 
   const donationAmounts = [5000, 10000, 25000, 50000, 100000]
 
@@ -48,42 +35,32 @@ const Donate = () => {
   const handleDonateOnline = () => {
     const amount = selectedAmount || parseInt(customAmount)
     if (amount && amount > 0) {
-      // This will redirect to payment gateway in future phases
       alert(`Thank you for your ₦${amount.toLocaleString()} donation! Online payment integration coming soon. Please use bank transfer for now.`)
     } else {
       alert('Please select or enter a donation amount')
     }
   }
 
-  const sponsorshipOptions = [
-    {
-      title: 'Sponsor a Child\'s Education',
-      amount: '₦50,000/year',
-      description: 'Provide school fees, books, and supplies for one child',
-      icon: Heart
-    },
-    {
-      title: 'Feed a Family for a Month',
-      amount: '₦25,000/month',
-      description: 'Provide nutritious meals for a family of four',
-      icon: Heart
-    },
-    {
-      title: 'Youth Program Support',
-      amount: '₦100,000',
-      description: 'Fund a youth sensitization workshop',
-      icon: Heart
-    },
-    {
-      title: 'Medical Assistance',
-      amount: 'Any Amount',
-      description: 'Help provide healthcare for vulnerable individuals',
-      icon: Heart
-    }
-  ]
+  if (loading && bankAccounts.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
+          <p className="text-secondary-gray">Loading donation information...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
+      <SEOHead
+        title={SEO_CONFIG.pages.donate.title}
+        description={SEO_CONFIG.pages.donate.description}
+        keywords={SEO_CONFIG.pages.donate.keywords}
+        image={SEO_CONFIG.pages.donate.image}
+        type="website"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
         <div className="container-custom">
@@ -106,21 +83,9 @@ const Donate = () => {
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {[
-              {
-                icon: Shield,
-                title: '100% Transparency',
-                description: 'We provide detailed reports on how every donation is used'
-              },
-              {
-                icon: Heart,
-                title: 'Direct Impact',
-                description: 'Your donations go directly to those who need them most'
-              },
-              {
-                icon: CheckCircle,
-                title: 'Tax Deductible',
-                description: 'All donations are eligible for tax deductions'
-              }
+              { icon: Shield, title: '100% Transparency', description: 'We provide detailed reports on how every donation is used' },
+              { icon: Heart, title: 'Direct Impact', description: 'Your donations go directly to those who need them most' },
+              { icon: CheckCircle, title: 'Tax Deductible', description: 'All donations are eligible for tax deductions' }
             ].map((item, index) => {
               const Icon = item.icon
               return (
@@ -156,7 +121,6 @@ const Donate = () => {
             >
               <h2 className="text-2xl font-bold mb-6">Make a Donation</h2>
 
-              {/* Donation Amounts */}
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-3">Select Amount (₦)</label>
                 <div className="grid grid-cols-3 gap-3 mb-3">
@@ -168,8 +132,8 @@ const Donate = () => {
                         setCustomAmount('')
                       }}
                       className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${selectedAmount === amount
-                          ? 'bg-primary-blue text-white shadow-lg transform scale-105'
-                          : 'bg-gray-100 text-secondary-gray hover:bg-gray-200'
+                        ? 'bg-primary-blue text-white shadow-lg transform scale-105'
+                        : 'bg-gray-100 text-secondary-gray hover:bg-gray-200'
                         }`}
                     >
                       ₦{amount.toLocaleString()}
@@ -188,7 +152,6 @@ const Donate = () => {
                 />
               </div>
 
-              {/* Donor Info (Simplified for MVP) */}
               <div className="space-y-4 mb-6">
                 <input
                   type="text"
@@ -231,6 +194,12 @@ const Donate = () => {
                 You can also make a direct transfer to any of our bank accounts:
               </p>
 
+              {error && (
+                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
+
               <div className="space-y-4">
                 {bankAccounts.map((account, index) => (
                   <div key={index} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -272,43 +241,49 @@ const Donate = () => {
       </section>
 
       {/* Sponsorship Opportunities */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
-              Sponsorship Opportunities
-            </h2>
-            <p className="text-lg text-secondary-gray max-w-2xl mx-auto">
-              Make a sustained impact through our sponsorship programs
-            </p>
-          </div>
+      {sponsorshipTiers.length > 0 && (
+        <section className="py-16">
+          <div className="container-custom">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
+                Sponsorship Opportunities
+              </h2>
+              <p className="text-lg text-secondary-gray max-w-2xl mx-auto">
+                Make a sustained impact through our sponsorship programs
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {sponsorshipOptions.map((option, index) => {
-              const Icon = option.icon
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-orange bg-opacity-10 rounded-full mb-4">
-                    <Icon className="h-8 w-8 text-primary-orange" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">{option.title}</h3>
-                  <div className="text-2xl font-bold text-primary-blue mb-2">{option.amount}</div>
-                  <p className="text-secondary-gray text-sm mb-4">{option.description}</p>
-                  <button className="btn-outline text-sm w-full">
-                    Sponsor Now
-                  </button>
-                </motion.div>
-              )
-            })}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sponsorshipTiers.map((tier, index) => {
+                let Icon = Heart
+                if (tier.icon === 'GraduationCap') Icon = GraduationCap
+                if (tier.icon === 'Users') Icon = Users
+                if (tier.icon === 'Target') Icon = Target
+
+                return (
+                  <motion.div
+                    key={tier.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                  >
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-orange bg-opacity-10 rounded-full mb-4">
+                      <Icon className="h-8 w-8 text-primary-orange" />
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2">{tier.title}</h3>
+                    <div className="text-2xl font-bold text-primary-blue mb-2">{tier.amount}</div>
+                    <p className="text-secondary-gray text-sm mb-4">{tier.description}</p>
+                    <button className="btn-outline text-sm w-full">
+                      Sponsor Now
+                    </button>
+                  </motion.div>
+                )
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Other Ways to Give */}
       <section className="py-16 bg-gray-50">
@@ -324,21 +299,9 @@ const Donate = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              {
-                title: 'Donate Goods',
-                description: 'Food items, clothing, educational materials, and medical supplies',
-                contact: 'items@hopeforthehopeless.org'
-              },
-              {
-                title: 'Corporate Partnership',
-                description: 'Partner with us for employee giving programs and CSR initiatives',
-                contact: 'partnerships@hopeforthehopeless.org'
-              },
-              {
-                title: 'Legacy Giving',
-                description: 'Include us in your will or estate planning',
-                contact: 'legacy@hopeforthehopeless.org'
-              }
+              { title: 'Donate Goods', description: 'Food items, clothing, educational materials, and medical supplies', contact: 'items@hopeforthehopeless.org' },
+              { title: 'Corporate Partnership', description: 'Partner with us for employee giving programs and CSR initiatives', contact: 'partnerships@hopeforthehopeless.org' },
+              { title: 'Legacy Giving', description: 'Include us in your will or estate planning', contact: 'legacy@hopeforthehopeless.org' }
             ].map((item, index) => (
               <motion.div
                 key={index}

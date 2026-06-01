@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { Heart, Target, Eye, Users, Shield, TrendingUp, Globe, BookOpen } from 'lucide-react'
+import { SEO_CONFIG } from '../config/seo.config'
+import SEOHead from '../components/SEO/SEOHead'
 
 const About = () => {
   const values = [
@@ -46,6 +48,13 @@ const About = () => {
 
   return (
     <div>
+      <SEOHead
+        title={SEO_CONFIG.pages.about.title}
+        description={SEO_CONFIG.pages.about.description}
+        keywords={SEO_CONFIG.pages.about.keywords}
+        image={SEO_CONFIG.pages.about.image}
+        type="website"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
         <div className="container-custom">

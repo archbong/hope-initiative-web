@@ -17,9 +17,15 @@ import {
   Target,
   ChevronRight
 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { usePrograms } from '../hooks/usePrograms'
+import SEOHead from '../components/SEO/SEOHead'
+import { SEO_CONFIG } from '../config/seo.config'
 
 const Programs = () => {
   const [activeTab, setActiveTab] = useState('youth')
+  const navigate = useNavigate();
+  const { programs, loading, error } = usePrograms()
 
   const tabs = [
     { id: 'youth', label: 'Youth Development', icon: Users },
@@ -28,182 +34,65 @@ const Programs = () => {
     { id: 'sustainable', label: 'Sustainable Development', icon: Globe }
   ]
 
-  const programs = {
-    youth: {
-      title: 'Youth Development Programs',
-      description: 'Empowering the next generation through education, awareness, and leadership development.',
-      initiatives: [
-        {
-          icon: GraduationCap,
-          title: 'Youth Sensitization',
-          description: 'Educational programs that raise awareness about important social issues and personal development.',
-          impact: '2,500+ youth reached',
-          color: 'blue'
-        },
-        {
-          icon: AlertTriangle,
-          title: 'Drug Abuse Awareness',
-          description: 'Campaigns and workshops educating youth about the dangers of substance abuse and addiction.',
-          impact: '45 schools visited',
-          color: 'orange'
-        },
-        {
-          icon: Shield,
-          title: 'Anti-Cultism Campaigns',
-          description: 'Programs that discourage cult involvement and promote positive peer pressure.',
-          impact: '30+ communities engaged',
-          color: 'green'
-        },
-        {
-          icon: Target,
-          title: 'Violence Prevention',
-          description: 'Initiatives addressing restiveness and promoting peaceful conflict resolution.',
-          impact: '15 workshops held',
-          color: 'red'
-        },
-        {
-          icon: Users,
-          title: 'Leadership Development',
-          description: 'Training programs that build leadership skills and civic responsibility.',
-          impact: '500 young leaders trained',
-          color: 'purple'
-        }
-      ]
-    },
-    humanitarian: {
-      title: 'Humanitarian Services',
-      description: 'Providing essential support and care to vulnerable individuals and families.',
-      initiatives: [
-        {
-          icon: Utensils,
-          title: 'Food Distribution',
-          description: 'Regular distribution of nutritious meals and food supplies to families in need.',
-          impact: '8,750+ meals distributed',
-          color: 'orange'
-        },
-        {
-          icon: Shirt,
-          title: 'Clothing Support',
-          description: 'Providing clean clothing and essential wear to orphans and vulnerable children.',
-          impact: '1,200+ individuals served',
-          color: 'blue'
-        },
-        {
-          icon: Baby,
-          title: 'Orphan Support Programs',
-          description: 'Comprehensive care and support for orphaned and abandoned children.',
-          impact: '250+ orphans supported',
-          color: 'pink'
-        },
-        {
-          icon: Heart,
-          title: 'Motherless Baby Care',
-          description: 'Specialized care for infants without maternal support.',
-          impact: '50+ babies cared for',
-          color: 'purple'
-        },
-        {
-          icon: Users,
-          title: 'Community Outreach',
-          description: 'Mobile services reaching underserved communities with essential support.',
-          impact: '15 communities served',
-          color: 'green'
-        }
-      ]
-    },
-    family: {
-      title: 'Family Welfare Programs',
-      description: 'Strengthening families through counseling, education, and support services.',
-      initiatives: [
-        {
-          icon: MessageCircle,
-          title: 'Counseling Services',
-          description: 'Professional counseling for families facing challenges and crises.',
-          impact: '300+ families counseled',
-          color: 'blue'
-        },
-        {
-          icon: Calendar,
-          title: 'Family Planning Education',
-          description: 'Education and resources for informed family planning decisions.',
-          impact: '1,000+ individuals educated',
-          color: 'green'
-        },
-        {
-          icon: Heart,
-          title: 'Maternal Support',
-          description: 'Support programs for expectant mothers and new parents.',
-          impact: '150+ mothers supported',
-          color: 'pink'
-        },
-        {
-          icon: MessageCircle,
-          title: 'Pregnancy Counseling',
-          description: 'Compassionate guidance and support for pregnancy-related concerns.',
-          impact: '200+ counseling sessions',
-          color: 'orange'
-        },
-        {
-          icon: Shield,
-          title: 'Community Health Awareness',
-          description: 'Health education programs promoting wellness and disease prevention.',
-          impact: '50+ health workshops',
-          color: 'purple'
-        }
-      ]
-    },
-    sustainable: {
-      title: 'Sustainable Development',
-      description: 'Building long-term solutions through partnerships and empowerment programs.',
-      initiatives: [
-        {
-          icon: Handshake,
-          title: 'Local Partnerships',
-          description: 'Collaborating with local organizations to maximize community impact.',
-          impact: '25+ local partners',
-          color: 'blue'
-        },
-        {
-          icon: Globe,
-          title: 'International Partnerships',
-          description: 'Global collaborations bringing resources and expertise to local communities.',
-          impact: '10+ international partners',
-          color: 'green'
-        },
-        {
-          icon: Target,
-          title: 'SDG Initiatives',
-          description: 'Programs aligned with UN Sustainable Development Goals.',
-          impact: '6 SDGs addressed',
-          color: 'orange'
-        },
-        {
-          icon: Users,
-          title: 'Community Empowerment',
-          description: 'Projects that build self-sufficiency and economic independence.',
-          impact: '20+ projects completed',
-          color: 'purple'
-        }
-      ]
+  const getIconComponent = (iconName: string) => {
+    const icons: Record<string, any> = {
+      GraduationCap, AlertTriangle, Shield, Utensils, Shirt, Baby, MessageCircle, Calendar, Handshake, Target, Users, Heart
     }
+    return icons[iconName] || Users
   }
 
-  const currentProgram = programs[activeTab as keyof typeof programs]
+  // const currentProgram = programs[activeTab as keyof typeof programs]
 
-  const getColorClasses = (color: string) => {
-    const colors = {
-      blue: 'bg-primary-blue',
-      green: 'bg-primary-green',
-      orange: 'bg-primary-orange',
-      red: 'bg-red-500',
-      pink: 'bg-pink-500',
-      purple: 'bg-purple-500'
-    }
-    return colors[color as keyof typeof colors] || 'bg-primary-blue'
+  const filteredPrograms = programs.filter(p => p.category === activeTab)
+
+  const handleProgramClick = (programId: string) => {
+    navigate(`/programs/${programId}`)
+  }
+
+  // const getColorClasses = (color: string) => {
+  //   const colors = {
+  //     blue: 'bg-primary-blue',
+  //     green: 'bg-primary-green',
+  //     orange: 'bg-primary-orange',
+  //     red: 'bg-red-500',
+  //     pink: 'bg-pink-500',
+  //     purple: 'bg-purple-500'
+  //   }
+  //   return colors[color as keyof typeof colors] || 'bg-primary-blue'
+  // }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
+          <p className="text-secondary-gray">Loading programs...</p>
+        </div>
+      </div>
+    )
+  }
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <button onClick={() => window.location.reload()} className="btn-primary">
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
     <div>
+      <SEOHead
+        title={SEO_CONFIG.pages.programs.title}
+        description={SEO_CONFIG.pages.programs.description}
+        keywords={SEO_CONFIG.pages.programs.keywords}
+        image={SEO_CONFIG.pages.programs.image}
+        type="website"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
         <div className="container-custom">
@@ -233,8 +122,8 @@ const Programs = () => {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${isActive
-                      ? 'bg-primary-blue text-white shadow-lg transform scale-105'
-                      : 'bg-white text-secondary-gray hover:bg-gray-100'
+                    ? 'bg-primary-blue text-white shadow-lg transform scale-105'
+                    : 'bg-white text-secondary-gray hover:bg-gray-100'
                     }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -257,51 +146,40 @@ const Programs = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
-                  {currentProgram.title}
-                </h2>
-                <p className="text-lg text-secondary-gray max-w-2xl mx-auto">
-                  {currentProgram.description}
-                </p>
-              </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {currentProgram.initiatives.map((initiative, index) => {
-                  const Icon = initiative.icon
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-                    >
-                      <div className={`h-2 ${getColorClasses(initiative.color)}`}></div>
-                      <div className="p-6">
-                        <div className={`inline-flex items-center justify-center w-14 h-14 ${getColorClasses(initiative.color)} bg-opacity-10 rounded-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                          <Icon className={`h-7 w-7 ${getColorClasses(initiative.color)} text-white`} />
-                        </div>
-                        <h3 className="text-xl font-semibold mb-3">{initiative.title}</h3>
-                        <p className="text-secondary-gray mb-4 leading-relaxed">
-                          {initiative.description}
-                        </p>
-                        <div className="flex items-center justify-between pt-4 border-t">
-                          <span className="text-sm font-semibold text-primary-blue">
-                            {initiative.impact}
-                          </span>
-                          <ChevronRight className="h-5 w-5 text-primary-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </div>
+                {filteredPrograms.map((program, index) => (
+                  <motion.div
+                    key={program.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
+                    onClick={() => handleProgramClick(program.slug)}
+                  >
+                    <div className="h-48 overflow-hidden">
+                      <img
+                        src={program.image}
+                        alt={program.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-3">{program.title}</h3>
+                      <p className="text-secondary-gray mb-4 line-clamp-2">{program.description}</p>
+                      <div className="flex items-center justify-between pt-4 border-t">
+                        <span className="text-sm font-semibold text-primary-blue">
+                          {program.impact.split(',')[0]}
+                        </span>
+                        <ChevronRight className="h-5 w-5 text-primary-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
-                    </motion.div>
-                  )
-                })}
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </section>
-
       {/* Impact Numbers Section */}
       <section className="py-16 bg-primary-blue text-white">
         <div className="container-custom">

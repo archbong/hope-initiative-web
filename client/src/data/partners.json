@@ -1,0 +1,118 @@
+{
+  "partners": {
+    "corporate": [
+      {
+        "id": 1,
+        "name": "First Bank PLC",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Supporting our food distribution programs",
+        "website": "https://www.firstbanknigeria.com",
+        "type": "Corporate Partner",
+        "featured": true
+      },
+      {
+        "id": 2,
+        "name": "MTN Foundation",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Funding youth empowerment initiatives",
+        "website": "https://www.mtn.ng",
+        "type": "Corporate Partner",
+        "featured": true
+      },
+      {
+        "id": 3,
+        "name": "Dangote Foundation",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Supporting community development projects",
+        "website": "https://www.dangote.com",
+        "type": "Corporate Partner",
+        "featured": true
+      },
+      {
+        "id": 4,
+        "name": "Access Bank",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Supporting our orphan care programs",
+        "website": "https://www.accessbankplc.com",
+        "type": "Corporate Partner",
+        "featured": false
+      }
+    ],
+    "international": [
+      {
+        "id": 5,
+        "name": "UNICEF Nigeria",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Collaborating on child welfare programs",
+        "website": "https://www.unicef.org/nigeria",
+        "type": "International Partner",
+        "featured": true
+      },
+      {
+        "id": 6,
+        "name": "World Food Programme",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Supporting our food security initiatives",
+        "website": "https://www.wfp.org",
+        "type": "International Partner",
+        "featured": true
+      },
+      {
+        "id": 7,
+        "name": "Save the Children",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Partnering on orphan support programs",
+        "website": "https://www.savethechildren.org",
+        "type": "International Partner",
+        "featured": true
+      },
+      {
+        "id": 8,
+        "name": "World Health Organization",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Supporting health awareness programs",
+        "website": "https://www.who.int",
+        "type": "International Partner",
+        "featured": false
+      }
+    ],
+    "local": [
+      {
+        "id": 9,
+        "name": "Lagos Food Bank",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Collaborating on food distribution",
+        "website": "https://www.lagosfoodbank.org",
+        "type": "Local Partner",
+        "featured": true
+      },
+      {
+        "id": 10,
+        "name": "Youth Alive Nigeria",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Youth development programs",
+        "website": "https://www.youthalivenigeria.org",
+        "type": "Local Partner",
+        "featured": true
+      },
+      {
+        "id": 11,
+        "name": "Red Cross Nigeria",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Emergency response collaboration",
+        "website": "https://www.redcross.org.ng",
+        "type": "Local Partner",
+        "featured": true
+      },
+      {
+        "id": 12,
+        "name": "Women in Need Foundation",
+        "logo": "/images/placeholder-logo.png",
+        "description": "Supporting women and children programs",
+        "website": "#",
+        "type": "Local Partner",
+        "featured": false
+      }
+    ]
+  }
+}

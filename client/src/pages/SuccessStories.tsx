@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Quote, Calendar, MapPin, Heart, ChevronLeft, ChevronRight } from 'lucide-react'
+import SEOHead from '../components/SEO/SEOHead'
+import { SEO_CONFIG } from '../config/seo.config'
 
 const SuccessStories = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -91,6 +93,13 @@ const SuccessStories = () => {
 
   return (
     <div>
+      <SEOHead
+        title={SEO_CONFIG.pages.successStories.title}
+        description={SEO_CONFIG.pages.successStories.description}
+        keywords={SEO_CONFIG.pages.successStories.keywords}
+        image={SEO_CONFIG.pages.successStories.image}
+        type="website"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
         <div className="container-custom">
@@ -198,8 +207,8 @@ const SuccessStories = () => {
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${selectedCategory === category
-                    ? 'bg-primary-blue text-white shadow-lg'
-                    : 'bg-gray-100 text-secondary-gray hover:bg-gray-200'
+                  ? 'bg-primary-blue text-white shadow-lg'
+                  : 'bg-gray-100 text-secondary-gray hover:bg-gray-200'
                   }`}
               >
                 {category}

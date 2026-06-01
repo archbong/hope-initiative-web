@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { Shield, Lock, Eye, Database, Mail, Users, FileText } from 'lucide-react'
+import SEOHead from '../components/SEO/SEOHead'
+import { SEO_CONFIG } from '../config/seo.config'
 
 const PrivacyPolicy = () => {
   const sections = [
@@ -76,6 +78,14 @@ const PrivacyPolicy = () => {
 
   return (
     <div>
+      <SEOHead
+        title={SEO_CONFIG.pages.privacy.title}
+        description={SEO_CONFIG.pages.privacy.description}
+        keywords={SEO_CONFIG.pages.privacy.keywords}
+        image={SEO_CONFIG.pages.privacy.image}
+        type="website"
+        noIndex={true}
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-16">
         <div className="container-custom">
