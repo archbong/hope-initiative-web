@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Heart, Mail, Phone, MapPin, ArrowRight, Send } from 'lucide-react'
+import { Heart, Mail, MapPin, ArrowRight, Send } from 'lucide-react'
 import { FacebookIcon, LinkedinIcon, InstagramIcon, TwitterIcon } from '../ui/SocialIcons'
 
 const Footer = () => {

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, MapPin, User, ChevronRight, Search, Tag, Heart, Clock, Loader2, AlertCircle, Sparkles, X, Megaphone } from 'lucide-react'
+import { Calendar, MapPin, User, ChevronRight, Search, Heart, Clock, Loader2, AlertCircle, Sparkles, X, Megaphone } from 'lucide-react'
 import { useEvents } from '../hooks/useEvent'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
