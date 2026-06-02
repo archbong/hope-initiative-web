@@ -23,8 +23,7 @@ export interface Program extends BaseEntity {
   initiatives: ProgramInitiative[]
   image: string
   gallery?: string[]
-
-
+  icon?: string
 }
 
 export interface ProgramFilters {

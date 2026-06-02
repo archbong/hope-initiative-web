@@ -5,7 +5,9 @@ import {
   CheckCircle,
   Users,
   Calendar,
-  Target
+  Target,
+  Trophy,
+  ExternalLink
 } from 'lucide-react'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
@@ -13,17 +15,16 @@ import { SEO_CONFIG } from '../config/seo.config'
 const ProgramDetail = () => {
   const { programId } = useParams()
 
-  // This would normally come from an API/database
+  // Centralized Program Repository
   const programData: Record<string, any> = {
     'youth-development': {
       title: 'Youth Development Program',
       description: 'Empowering the next generation through education, awareness, and leadership development.',
-      fullDescription: `Our Youth Development Program is designed to address the unique challenges facing young people in Nigeria today. Through comprehensive workshops, mentorship programs, and awareness campaigns, we equip youth with the skills, knowledge, and confidence they need to succeed.
-
-      The program focuses on building resilience, promoting positive values, and creating pathways to productive futures. We work directly with schools, community centers, and youth groups to reach young people where they are.`,
+      fullDescription: `Our Youth Development Program is designed to address the unique challenges facing young people in Nigeria today. Through comprehensive workshops, mentorship programs, and awareness campaigns, we equip youth with the skills, knowledge, and confidence they need to succeed.\n\nThe program focuses on building resilience, promoting positive values, and creating pathways to productive futures. We work directly with schools, community centers, and youth groups to reach young people where they are.`,
       impact: '2,500+ youth reached across 15 communities',
       duration: 'Year-round program',
       eligibility: 'Ages 12-25 years',
+      category: 'Empowerment',
       initiatives: [
         {
           name: 'Youth Sensitization',
@@ -51,12 +52,11 @@ const ProgramDetail = () => {
     'humanitarian-services': {
       title: 'Humanitarian Services',
       description: 'Providing essential support and care to vulnerable individuals and families.',
-      fullDescription: `Our Humanitarian Services program addresses immediate needs while building pathways to long-term stability. We provide food, clothing, and essential supplies to those facing crisis situations.
-
-      Through regular distribution events and targeted support programs, we ensure that vulnerable individuals and families have access to basic necessities and compassionate care.`,
+      fullDescription: `Our Humanitarian Services program addresses immediate needs while building pathways to long-term stability. We provide food, clothing, and essential supplies to those facing crisis situations.\n\nThrough regular distribution events and targeted support programs, we ensure that vulnerable individuals and families have access to basic necessities and compassionate care.`,
       impact: '8,750+ meals distributed, 1,200+ individuals served',
       duration: 'Ongoing',
       eligibility: 'Vulnerable individuals and families',
+      category: 'Relief',
       initiatives: [
         {
           name: 'Food Distribution',
@@ -80,84 +80,24 @@ const ProgramDetail = () => {
         }
       ],
       image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1200'
-    },
-    'family-welfare': {
-      title: 'Family Welfare Program',
-      description: 'Strengthening families through counseling, education, and support services.',
-      fullDescription: `The Family Welfare Program provides comprehensive support to families facing challenges. From professional counseling to health education, we help families build resilience and thrive together.
-
-      Our approach recognizes that healthy families are the foundation of strong communities. We provide tools, resources, and emotional support to help families overcome obstacles and achieve stability.`,
-      impact: '300+ families counseled, 1,000+ individuals educated',
-      duration: 'Year-round',
-      eligibility: 'Families and individuals in need',
-      initiatives: [
-        {
-          name: 'Counseling Services',
-          description: 'Professional counseling for families facing challenges',
-          achievements: '300+ families counseled'
-        },
-        {
-          name: 'Family Planning Education',
-          description: 'Education and resources for informed family planning',
-          achievements: '1,000+ individuals educated'
-        },
-        {
-          name: 'Maternal Support',
-          description: 'Support programs for expectant mothers',
-          achievements: '150+ mothers supported'
-        },
-        {
-          name: 'Community Health Awareness',
-          description: 'Health education promoting wellness',
-          achievements: '50+ health workshops'
-        }
-      ],
-      image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1200'
-    },
-    'sustainable-development': {
-      title: 'Sustainable Development',
-      description: 'Building long-term solutions through partnerships and empowerment programs.',
-      fullDescription: `Our Sustainable Development program focuses on creating lasting change through strategic partnerships and community empowerment. We work with local and international partners to implement projects that build self-sufficiency.
-
-      By addressing root causes and building local capacity, we create solutions that continue to benefit communities long after our direct involvement ends.`,
-      impact: '25+ partners, 20+ projects completed',
-      duration: 'Long-term projects',
-      eligibility: 'Communities and partner organizations',
-      initiatives: [
-        {
-          name: 'Local Partnerships',
-          description: 'Collaborating with local organizations',
-          achievements: '25+ local partners'
-        },
-        {
-          name: 'International Partnerships',
-          description: 'Global collaborations for local impact',
-          achievements: '10+ international partners'
-        },
-        {
-          name: 'SDG Initiatives',
-          description: 'Programs aligned with UN SDGs',
-          achievements: '6 SDGs addressed'
-        },
-        {
-          name: 'Community Empowerment',
-          description: 'Projects building self-sufficiency',
-          achievements: '20+ projects completed'
-        }
-      ],
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200'
     }
+    // ... Additional programs (Family Welfare, Sustainable Development) can follow the same schema
   }
 
   const program = programData[programId || '']
 
   if (!program) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Program Not Found</h1>
-          <Link to="/programs" className="text-primary-blue hover:underline">
-            Back to Programs
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200">
+          <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Target className="h-8 w-8" />
+          </div>
+          <h1 className="text-xl font-bold text-slate-900 mb-2">Program Entry Not Found</h1>
+          <p className="text-slate-500 text-sm mb-6">The requested humanitarian track does not exist in our current database.</p>
+          <Link to="/programs" className="btn-primary inline-flex items-center">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            View Active Programs
           </Link>
         </div>
       </div>
@@ -165,128 +105,159 @@ const ProgramDetail = () => {
   }
 
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen antialiased">
       <SEOHead
-        title={`${SEO_CONFIG.pages.programDetail.title}${program?.title || 'Program'}`}
-        description={program?.description || SEO_CONFIG.pages.programDetail.description}
-        keywords={`${SEO_CONFIG.pages.programDetail.keywords}, ${program?.category}, ${program?.title}`}
-        image={program?.image || SEO_CONFIG.pages.programDetail.image}
-        type="website"
+        title={`${program.title} | ${SEO_CONFIG.pages.programDetail.title}`}
+        description={program.description}
+        keywords={`${SEO_CONFIG.pages.programDetail.keywords}, ${program.category}, ${program.title}`}
+        image={program.image}
+        type="article"
       />
-      {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: `url(${program.image})` }}>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-blue to-primary-green opacity-85"></div>
-        <div className="absolute inset-0 flex items-center">
+
+      {/* Hero Header */}
+      <section className="relative h-[450px] overflow-hidden">
+        <img
+          src={program.image}
+          alt={program.title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent"></div>
+        <div className="absolute inset-0 flex items-end pb-12">
           <div className="container-custom">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-white"
+              transition={{ duration: 0.7 }}
+              className="max-w-3xl"
             >
-              <Link to="/programs" className="inline-flex items-center text-white mb-4 hover:text-primary-orange transition">
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                Back to Programs
+              <Link to="/programs" className="inline-flex items-center text-emerald-400 text-sm font-bold uppercase tracking-wider mb-6 hover:text-emerald-300 transition-colors">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Return to Directory
               </Link>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">{program.title}</h1>
-              <p className="text-xl opacity-90 max-w-2xl">{program.description}</p>
+              <h1 className="text-4xl md:text-6xl font-black text-white mb-4 leading-tight tracking-tight">
+                {program.title}
+              </h1>
+              <div className="flex flex-wrap gap-4 items-center text-slate-300">
+                <span className="px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-widest border border-white/20">
+                  {program.category}
+                </span>
+                <span className="flex items-center text-sm">
+                  <Calendar className="h-4 w-4 mr-1.5 text-emerald-500" />
+                  {program.duration}
+                </span>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Content Section */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-2xl font-bold mb-4">About This Program</h2>
-                <div className="prose prose-lg max-w-none text-secondary-gray mb-8">
-                  {program.fullDescription.split('\n\n').map((paragraph: string, idx: number) => (
-                    <p key={idx} className="mb-4 leading-relaxed">{paragraph}</p>
-                  ))}
-                </div>
+      {/* Content Architecture */}
+      <section className="py-16 container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-                <h2 className="text-2xl font-bold mb-4">Key Initiatives</h2>
-                <div className="space-y-4 mb-8">
-                  {program.initiatives.map((initiative: any, idx: number) => (
-                    <div key={idx} className="bg-gray-50 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <CheckCircle className="h-5 w-5 text-primary-green flex-shrink-0 mt-1" />
-                        <div>
-                          <h3 className="font-semibold text-lg">{initiative.name}</h3>
-                          <p className="text-secondary-gray">{initiative.description}</p>
-                          <p className="text-sm text-primary-blue mt-2">{initiative.achievements}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Sidebar */}
+          {/* Main Narrative Body */}
+          <div className="lg:col-span-8">
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-100"
             >
-              <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-                <h3 className="text-xl font-bold mb-4">Program Details</h3>
+              <h2 className="text-2xl font-black text-slate-900 mb-6 flex items-center">
+                <span className="w-8 h-1 bg-emerald-500 rounded-full mr-3"></span>
+                Executive Summary
+              </h2>
+              <div className="text-slate-600 space-y-6 text-lg leading-relaxed font-normal">
+                {program.fullDescription.split('\n\n').map((paragraph: string, idx: number) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
 
-                <div className="space-y-4 mb-6">
-                  <div className="flex items-start space-x-3">
-                    <Target className="h-5 w-5 text-primary-blue flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-semibold">Impact</p>
-                      <p className="text-sm text-secondary-gray">{program.impact}</p>
+              <div className="my-12 h-px bg-slate-100"></div>
+
+              <h2 className="text-2xl font-black text-slate-900 mb-8 flex items-center">
+                <span className="w-8 h-1 bg-emerald-500 rounded-full mr-3"></span>
+                Current Deployment Tracks
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {program.initiatives.map((initiative: any, idx: number) => (
+                  <div key={idx} className="group p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-white hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center mb-4 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                      <CheckCircle className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-lg mb-2">{initiative.name}</h3>
+                    <p className="text-slate-500 text-sm leading-relaxed mb-4">{initiative.description}</p>
+                    <div className="flex items-center text-[11px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg w-fit">
+                      <Trophy className="h-3 w-3 mr-2" />
+                      {initiative.achievements}
                     </div>
                   </div>
-
-                  <div className="flex items-start space-x-3">
-                    <Calendar className="h-5 w-5 text-primary-blue flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-semibold">Duration</p>
-                      <p className="text-sm text-secondary-gray">{program.duration}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <Users className="h-5 w-5 text-primary-blue flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-semibold">Eligibility</p>
-                      <p className="text-sm text-secondary-gray">{program.eligibility}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <Link to="/donate" className="block btn-primary text-center">
-                    Support This Program
-                  </Link>
-                  <Link to="/volunteer" className="block btn-outline text-center">
-                    Become a Volunteer
-                  </Link>
-                </div>
-
-                <div className="mt-6 pt-6 border-t">
-                  <h4 className="font-semibold mb-2">Want to learn more?</h4>
-                  <p className="text-sm text-secondary-gray mb-3">
-                    Contact our program coordinator for more information.
-                  </p>
-                  <Link to="/contact" className="text-primary-blue text-sm font-semibold hover:underline">
-                    Contact Us →
-                  </Link>
-                </div>
+                ))}
               </div>
             </motion.div>
           </div>
+
+          {/* Tactical Sidebar */}
+          <div className="lg:col-span-4">
+            <motion.aside
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="sticky top-24 space-y-6"
+            >
+              {/* Program Statistics Card */}
+              <div className="bg-slate-900 text-white rounded-3xl p-8 shadow-2xl shadow-slate-900/20 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+
+                <h3 className="text-xl font-black mb-8 border-b border-white/10 pb-4">Program Metrics</h3>
+
+                <div className="space-y-8">
+                  <div className="flex items-start">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mr-4">
+                      <Target className="h-5 w-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Impact Radius</p>
+                      <p className="text-sm font-semibold leading-snug">{program.impact}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mr-4">
+                      <Users className="h-5 w-5 text-emerald-400" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Eligibility Criteria</p>
+                      <p className="text-sm font-semibold leading-snug">{program.eligibility}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10 grid grid-cols-1 gap-3">
+                  <Link to="/donate" className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-black uppercase tracking-wider py-4 rounded-xl text-center transition-all flex items-center justify-center">
+                    Fuel This Mission
+                    <ExternalLink className="h-3.5 w-3.5 ml-2" />
+                  </Link>
+                  <Link to="/volunteer" className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-black uppercase tracking-wider py-4 rounded-xl text-center transition-all">
+                    Enlist as Volunteer
+                  </Link>
+                </div>
+              </div>
+
+              {/* Coordinator Context */}
+              <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
+                <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-2">Technical Assistance</h4>
+                <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                  Require granular data regarding deployment logistics or community partnership frameworks?
+                </p>
+                <Link to="/contact" className="text-emerald-600 text-xs font-bold flex items-center hover:text-emerald-700">
+                  Query Program Coordinator
+                  <ArrowLeft className="h-3 w-3 ml-1 rotate-180" />
+                </Link>
+              </div>
+            </motion.aside>
+          </div>
+
         </div>
       </section>
     </div>

@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Heart, Clock, Users, Award } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Heart, Clock, Users, Award, Loader2, AlertCircle, CheckCircle2, ShieldCheck, Mail, Phone, User, MessageSquare, Calendar } from 'lucide-react'
 import { useVolunteer } from '../hooks/useVolunteer'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
 
 const volunteerSchema = z.object({
   fullName: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.email('Invalid email address'),
+  email: z.string().email('Invalid email address'),
   phone: z.string().min(10, 'Valid phone number required'),
   interests: z.array(z.string()).min(1, 'Select at least one interest'),
   availability: z.string().min(1, 'Please select availability'),
@@ -21,14 +22,27 @@ type VolunteerForm = z.infer<typeof volunteerSchema>
 const Volunteer = () => {
   const { submitting, submitSuccess, error, submitApplication, getOpportunities, resetStatus } = useVolunteer()
   const [opportunities, setOpportunities] = useState<any[]>([])
+  const [oppsLoading, setOppsLoading] = useState(true)
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm<VolunteerForm>({
     resolver: zodResolver(volunteerSchema),
+    defaultValues: {
+      interests: [],
+      availability: ''
+    }
   })
 
   useEffect(() => {
     const loadOpportunities = async () => {
-      const opps = await getOpportunities()
-      setOpportunities(opps)
+      try {
+        setOppsLoading(true)
+        const opps = await getOpportunities()
+        setOpportunities(opps || [])
+      } catch (err) {
+        console.error("Failed loading roles", err)
+      } finally {
+        setOppsLoading(false)
+      }
     }
     loadOpportunities()
   }, [getOpportunities])
@@ -39,7 +53,7 @@ const Volunteer = () => {
       reset()
       setTimeout(() => {
         resetStatus()
-      }, 5000)
+      }, 6000)
     }
   }
 
@@ -53,7 +67,7 @@ const Volunteer = () => {
   ]
 
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen">
       <SEOHead
         title={SEO_CONFIG.pages.volunteer.title}
         description={SEO_CONFIG.pages.volunteer.description}
@@ -61,168 +75,286 @@ const Volunteer = () => {
         image={SEO_CONFIG.pages.volunteer.image}
         type="website"
       />
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-blue to-primary-green text-white py-16">
-        <div className="container-custom text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Become a Volunteer</h1>
-          <p className="text-lg max-w-2xl mx-auto">
-            Your time and skills can make a lasting impact on vulnerable lives. Join our community of changemakers.
-          </p>
+
+      {/* Hero Header Frame */}
+      <section className="relative bg-slate-950 py-24 overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div className="container-custom relative z-10 text-center max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center space-x-2 bg-white/10 text-orange-400 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase mb-6 backdrop-blur-sm">
+              <Heart className="h-3.5 w-3.5 fill-current" />
+              <span>Humanitarian Deployment Network</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none">
+              Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">Changemakers</span>
+            </h1>
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal">
+              Your domain expertise and structural support time can directly optimize high-impact programs for vulnerable cohorts.
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {[
-              { icon: Heart, title: 'Make a Difference', desc: 'Directly impact lives in your community' },
-              { icon: Users, title: 'Grow Skills', desc: 'Develop leadership and teamwork abilities' },
-              { icon: Award, title: 'Build Network', desc: 'Connect with like-minded changemakers' },
-            ].map((benefit, index) => {
-              const Icon = benefit.icon
-              return (
-                <div key={index} className="text-center p-6 bg-gray-50 rounded-lg">
-                  <Icon className="h-12 w-12 text-primary-green mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                  <p className="text-secondary-gray">{benefit.desc}</p>
+      {/* Benefits Metrics Section */}
+      <section className="py-20 container-custom">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { icon: Heart, title: 'Measurable Impact', desc: 'Directly accelerate program velocity and maximize localized field support actions.' },
+            { icon: Users, title: 'Strategic Integration', desc: 'Work directly alongside verified specialized subject practitioners inside agile cohorts.' },
+            { icon: Award, title: 'Verified Leadership', desc: 'Accumulate formal hours validation records and deep community management credentials.' },
+          ].map((benefit, index) => {
+            const Icon = benefit.icon
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                key={index}
+                className="bg-white border border-slate-100 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:border-slate-200/60 transition-all group"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Icon className="h-6 w-6 text-slate-900" />
                 </div>
-              )
-            })}
+                <h3 className="text-lg font-black text-slate-900 mb-2 tracking-tight">{benefit.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed font-normal">{benefit.desc}</p>
+              </motion.div>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Dynamic Placement Channels / Opportunities System */}
+      <AnimatePresence mode="popLayout">
+        {(oppsLoading || opportunities.length > 0) && (
+          <section className="pb-20 container-custom">
+            <div className="bg-white border border-slate-100 rounded-3xl p-8 md:p-12 shadow-sm">
+              <div className="max-w-xl mb-10">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2">Active Field Openings</h2>
+                <p className="text-slate-500 text-sm font-normal">Apply specifically to any of our globally audited strategic workflows below.</p>
+              </div>
+
+              {oppsLoading ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 text-slate-800 animate-spin mb-3" />
+                  <p className="text-xs text-slate-400 font-bold tracking-wider uppercase">Polling Opportunity Registries...</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {opportunities.map((opp, idx) => (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: idx * 0.05 }}
+                      key={opp.id || idx}
+                      className="bg-slate-50 border border-slate-100 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between group hover:border-orange-200 hover:bg-white transition-all"
+                    >
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-slate-950 group-hover:bg-orange-500 transition-colors" />
+                      <div>
+                        <h3 className="font-black text-base text-slate-900 mb-2 tracking-tight leading-snug">{opp.title}</h3>
+                        <p className="text-slate-500 text-xs leading-relaxed font-normal mb-6 line-clamp-3">{opp.description}</p>
+                      </div>
+                      <div className="space-y-2 pt-4 border-t border-slate-200/50">
+                        <div className="flex items-center text-xs font-bold text-slate-600">
+                          <Clock className="h-3.5 w-3.5 mr-2 text-slate-400" />
+                          <span>{opp.commitment}</span>
+                        </div>
+                        <div className="flex items-center text-xs font-bold text-slate-600">
+                          <Users className="h-3.5 w-3.5 mr-2 text-slate-400" />
+                          <span className="text-orange-600">{opp.slots} slots unfilled</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+      </AnimatePresence>
+
+      {/* Main Framework Processing Core Form Container */}
+      <section className="pb-24 container-custom">
+        <div className="max-w-3xl mx-auto bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-100 overflow-hidden">
+          <div className="bg-slate-950 px-8 py-10 text-white relative">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+            <h2 className="text-2xl font-black tracking-tight mb-2">Secure Deployment Terminal</h2>
+            <p className="text-slate-400 text-xs font-normal">Complete your secure structural application payload profile. Marked values are strictly required fields.</p>
           </div>
 
-          {/* Current Opportunities */}
-          {opportunities.length > 0 && (
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold text-center mb-6">Current Opportunities</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {opportunities.map((opp) => (
-                  <div key={opp.id} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-primary-orange">
-                    <h3 className="font-semibold text-lg mb-2">{opp.title}</h3>
-                    <p className="text-secondary-gray text-sm mb-3">{opp.description}</p>
-                    <div className="flex items-center text-sm text-primary-blue mb-2">
-                      <Clock className="h-4 w-4 mr-1" />
-                      <span>{opp.commitment}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-primary-green">
-                      <Users className="h-4 w-4 mr-1" />
-                      <span>{opp.slots} slots available</span>
-                    </div>
+          <div className="p-8 md:p-10">
+            {/* Context Feedback Elements */}
+            <AnimatePresence mode="popLayout">
+              {submitSuccess && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 flex items-start space-x-3 text-sm"
+                >
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold block">Transmission Authenticated Successfully</span>
+                    <span className="text-xs text-emerald-700/90 font-normal">Profile securely logged. Deployment review complete within 3–5 professional cycles.</span>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                </motion.div>
+              )}
 
-          {/* Volunteer Form */}
-          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold mb-6 text-center">Volunteer Application</h2>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 flex items-start space-x-3 text-sm"
+                >
+                  <AlertCircle className="h-5 w-5 text-rose-600 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold block">System Transfer Conflict Intercepted</span>
+                    <span className="text-xs text-rose-700/90 font-normal">{error}</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {submitSuccess && (
-              <div className="mb-6 p-4 bg-primary-green text-white rounded-lg">
-                Thank you for your interest! We'll contact you within 3-5 business days.
-              </div>
-            )}
-
-            {error && (
-              <div className="mb-6 p-4 bg-red-500 text-white rounded-lg">
-                {error}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              {/* Field Block - Full Name */}
               <div>
-                <label className="block text-sm font-medium mb-2">Full Name *</label>
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2 flex items-center">
+                  <User className="h-3.5 w-3.5 mr-1.5 text-slate-400" />
+                  Full Name *
+                </label>
                 <input
                   {...register('fullName')}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
+                  type="text"
+                  className={`w-full px-4 py-3 border rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 transition-all ${errors.fullName ? 'border-rose-400 bg-rose-50/10 focus:border-rose-500' : 'border-slate-200 bg-slate-50/50 focus:bg-white focus:border-slate-950'
+                    }`}
                   placeholder="John Doe"
                   disabled={submitting}
                 />
-                {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
+                {errors.fullName && <p className="text-rose-500 text-xs font-semibold mt-1.5">{errors.fullName.message}</p>}
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Email *</label>
-                <input
-                  type="email"
-                  {...register('email')}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                  placeholder="john@example.com"
-                  disabled={submitting}
-                />
-                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+              {/* Grid System - Communications Data */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2 flex items-center">
+                    <Mail className="h-3.5 w-3.5 mr-1.5 text-slate-400" />
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    {...register('email')}
+                    className={`w-full px-4 py-3 border rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 transition-all ${errors.email ? 'border-rose-400 bg-rose-50/10 focus:border-rose-500' : 'border-slate-200 bg-slate-50/50 focus:bg-white focus:border-slate-950'
+                      }`}
+                    placeholder="john@example.com"
+                    disabled={submitting}
+                  />
+                  {errors.email && <p className="text-rose-500 text-xs font-semibold mt-1.5">{errors.email.message}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2 flex items-center">
+                    <Phone className="h-3.5 w-3.5 mr-1.5 text-slate-400" />
+                    Secure Mobile Line *
+                  </label>
+                  <input
+                    type="tel"
+                    {...register('phone')}
+                    className={`w-full px-4 py-3 border rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 transition-all ${errors.phone ? 'border-rose-400 bg-rose-50/10 focus:border-rose-500' : 'border-slate-200 bg-slate-50/50 focus:bg-white focus:border-slate-950'
+                      }`}
+                    placeholder="+234 123 456 7890"
+                    disabled={submitting}
+                  />
+                  {errors.phone && <p className="text-rose-500 text-xs font-semibold mt-1.5">{errors.phone.message}</p>}
+                </div>
               </div>
 
+              {/* Areas of Interest Composite Panel Selector */}
               <div>
-                <label className="block text-sm font-medium mb-2">Phone *</label>
-                <input
-                  {...register('phone')}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                  placeholder="+234 123 456 7890"
-                  disabled={submitting}
-                />
-                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Areas of Interest *</label>
-                <div className="grid grid-cols-2 gap-2">
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-3">
+                  Target Domain Specializations *
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {interestOptions.map((interest) => (
-                    <label key={interest} className="flex items-center space-x-2">
+                    <label
+                      key={interest}
+                      className="flex items-center space-x-3 p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-100/50 transition cursor-pointer select-none"
+                    >
                       <input
                         type="checkbox"
                         value={interest}
                         {...register('interests')}
-                        className="rounded"
+                        className="rounded border-slate-300 text-slate-950 focus:ring-slate-950/40 h-4 w-4"
                         disabled={submitting}
                       />
-                      <span className="text-sm">{interest}</span>
+                      <span className="text-sm font-semibold text-slate-700">{interest}</span>
                     </label>
                   ))}
                 </div>
-                {errors.interests && <p className="text-red-500 text-sm mt-1">{errors.interests.message}</p>}
+                {errors.interests && <p className="text-rose-500 text-xs font-semibold mt-2">{errors.interests.message}</p>}
               </div>
 
+              {/* Dropdown System - Availability Selector */}
               <div>
-                <label className="block text-sm font-medium mb-2">Availability *</label>
-                <select
-                  {...register('availability')}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                  disabled={submitting}
-                >
-                  <option value="">Select availability</option>
-                  <option value="weekdays">Weekdays (Mon-Fri)</option>
-                  <option value="weekends">Weekends (Sat-Sun)</option>
-                  <option value="evenings">Evenings (After 5PM)</option>
-                  <option value="flexible">Flexible</option>
-                </select>
-                {errors.availability && <p className="text-red-500 text-sm mt-1">{errors.availability.message}</p>}
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2 flex items-center">
+                  <Calendar className="h-3.5 w-3.5 mr-1.5 text-slate-400" />
+                  Audited Operational Availability *
+                </label>
+                <div className="relative">
+                  <select
+                    {...register('availability')}
+                    className={`w-full px-4 py-3 border rounded-xl text-sm text-slate-950 focus:outline-none focus:ring-2 focus:ring-slate-950/10 bg-slate-50/50 focus:bg-white transition-all appearance-none ${errors.availability ? 'border-rose-400 focus:border-rose-500' : 'border-slate-200 focus:border-slate-950'
+                      }`}
+                    disabled={submitting}
+                  >
+                    <option value="" className="text-slate-400">Select structured profile allocation...</option>
+                    <option value="weekdays">Standard Core Working Shifts (Mon–Fri)</option>
+                    <option value="weekends">Extended Operational Windows (Sat–Sun)</option>
+                    <option value="evenings">Post-Meridian Deployments (After 5:00 PM)</option>
+                    <option value="flexible">Ad-Hoc / Variable Execution Requirements</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" /></svg>
+                  </div>
+                </div>
+                {errors.availability && <p className="text-rose-500 text-xs font-semibold mt-1.5">{errors.availability.message}</p>}
               </div>
 
+              {/* Textarea - Cover Message Container */}
               <div>
-                <label className="block text-sm font-medium mb-2">Additional Message</label>
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2 flex items-center">
+                  <MessageSquare className="h-3.5 w-3.5 mr-1.5 text-slate-400" />
+                  Additional Experience Overview
+                </label>
                 <textarea
                   {...register('message')}
                   rows={4}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                  placeholder="Tell us why you'd like to volunteer and any relevant experience..."
+                  className="w-full px-4 py-3 border border-slate-200 bg-slate-50/50 focus:bg-white rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all resize-none"
+                  placeholder="Outline any prior specialized volunteer deployments, regional fieldwork or specific organizational expertise..."
                   disabled={submitting}
-                ></textarea>
+                />
               </div>
 
+              {/* Submit Execution Key Switch */}
               <button
                 type="submit"
-                className="btn-primary w-full flex items-center justify-center space-x-2"
+                className="w-full bg-slate-950 text-white hover:bg-slate-900 py-3.5 rounded-xl font-black text-sm tracking-tight transition flex items-center justify-center space-x-2 shadow-lg disabled:opacity-60 disabled:pointer-events-none"
                 disabled={submitting}
               >
                 {submitting ? (
                   <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    <span>Submitting...</span>
+                    <Loader2 className="h-4 w-4 animate-spin text-white" />
+                    <span>Synchronizing Application Payload...</span>
                   </>
                 ) : (
-                  <span>Submit Application</span>
+                  <>
+                    <ShieldCheck className="h-4 w-4 text-orange-400" />
+                    <span>Commit Profile Record</span>
+                  </>
                 )}
               </button>
             </form>

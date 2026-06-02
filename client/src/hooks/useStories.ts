@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { storyService } from '../services/story.service'
 import type { Story, StoryFilters } from '../types/story.types'
-// import { Story, StoryFilters } from '../types'
 
 interface UseStoriesReturn {
   stories: Story[]
@@ -17,6 +16,9 @@ export const useStories = (initialFilters?: StoryFilters): UseStoriesReturn => {
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [total, setTotal] = useState<number>(0)
+
+  // Fix: Capture filters in a ref to prevent infinite re-render loop cycles
+  const initialFiltersRef = useRef(initialFilters)
 
   const fetchStories = useCallback(async (filters?: StoryFilters) => {
     setLoading(true)
@@ -49,8 +51,8 @@ export const useStories = (initialFilters?: StoryFilters): UseStoriesReturn => {
   }, [])
 
   useEffect(() => {
-    fetchStories(initialFilters)
-  }, [fetchStories, initialFilters])
+    fetchStories(initialFiltersRef.current)
+  }, [fetchStories]) // Clear of warnings
 
   return {
     stories,

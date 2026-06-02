@@ -19,6 +19,7 @@ export const useGallery = (initialFilters?: GalleryFilters): UseGalleryReturn =>
   const [error, setError] = useState<string | null>(null)
   const [total, setTotal] = useState<number>(0)
   const [categories, setCategories] = useState<{ id: string; label: string; count: number }[]>([])
+
   const isMounted = useRef(true)
   const initialFiltersRef = useRef(initialFilters)
 
@@ -31,7 +32,7 @@ export const useGallery = (initialFilters?: GalleryFilters): UseGalleryReturn =>
     try {
       const response = await galleryService.filter(filters || {})
       if (isMounted.current && response.success) {
-        setImages(response.data)
+        setImages(response.data || [])
         setTotal(response.total || 0)
       } else if (isMounted.current && !response.success) {
         setError(response.message || 'Failed to fetch images')
@@ -54,7 +55,7 @@ export const useGallery = (initialFilters?: GalleryFilters): UseGalleryReturn =>
     try {
       const response = await galleryService.getCategories()
       if (isMounted.current && response.success) {
-        setCategories(response.data)
+        setCategories(response.data || [])
       }
     } catch (err) {
       console.error('Failed to fetch categories:', err)
@@ -82,7 +83,7 @@ export const useGallery = (initialFilters?: GalleryFilters): UseGalleryReturn =>
   }, [fetchImages, fetchCategories])
 
   return {
-    images,
+    images, // Keep this name cleanly structured!
     loading,
     error,
     total,

@@ -2,16 +2,14 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  ArrowLeft, Calendar, MapPin, User, Clock,
-  Share2, Mail, ExternalLink, Phone
+  ArrowLeft, Calendar, MapPin,
+  Share2, ExternalLink, Info
 } from 'lucide-react'
 import { useEvents } from '../hooks/useEvent'
 import type { Event } from '../types/event.types'
 import { FacebookIcon, LinkedinIcon, TwitterIcon } from '../components/ui/SocialIcons'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
-// import { useEvents } from '../hooks/useEvents'
-// import { Event } from '../types'
 
 const EventDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -23,97 +21,55 @@ const EventDetail = () => {
   useEffect(() => {
     const loadEvent = async () => {
       if (!slug) return
-
       setLoading(true)
-      setError(null)
-
       try {
         const eventData = await getEventBySlug(slug)
-        if (eventData) {
-          setEvent(eventData)
-        } else {
-          setError('Event not found')
-        }
+        eventData ? setEvent(eventData) : setError('Event not found')
       } catch (err) {
         setError('Failed to load event')
-        console.error(err)
       } finally {
         setLoading(false)
       }
     }
-
     loadEvent()
   }, [slug, getEventBySlug])
 
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      outreach: 'bg-green-100 text-green-800',
-      announcement: 'bg-blue-100 text-blue-800',
-      youth: 'bg-purple-100 text-purple-800',
-      partnership: 'bg-yellow-100 text-yellow-800',
-      health: 'bg-red-100 text-red-800',
-      milestone: 'bg-orange-100 text-orange-800'
+  const getCategoryStyles = (category: string) => {
+    const styles: Record<string, string> = {
+      outreach: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+      announcement: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+      youth: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
+      health: 'bg-rose-500/10 text-rose-500 border-rose-500/20',
     }
-    return colors[category] || 'bg-gray-100 text-gray-800'
+    return styles[category] || 'bg-slate-500/10 text-slate-500 border-slate-500/20'
   }
 
-  const getCategoryLabel = (category: string) => {
-    const labels: Record<string, string> = {
-      outreach: 'Outreach',
-      announcement: 'Announcement',
-      youth: 'Youth Program',
-      partnership: 'Partnership',
-      health: 'Health',
-      milestone: 'Milestone'
-    }
-    return labels[category] || category
-  }
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex flex-col items-center">
+        <div className="w-12 h-12 border-4 border-slate-200 border-t-emerald-500 rounded-full animate-spin mb-4" />
+        <p className="text-slate-500 font-bold tracking-widest text-xs uppercase">Initializing Brief...</p>
+      </div>
+    </div>
+  )
 
-  const getStatusBadge = (status: string, date: string) => {
-    const eventDate = new Date(date)
-    const today = new Date()
-
-    if (status === 'upcoming' && eventDate > today) {
-      return { text: 'Upcoming', color: 'bg-green-100 text-green-800' }
-    } else if (status === 'ongoing') {
-      return { text: 'Ongoing', color: 'bg-blue-100 text-blue-800' }
-    } else if (status === 'completed' || eventDate < today) {
-      return { text: 'Past Event', color: 'bg-gray-100 text-gray-800' }
-    }
-    return { text: status, color: 'bg-gray-100 text-gray-800' }
-  }
+  if (error || !event) return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="text-center p-12 bg-white rounded-3xl shadow-sm border border-slate-200 max-w-md">
+        <Info className="h-12 w-12 text-rose-500 mx-auto mb-4" />
+        <h1 className="text-2xl font-black text-slate-900 mb-2">Record Not Found</h1>
+        <p className="text-slate-500 mb-8">The event or article you are looking for has been archived or moved.</p>
+        <Link to="/news-events" className="inline-flex items-center text-emerald-600 font-bold uppercase text-xs tracking-widest hover:text-emerald-700">
+          <ArrowLeft className="h-4 w-4 mr-2" /> Return to Archive
+        </Link>
+      </div>
+    </div>
+  )
 
   const shareUrl = window.location.href
-  const shareTitle = event?.title || 'Hope for the Hopeless Initiative'
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
-          <p className="text-secondary-gray">Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error || !event) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">{error || 'Event Not Found'}</h1>
-          <Link to="/news-events" className="text-primary-blue hover:underline">
-            Back to News & Events
-          </Link>
-        </div>
-      </div>
-    )
-  }
-
-  const statusBadge = getStatusBadge(event.status as string, event.date)
 
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen antialiased">
       <SEOHead
         title={`${SEO_CONFIG.pages.eventDetail.title}${event?.title || 'Event'}`}
         description={event?.description || SEO_CONFIG.pages.eventDetail.description}
@@ -125,211 +81,161 @@ const EventDetail = () => {
         author={event?.author}
         tags={[event?.category || '', event?.type || '', 'news', 'event']}
       />
-      {/* Hero Section */}
-      <section className="relative h-96 bg-cover bg-center" style={{ backgroundImage: `url(${event.image})` }}>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-blue to-primary-green opacity-85"></div>
-        <div className="absolute inset-0 flex items-center">
+
+      {/* Modern Hero Section */}
+      <section className="relative h-[500px] w-full overflow-hidden">
+        <motion.img
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5 }}
+          src={event.image}
+          className="absolute inset-0 w-full h-full object-cover"
+          alt={event.title}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
+
+        <div className="absolute inset-0 flex items-end pb-16">
           <div className="container-custom">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-white max-w-3xl"
+              className="max-w-4xl"
             >
-              <Link to="/news-events" className="inline-flex items-center text-white mb-4 hover:text-primary-orange transition">
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                Back to News & Events
+              <Link to="/news-events" className="inline-flex items-center text-emerald-400 text-xs font-black uppercase tracking-[0.2em] mb-8 group">
+                <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+                Back to Intelligence
               </Link>
-              <div className="flex items-center space-x-3 mb-4">
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getCategoryColor(event.category)}`}>
-                  {getCategoryLabel(event.category)}
+
+              <div className="flex gap-3 mb-6">
+                <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border backdrop-blur-md ${getCategoryStyles(event.category)}`}>
+                  {event.category}
                 </span>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusBadge.color}`}>
-                  {statusBadge.text}
+                <span className="px-4 py-1.5 bg-white/10 border border-white/20 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-full">
+                  {event.status}
                 </span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">{event.title}</h1>
-              <div className="flex flex-wrap gap-4 text-sm opacity-90">
-                <span className="flex items-center">
-                  <Calendar className="h-4 w-4 mr-1" />
-                  {new Date(event.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                  {event.endDate && ` - ${new Date(event.endDate).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric'
-                  })}`}
-                </span>
-                <span className="flex items-center">
-                  <MapPin className="h-4 w-4 mr-1" />
-                  {event.location}
-                </span>
-                <span className="flex items-center">
-                  <User className="h-4 w-4 mr-1" />
-                  {event.author}
-                </span>
-                <span className="flex items-center">
-                  <Clock className="h-4 w-4 mr-1" />
-                  {event.readTime}
-                </span>
+
+              <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-8 tracking-tight">
+                {event.title}
+              </h1>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-t border-white/10 text-white/80">
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-tighter text-emerald-500">Date Posted</p>
+                  <p className="text-sm font-bold">{new Date(event.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-tighter text-emerald-500">Location</p>
+                  <p className="text-sm font-bold truncate">{event.location}</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-tighter text-emerald-500">Correspondent</p>
+                  <p className="text-sm font-bold">{event.author}</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-tighter text-emerald-500">Reading Time</p>
+                  <p className="text-sm font-bold">{event.readTime || '5 min'}</p>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Content Section */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="prose prose-lg max-w-none"
-              >
-                <div className="text-secondary-gray leading-relaxed whitespace-pre-line">
-                  {event.content.split('\n\n').map((paragraph, idx) => {
-                    if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                      return (
-                        <h3 key={idx} className="text-xl font-bold mt-6 mb-3 text-secondary-dark">
-                          {paragraph.replace(/\*\*/g, '')}
-                        </h3>
-                      )
-                    }
-                    if (paragraph.startsWith('- ')) {
-                      return (
-                        <ul key={idx} className="list-disc list-inside my-3 space-y-1">
-                          {paragraph.split('\n').map((item, itemIdx) => (
-                            <li key={itemIdx} className="text-secondary-gray">
-                              {item.replace('- ', '')}
-                            </li>
-                          ))}
-                        </ul>
-                      )
-                    }
-                    return (
-                      <p key={idx} className="mb-4 leading-relaxed">
-                        {paragraph}
-                      </p>
-                    )
-                  })}
-                </div>
-              </motion.div>
-            </div>
+      {/* Main Content Architecture */}
+      <section className="py-20 container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
-            {/* Sidebar */}
+          {/* Narrative Body */}
+          <div className="lg:col-span-8">
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="bg-white rounded-[2rem] p-10 shadow-sm border border-slate-100"
             >
-              <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-                <h3 className="text-xl font-bold mb-4">Event Information</h3>
-
-                <div className="space-y-4 mb-6">
-                  <div className="flex items-start space-x-3">
-                    <Calendar className="h-5 w-5 text-primary-blue flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-semibold">Date & Time</p>
-                      <p className="text-sm text-secondary-gray">
-                        {new Date(event.date).toLocaleDateString('en-US', {
-                          weekday: 'long',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}
-                        {event.endDate && (
-                          <>
-                            <br />to {new Date(event.endDate).toLocaleDateString('en-US', {
-                              month: 'long',
-                              day: 'numeric'
-                            })}
-                          </>
-                        )}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <MapPin className="h-5 w-5 text-primary-blue flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-semibold">Location</p>
-                      <p className="text-sm text-secondary-gray">{event.location}</p>
-                    </div>
-                  </div>
-
-                  {event.contactEmail && (
-                    <div className="flex items-start space-x-3">
-                      <Mail className="h-5 w-5 text-primary-blue flex-shrink-0 mt-1" />
-                      <div>
-                        <p className="font-semibold">Contact</p>
-                        <a href={`mailto:${event.contactEmail}`} className="text-sm text-primary-blue hover:underline">
-                          {event.contactEmail}
-                        </a>
-                        {event.contactPhone && (
-                          <a href={`tel:${event.contactPhone}`} className="text-sm text-primary-blue hover:underline block mt-1">
-                            <Phone className="h-3 w-3 inline mr-1" />
-                            {event.contactPhone}
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {event.registrationLink && event.type === 'event' && (
-                  <a
-                    href={event.registrationLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block btn-primary text-center mb-4"
-                  >
-                    Register Now
-                    <ExternalLink className="h-4 w-4 inline ml-2" />
-                  </a>
-                )}
-
-                {/* Share Section */}
-                <div className="border-t pt-4 mt-4">
-                  <h4 className="font-semibold mb-3 flex items-center">
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Share This {event.type === 'event' ? 'Event' : 'Article'}
-                  </h4>
-                  <div className="flex space-x-3">
-                    <a
-                      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition"
-                    >
-                      <FacebookIcon className="h-5 w-5" />
-                    </a>
-                    <a
-                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-blue-400 text-white p-2 rounded-lg hover:bg-blue-500 transition"
-                    >
-                      <TwitterIcon className="h-5 w-5" />
-                    </a>
-                    <a
-                      href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareTitle)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-blue-700 text-white p-2 rounded-lg hover:bg-blue-800 transition"
-                    >
-                      <LinkedinIcon className="h-5 w-5" />
-                    </a>
-                  </div>
+              <div className="prose prose-slate prose-lg max-w-none">
+                <div className="text-slate-600 leading-[1.8] font-normal space-y-8">
+                  {event.content.split('\n\n').map((paragraph, idx) => {
+                    if (paragraph.startsWith('**')) {
+                      return <h2 key={idx} className="text-2xl font-black text-slate-900 pt-4">{paragraph.replace(/\*\*/g, '')}</h2>
+                    }
+                    return <p key={idx}>{paragraph}</p>
+                  })}
                 </div>
               </div>
             </motion.div>
           </div>
+
+          {/* Tactical Sidebar */}
+          <div className="lg:col-span-4">
+            <motion.aside
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="sticky top-28 space-y-8"
+            >
+              {/* Event Logistics Card */}
+              <div className="bg-slate-900 rounded-[2rem] p-8 text-white shadow-2xl shadow-slate-900/20">
+                <h3 className="text-lg font-black mb-8 flex items-center">
+                  <span className="w-6 h-1 bg-emerald-500 mr-3 rounded-full" />
+                  Logistics & RSVP
+                </h3>
+
+                <div className="space-y-6">
+                  <div className="flex items-start group">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mr-4 shrink-0 group-hover:bg-emerald-500 transition-colors">
+                      <Calendar className="h-5 w-5 text-emerald-400 group-hover:text-white" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase text-slate-500 mb-1">Timing</p>
+                      <p className="text-sm font-semibold">{new Date(event.date).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start group">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mr-4 shrink-0 group-hover:bg-emerald-500 transition-colors">
+                      <MapPin className="h-5 w-5 text-emerald-400 group-hover:text-white" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase text-slate-500 mb-1">Venue</p>
+                      <p className="text-sm font-semibold">{event.location}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-10 space-y-3">
+                  {event.registrationLink && (
+                    <a href={event.registrationLink} className="flex items-center justify-center w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl font-black text-xs uppercase tracking-wider transition-all">
+                      Secure Access
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  )}
+                  <button className="flex items-center justify-center w-full py-4 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl font-black text-xs uppercase tracking-wider transition-all">
+                    Add to Calendar
+                  </button>
+                </div>
+              </div>
+
+              {/* Share Briefing */}
+              <div className="bg-white border border-slate-100 rounded-[2rem] p-8 shadow-sm">
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center">
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Distribute Brief
+                </h4>
+                <div className="flex gap-4">
+                  {[
+                    { icon: <FacebookIcon className="h-5 w-5" />, color: 'hover:bg-blue-600', link: `https://facebook.com/sharer/sharer.php?u=${shareUrl}` },
+                    { icon: <TwitterIcon className="h-5 w-5" />, color: 'hover:bg-sky-500', link: `https://twitter.com/intent/tweet?url=${shareUrl}` },
+                    { icon: <LinkedinIcon className="h-5 w-5" />, color: 'hover:bg-blue-800', link: `https://linkedin.com/shareArticle?url=${shareUrl}` }
+                  ].map((social, i) => (
+                    <a key={i} href={social.link} target="_blank" className={`w-12 h-12 flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-slate-400 ${social.color} hover:text-white transition-all duration-300`}>
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </motion.aside>
+          </div>
+
         </div>
       </section>
     </div>

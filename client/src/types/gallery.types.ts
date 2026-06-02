@@ -9,6 +9,7 @@ export interface GalleryImage extends BaseEntity {
   date: string
   location: string
   image: string
+  url: string
   thumbnail: string
   photographer?: string
 }

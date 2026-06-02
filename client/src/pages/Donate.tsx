@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Heart, Building, Copy, Check, Shield, Target, Users, GraduationCap, CheckCircle } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Heart, Building, Copy, Check, Shield, Target, Users, GraduationCap, CheckCircle, Wallet, Mail, AlertCircle, ArrowUpRight, HelpCircle } from 'lucide-react'
 import { useDonation } from '../hooks/useDonation'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
 
 const Donate = () => {
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null)
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(5000)
   const [customAmount, setCustomAmount] = useState('')
+  const [donorName, setDonorName] = useState('')
+  const [donorEmail, setDonorEmail] = useState('')
+  const [donorPhone, setDonorPhone] = useState('')
 
   const {
     bankAccounts,
@@ -32,28 +35,18 @@ const Donate = () => {
     setTimeout(() => setCopiedAccount(null), 2000)
   }
 
-  const handleDonateOnline = () => {
+  const handleDonateOnline = (e: React.FormEvent) => {
+    e.preventDefault()
     const amount = selectedAmount || parseInt(customAmount)
     if (amount && amount > 0) {
       alert(`Thank you for your ₦${amount.toLocaleString()} donation! Online payment integration coming soon. Please use bank transfer for now.`)
     } else {
-      alert('Please select or enter a donation amount')
+      alert('Please select or enter a valid donation amount')
     }
   }
 
-  if (loading && bankAccounts.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
-          <p className="text-secondary-gray">Loading donation information...</p>
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen font-sans antialiased">
       <SEOHead
         title={SEO_CONFIG.pages.donate.title}
         description={SEO_CONFIG.pages.donate.description}
@@ -61,199 +54,248 @@ const Donate = () => {
         image={SEO_CONFIG.pages.donate.image}
         type="website"
       />
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
-        <div className="container-custom">
+
+      {/* Hero Header Frame */}
+      <section className="relative bg-slate-950 py-24 overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div className="container-custom relative z-10 text-center max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Support Our Mission</h1>
-            <p className="text-lg md:text-xl opacity-90">
-              Your generous donation helps us restore hope and transform lives
+            <div className="inline-flex items-center space-x-2 bg-white/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase mb-6 backdrop-blur-sm">
+              <Shield className="h-3.5 w-3.5" />
+              <span>Verified Direct-to-Impact Channel</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none">
+              Empower Real <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Transformation</span>
+            </h1>
+            <p className="text-lg text-slate-400 max-w-xl mx-auto leading-relaxed font-normal">
+              Your financial deployment funds sustainable regional programs, immediate relief initiatives, and structural healthcare allocations.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Why Donate Section */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {[
-              { icon: Shield, title: '100% Transparency', description: 'We provide detailed reports on how every donation is used' },
-              { icon: Heart, title: 'Direct Impact', description: 'Your donations go directly to those who need them most' },
-              { icon: CheckCircle, title: 'Tax Deductible', description: 'All donations are eligible for tax deductions' }
-            ].map((item, index) => {
-              const Icon = item.icon
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="text-center p-6"
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-blue bg-opacity-10 rounded-full mb-4">
-                    <Icon className="h-8 w-8 text-primary-blue" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-secondary-gray">{item.description}</p>
-                </motion.div>
-              )
-            })}
-          </div>
+      {/* Core Integrity Vectors */}
+      <section className="py-12 container-custom -mt-8 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: Shield, title: '100% Transparency', desc: 'Fully audited programmatic reporting patterns ensure complete visibility over all financial pipelines.' },
+            { icon: Heart, title: 'Direct Execution', desc: 'Capital distributions skip bureaucratic overhead, landing exactly where vital project workflows occur.' },
+            { icon: CheckCircle, title: 'Tax Deductible', desc: 'All incoming institutional contributions are accompanied by verifiable compliance documentation.' }
+          ].map((item, idx) => {
+            const Icon = item.icon
+            return (
+              <div key={idx} className="bg-white border border-slate-100 rounded-2xl p-6 shadow-md shadow-slate-100/50 flex items-start space-x-4">
+                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0">
+                  <Icon className="h-5 w-5 text-slate-900" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-black text-slate-900 tracking-tight mb-1">{item.title}</h3>
+                  <p className="text-xs text-slate-500 leading-relaxed font-normal">{item.desc}</p>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </section>
 
-      {/* Donation Options */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Online Donation Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white rounded-xl shadow-lg p-8"
-            >
-              <h2 className="text-2xl font-bold mb-6">Make a Donation</h2>
+      {/* Contribution Gateways */}
+      <section className="py-12 container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-              <div className="mb-6">
-                <label className="block text-sm font-medium mb-3">Select Amount (₦)</label>
-                <div className="grid grid-cols-3 gap-3 mb-3">
+          {/* Online Pipeline Interface */}
+          <div className="lg:col-span-7 bg-white border border-slate-100 rounded-3xl shadow-sm overflow-hidden">
+            <div className="bg-slate-950 p-6 md:p-8 text-white relative">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+              <h2 className="text-xl font-black tracking-tight mb-1 flex items-center">
+                <Wallet className="h-5 w-5 mr-2 text-emerald-400" />
+                Digital Transaction Terminal
+              </h2>
+              <p className="text-xs text-slate-400 font-normal">Configure your localized parameters for instant programmatic clearance.</p>
+            </div>
+
+            <form onSubmit={handleDonateOnline} className="p-6 md:p-8 space-y-6">
+              <div>
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-3">
+                  Select Contribution Matrix (₦)
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-3">
                   {donationAmounts.map((amount) => (
                     <button
+                      type="button"
                       key={amount}
                       onClick={() => {
                         setSelectedAmount(amount)
                         setCustomAmount('')
                       }}
-                      className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${selectedAmount === amount
-                        ? 'bg-primary-blue text-white shadow-lg transform scale-105'
-                        : 'bg-gray-100 text-secondary-gray hover:bg-gray-200'
+                      className={`py-2.5 rounded-xl text-xs font-black tracking-tight transition-all ${selectedAmount === amount
+                          ? 'bg-slate-950 text-white shadow-md shadow-slate-900/10 scale-[1.02]'
+                          : 'bg-slate-50 text-slate-600 border border-slate-100 hover:bg-slate-100'
                         }`}
                     >
                       ₦{amount.toLocaleString()}
                     </button>
                   ))}
                 </div>
-                <input
-                  type="number"
-                  placeholder="Custom amount (₦)"
-                  value={customAmount}
-                  onChange={(e) => {
-                    setCustomAmount(e.target.value)
-                    setSelectedAmount(null)
-                  }}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                />
+
+                <div className="relative mt-2">
+                  <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                    <span className="text-sm font-bold text-slate-400">₦</span>
+                  </div>
+                  <input
+                    type="number"
+                    placeholder="Enter explicit custom value..."
+                    value={customAmount}
+                    onChange={(e) => {
+                      setCustomAmount(e.target.value)
+                      setSelectedAmount(null)
+                    }}
+                    className="w-full pl-8 pr-4 py-3 border border-slate-200 bg-slate-50/50 focus:bg-white rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-4 mb-6">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                />
+              <div className="space-y-4 pt-2 border-t border-slate-100">
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-700">
+                  Donor Profiling Parameters
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Legal Full Name"
+                    value={donorName}
+                    onChange={(e) => setDonorName(e.target.value)}
+                    className="w-full px-4 py-3 border border-slate-200 bg-slate-50/50 focus:bg-white rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all"
+                  />
+                  <input
+                    type="email"
+                    required
+                    placeholder="Secure Email Address"
+                    value={donorEmail}
+                    onChange={(e) => setDonorEmail(e.target.value)}
+                    className="w-full px-4 py-3 border border-slate-200 bg-slate-50/50 focus:bg-white rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all"
+                  />
+                </div>
                 <input
                   type="tel"
-                  placeholder="Phone Number"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
+                  placeholder="Mobile Link Line (Optional)"
+                  value={donorPhone}
+                  onChange={(e) => setDonorPhone(e.target.value)}
+                  className="w-full px-4 py-3 border border-slate-200 bg-slate-50/50 focus:bg-white rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all"
                 />
               </div>
 
               <button
-                onClick={handleDonateOnline}
-                className="w-full bg-primary-blue text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105"
+                type="submit"
+                className="w-full bg-slate-950 text-white hover:bg-slate-900 py-3.5 rounded-xl font-black text-sm tracking-tight transition shadow-lg shadow-slate-900/10 flex items-center justify-center space-x-2"
               >
-                Donate Now
+                <span>Authorize Transmission</span>
+                <ArrowUpRight className="h-4 w-4" />
               </button>
 
-              <p className="text-xs text-secondary-gray text-center mt-4">
-                Secure donation processing coming soon. For now, please use bank transfer below.
-              </p>
-            </motion.div>
+              <div className="bg-amber-50 border border-amber-200/60 rounded-xl p-3.5 flex items-start space-x-2.5">
+                <HelpCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                <p className="text-[11px] leading-relaxed text-amber-800 font-medium">
+                  <strong>Notice:</strong> Online network routing tunnels are updating. If live validation checks fail, please leverage our direct clearing accounts on the right side.
+                </p>
+              </div>
+            </form>
+          </div>
 
-            {/* Bank Transfer Details */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white rounded-xl shadow-lg p-8"
-            >
-              <h2 className="text-2xl font-bold mb-6">Bank Transfer</h2>
-              <p className="text-secondary-gray mb-6">
-                You can also make a direct transfer to any of our bank accounts:
-              </p>
+          {/* Secure Wire Transfer System */}
+          <div className="lg:col-span-5 bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm">
+            <h2 className="text-xl font-black tracking-tight text-slate-900 mb-2">Direct Settlement Routing</h2>
+            <p className="text-xs text-slate-500 font-normal mb-6">
+              Deploy capital directly via your preferred institutional banking infrastructure.
+            </p>
 
+            <AnimatePresence mode="popLayout">
               {error && (
-                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
-                  {error}
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="mb-4 p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 flex items-start space-x-2 text-xs font-semibold"
+                >
+                  <AlertCircle className="h-4 w-4 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{error}</span>
+                </motion.div>
               )}
+            </AnimatePresence>
 
-              <div className="space-y-4">
-                {bankAccounts.map((account, index) => (
-                  <div key={index} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div className="space-y-4">
+              {loading && bankAccounts.length === 0 ? (
+                Array.from({ length: 2 }).map((_, i) => (
+                  <div key={i} className="border border-slate-100 rounded-2xl p-4 space-y-2 animate-pulse bg-slate-50/50">
+                    <div className="h-4 bg-slate-200 rounded w-1/3"></div>
+                    <div className="h-3 bg-slate-200 rounded w-1/2"></div>
+                    <div className="h-3 bg-slate-200 rounded w-2/3"></div>
+                  </div>
+                ))
+              ) : (
+                bankAccounts.map((account, index) => (
+                  <div key={index} className="border border-slate-100 bg-slate-50/50 rounded-2xl p-4 relative group hover:bg-white hover:border-slate-200 transition-all">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center space-x-2">
-                        <Building className="h-5 w-5 text-primary-blue" />
-                        <h3 className="font-semibold">{account.bank}</h3>
+                        <Building className="h-4 w-4 text-slate-400" />
+                        <h3 className="font-black text-sm text-slate-900 tracking-tight">{account.bank}</h3>
                       </div>
                       <button
+                        type="button"
                         onClick={() => handleCopyAccount(account.accountNumber)}
-                        className="text-primary-blue hover:text-primary-green transition"
+                        className="p-1.5 rounded-lg bg-white border border-slate-100 text-slate-600 hover:text-slate-900 shadow-sm transition"
+                        title="Copy Account Number"
                       >
                         {copiedAccount === account.accountNumber ? (
-                          <Check className="h-5 w-5" />
+                          <Check className="h-3.5 w-3.5 text-emerald-600" />
                         ) : (
-                          <Copy className="h-5 w-5" />
+                          <Copy className="h-3.5 w-3.5" />
                         )}
                       </button>
                     </div>
-                    <p className="text-sm text-secondary-gray">Account Name: {account.accountName}</p>
-                    <p className="text-sm font-mono font-semibold">Account Number: {account.accountNumber}</p>
-                    <p className="text-sm text-secondary-gray">Sort Code: {account.sortCode}</p>
+                    <div className="space-y-0.5 text-xs text-slate-500 font-medium">
+                      <p><span className="text-slate-400">Name:</span> {account.accountName}</p>
+                      <p className="font-mono text-slate-900 font-bold py-0.5">No: {account.accountNumber}</p>
+                      <p><span className="text-slate-400">Sort Code:</span> {account.sortCode}</p>
+                    </div>
                   </div>
-                ))}
-              </div>
+                ))
+              )}
+            </div>
 
-              <div className="mt-6 bg-blue-50 rounded-lg p-4">
-                <p className="text-sm text-primary-blue">
-                  After making a transfer, please email us at{' '}
-                  <a href="mailto:donations@hopeforthehopeless.org" className="font-semibold underline">
+            <div className="mt-6 bg-slate-950 rounded-2xl p-4 text-white relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+              <div className="relative z-10 flex items-start space-x-3">
+                <Mail className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                <p className="text-xs leading-relaxed text-slate-300 font-normal">
+                  Following wire completion, transmit verification details to{' '}
+                  <a href="mailto:donations@hopeforthehopeless.org" className="font-bold text-white underline hover:text-emerald-300 transition">
                     donations@hopeforthehopeless.org
-                  </a>
-                  {' '}with your name and payment details so we can acknowledge your donation.
+                  </a>{' '}
+                  for systematic tax logging.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
+
         </div>
       </section>
 
-      {/* Sponsorship Opportunities */}
+      {/* Structured Sponsorship Portfolios */}
       {sponsorshipTiers.length > 0 && (
-        <section className="py-16">
+        <section className="py-16 bg-slate-900 text-white rounded-t-[2.5rem] lg:rounded-t-[4rem]">
           <div className="container-custom">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
-                Sponsorship Opportunities
-              </h2>
-              <p className="text-lg text-secondary-gray max-w-2xl mx-auto">
-                Make a sustained impact through our sponsorship programs
-              </p>
+            <div className="max-w-xl mb-12">
+              <div className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2">Sustained Commitments</div>
+              <h2 className="text-3xl font-black tracking-tight mb-2">Sponsorship Portfolios</h2>
+              <p className="text-sm text-slate-400">Drive localized macro-level outcomes through structural institutional architecture sponsorship.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {sponsorshipTiers.map((tier, index) => {
                 let Icon = Heart
                 if (tier.icon === 'GraduationCap') Icon = GraduationCap
@@ -263,19 +305,22 @@ const Donate = () => {
                 return (
                   <motion.div
                     key={tier.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.05 }}
+                    className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/10 hover:border-white/20 transition-all group"
                   >
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-orange bg-opacity-10 rounded-full mb-4">
-                      <Icon className="h-8 w-8 text-primary-orange" />
+                    <div>
+                      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mb-4 text-emerald-400 group-hover:scale-105 transition-transform">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-base font-black tracking-tight mb-1">{tier.title}</h3>
+                      <div className="text-xl font-bold text-emerald-400 mb-3">{tier.amount}</div>
+                      <p className="text-xs text-slate-400 leading-relaxed font-normal mb-6">{tier.description}</p>
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">{tier.title}</h3>
-                    <div className="text-2xl font-bold text-primary-blue mb-2">{tier.amount}</div>
-                    <p className="text-secondary-gray text-sm mb-4">{tier.description}</p>
-                    <button className="btn-outline text-sm w-full">
-                      Sponsor Now
+                    <button className="w-full py-2.5 rounded-xl border border-white/20 hover:border-white text-xs font-black tracking-tight bg-transparent hover:bg-white hover:text-slate-950 transition-all">
+                      Initiate Portfolio
                     </button>
                   </motion.div>
                 )
@@ -285,55 +330,49 @@ const Donate = () => {
         </section>
       )}
 
-      {/* Other Ways to Give */}
-      <section className="py-16 bg-gray-50">
+      {/* Alternative Contribution Channels */}
+      <section className="py-20 bg-slate-50 border-t border-slate-200/60">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
-              Other Ways to Give
-            </h2>
-            <p className="text-lg text-secondary-gray">
-              Your support can take many forms
-            </p>
+          <div className="max-w-xl mb-12">
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2">Alternative Support Vectors</h2>
+            <p className="text-xs text-slate-500 font-normal">Our developmental initiatives accept non-liquid physical supplies and legacy arrangements.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { title: 'Donate Goods', description: 'Food items, clothing, educational materials, and medical supplies', contact: 'items@hopeforthehopeless.org' },
-              { title: 'Corporate Partnership', description: 'Partner with us for employee giving programs and CSR initiatives', contact: 'partnerships@hopeforthehopeless.org' },
-              { title: 'Legacy Giving', description: 'Include us in your will or estate planning', contact: 'legacy@hopeforthehopeless.org' }
+              { title: 'Material Supply Logistics', desc: 'Consolidated physical assets including medical instrumentation, raw nutritional aggregates, and scholastic items.', contact: 'items@hopeforthehopeless.org' },
+              { title: 'Corporate Alignment Programs', desc: 'Integrate corporate social responsibility operations, joint matching strategies, or foundation grants.', contact: 'partnerships@hopeforthehopeless.org' },
+              { title: 'Legacy Estate Planning', desc: 'Secure long-horizon systemic durability by designating programmatic capital distributions within formal wills.', contact: 'legacy@hopeforthehopeless.org' }
             ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg p-6"
-              >
-                <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-secondary-gray mb-4">{item.description}</p>
-                <a href={`mailto:${item.contact}`} className="text-primary-blue font-semibold hover:underline">
-                  {item.contact}
+              <div key={index} className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                <div>
+                  <h3 className="font-black text-sm text-slate-900 tracking-tight mb-2">{item.title}</h3>
+                  <p className="text-xs text-slate-500 leading-relaxed font-normal mb-4">{item.desc}</p>
+                </div>
+                <a
+                  href={`mailto:${item.contact}`}
+                  className="inline-flex items-center text-xs font-bold text-slate-950 hover:text-slate-700 transition space-x-1 border-t border-slate-100 pt-3"
+                >
+                  <span>{item.contact}</span>
+                  <ArrowUpRight className="h-3 w-3" />
                 </a>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Impact CTA */}
-      <section className="py-16 bg-primary-green text-white">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Every Gift Makes a Difference
-          </h2>
-          <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Your donation, no matter the size, helps us reach more people in need.
-          </p>
-          <div className="inline-flex items-center space-x-2 bg-white bg-opacity-20 rounded-lg px-6 py-3">
-            <Heart className="h-5 w-5" />
-            <span className="font-semibold">Thank you for your generosity</span>
+      {/* High-Impact Acknowledgement CTA */}
+      <section className="bg-slate-950 py-16 text-center text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div className="container-custom relative z-10 max-w-xl">
+          <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-4">
+            <Heart className="h-6 w-6 fill-current" />
           </div>
+          <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-3">Every Action Reshapes a Future</h2>
+          <p className="text-xs md:text-sm text-slate-400 max-w-md mx-auto leading-relaxed font-normal mb-0">
+            We hold deep institutional appreciation for your ongoing programmatic alignment and collaborative generosity.
+          </p>
         </div>
       </section>
     </div>

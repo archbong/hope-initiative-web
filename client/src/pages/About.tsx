@@ -1,53 +1,36 @@
 import { motion } from 'framer-motion'
-import { Heart, Target, Eye, Users, Shield, TrendingUp, Globe, BookOpen } from 'lucide-react'
+import { Heart, Target, Eye, Users, Shield, TrendingUp, Globe, BookOpen, Sparkles, Milestone, HandHeart } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { SEO_CONFIG } from '../config/seo.config'
 import SEOHead from '../components/SEO/SEOHead'
 
 const About = () => {
   const values = [
-    {
-      icon: Heart,
-      title: 'Compassion',
-      description: 'We serve with empathy and care for every individual we encounter.'
-    },
-    {
-      icon: Shield,
-      title: 'Integrity',
-      description: 'We uphold transparency and accountability in all our actions.'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Empowerment',
-      description: 'We equip people with opportunities and knowledge for self-sufficiency.'
-    },
-    {
-      icon: Users,
-      title: 'Service',
-      description: 'We place community impact first in everything we do.'
-    },
-    {
-      icon: Globe,
-      title: 'Collaboration',
-      description: 'We believe in the power of partnerships for greater impact.'
-    },
-    {
-      icon: BookOpen,
-      title: 'Sustainability',
-      description: 'We focus on long-term impact and lasting solutions.'
-    }
+    { icon: Heart, title: 'Compassion', description: 'We serve with empathy and care for every individual we encounter.', color: 'text-rose-500' },
+    { icon: Shield, title: 'Integrity', description: 'We uphold transparency and accountability in all our actions.', color: 'text-blue-600' },
+    { icon: TrendingUp, title: 'Empowerment', description: 'We equip people with opportunities and knowledge for self-sufficiency.', color: 'text-emerald-600' },
+    { icon: Users, title: 'Service', description: 'We place community impact first in everything we do.', color: 'text-orange-600' },
+    { icon: Globe, title: 'Collaboration', description: 'We believe in the power of partnerships for greater impact.', color: 'text-indigo-600' },
+    { icon: BookOpen, title: 'Sustainability', description: 'We focus on long-term impact and lasting solutions.', color: 'text-teal-600' }
   ]
 
   const sdgGoals = [
-    { number: 1, name: 'No Poverty', color: 'bg-red-600' },
-    { number: 2, name: 'Zero Hunger', color: 'bg-yellow-600' },
-    { number: 3, name: 'Good Health', color: 'bg-green-600' },
-    { number: 4, name: 'Quality Education', color: 'bg-red-500' },
-    { number: 5, name: 'Gender Equality', color: 'bg-orange-600' },
-    { number: 17, name: 'Partnerships', color: 'bg-blue-800' }
+    { number: 1, name: 'No Poverty', color: 'bg-[#E5243B]' },
+    { number: 2, name: 'Zero Hunger', color: 'bg-[#DDA63A]' },
+    { number: 3, name: 'Good Health', color: 'bg-[#4C9F38]' },
+    { number: 4, name: 'Quality Education', color: 'bg-[#C5192D]' },
+    { number: 5, name: 'Gender Equality', color: 'bg-[#FF3A21]' },
+    { number: 17, name: 'Partnerships', color: 'bg-[#19486A]' }
+  ]
+
+  const impactStats = [
+    { label: 'Children Supported', value: '1,250+', icon: HandHeart },
+    { label: 'Meals Distributed', value: '8,750+', icon: Heart },
+    { label: 'Communities Impacted', value: '15+', icon: Globe },
   ]
 
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen">
       <SEOHead
         title={SEO_CONFIG.pages.about.title}
         description={SEO_CONFIG.pages.about.description}
@@ -55,179 +38,168 @@ const About = () => {
         image={SEO_CONFIG.pages.about.image}
         type="website"
       />
+
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
-        <div className="container-custom">
+      <section className="relative bg-slate-900 py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+
+        <div className="container-custom relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About Us</h1>
-            <p className="text-lg md:text-xl opacity-90">
-              Learn about our mission, vision, and the values that drive us to restore hope and transform lives across Nigeria.
+            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sky-400 text-sm font-bold uppercase tracking-wider mb-6 border border-white/10">
+              <Sparkles className="h-4 w-4" />
+              <span>Restoring Dignity Since Inception</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+              Driven by <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">Hope</span>, Guided by Service.
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl">
+              We are a dedicated humanitarian initiative focused on breaking cycles of poverty and providing a safety net for the most vulnerable in our society.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="py-16">
+      <section className="py-24 -mt-12">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white rounded-xl shadow-lg p-8 border-t-4 border-primary-blue"
+              whileHover={{ y: -5 }}
+              className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-10 border border-slate-100 relative overflow-hidden"
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-blue bg-opacity-10 rounded-full mb-4">
-                <Target className="h-8 w-8 text-primary-blue" />
+              <div className="absolute top-0 right-0 p-8 opacity-5">
+                <Target className="h-24 w-24" />
               </div>
-              <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
-              <p className="text-secondary-gray leading-relaxed">
-                To restore hope, dignity, and opportunity to vulnerable individuals and communities
-                through humanitarian support, youth empowerment, counseling services, entrepreneurial
-                development, and strategic partnerships that advance sustainable social impact.
+              <div className="w-14 h-14 bg-sky-100 rounded-2xl flex items-center justify-center mb-6">
+                <Target className="h-7 w-7 text-sky-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">Our Mission</h2>
+              <p className="text-slate-600 leading-relaxed text-lg">
+                To restore hope, dignity, and opportunity through humanitarian support, youth empowerment, and strategic partnerships that advance sustainable social impact.
               </p>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white rounded-xl shadow-lg p-8 border-t-4 border-primary-green"
+              whileHover={{ y: -5 }}
+              className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-10 border border-slate-100 relative overflow-hidden"
             >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-green bg-opacity-10 rounded-full mb-4">
-                <Eye className="h-8 w-8 text-primary-green" />
+              <div className="absolute top-0 right-0 p-8 opacity-5">
+                <Eye className="h-24 w-24" />
               </div>
-              <h2 className="text-2xl font-bold mb-4">Our Vision</h2>
-              <p className="text-secondary-gray leading-relaxed">
-                To become a leading humanitarian organization that transforms lives, empowers communities,
-                supports vulnerable children and families, and contributes meaningfully to sustainable
-                development across Nigeria and beyond.
+              <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6">
+                <Eye className="h-7 w-7 text-emerald-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">Our Vision</h2>
+              <p className="text-slate-600 leading-relaxed text-lg">
+                To become a leading humanitarian organization that transforms lives and contributes meaningfully to sustainable development across Nigeria and beyond.
               </p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Core Values Section */}
-      <section className="py-16 bg-gray-50">
+      {/* Core Values */}
+      <section className="py-20 bg-slate-950 text-white rounded-[3rem] mx-4 sm:mx-8">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
-              Our Core Values
-            </h2>
-            <p className="text-lg text-secondary-gray max-w-2xl mx-auto">
-              These values guide everything we do, from daily operations to long-term strategic planning.
-            </p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black mb-6">The Values We Live By</h2>
+            <div className="w-24 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {values.map((value, index) => {
-              const Icon = value.icon
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow"
-                >
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-orange bg-opacity-10 rounded-lg mb-4">
-                    <Icon className="h-6 w-6 text-primary-orange" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-                  <p className="text-secondary-gray">{value.description}</p>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* History Section */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-bold mb-4">Our Journey</h2>
-              <div className="w-20 h-1 bg-primary-orange mb-6"></div>
-              <p className="text-secondary-gray mb-4 leading-relaxed">
-                Hope for the Hopeless and Orphans Entrepreneurial Initiative was founded with a
-                simple but powerful belief: that every person, regardless of their circumstances,
-                deserves hope, dignity, and the opportunity to build a better future.
-              </p>
-              <p className="text-secondary-gray mb-4 leading-relaxed">
-                What began as a small community outreach has grown into a comprehensive humanitarian
-                organization serving thousands of vulnerable individuals across Nigeria. Our programs
-                address critical needs while building sustainable solutions for long-term impact.
-              </p>
-              <p className="text-secondary-gray leading-relaxed">
-                Today, we continue to expand our reach, forge strategic partnerships, and develop
-                innovative approaches to serve the most vulnerable members of our society.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="bg-gradient-to-br from-primary-blue to-primary-green rounded-xl p-8 text-white">
-                <h3 className="text-2xl font-bold mb-4">Our Impact So Far</h3>
-                <div className="space-y-4">
-                  <div>
-                    <div className="text-3xl font-bold">1,250+</div>
-                    <div className="opacity-90">Children Supported</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {values.map((value, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="flex items-start space-x-5">
+                  <div className={`shrink-0 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white transition-colors duration-300`}>
+                    <value.icon className={`h-6 w-6 transition-colors duration-300 ${value.color}`} />
                   </div>
                   <div>
-                    <div className="text-3xl font-bold">8,750+</div>
-                    <div className="opacity-90">Meals Distributed</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold">15+</div>
-                    <div className="opacity-90">Communities Impacted</div>
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-sky-400 transition-colors">{value.title}</h3>
+                    <p className="text-slate-400 leading-relaxed text-sm">{value.description}</p>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SDG Alignment Section */}
-      <section className="py-16 bg-gray-50">
+      {/* History & Impact */}
+      <section className="py-24">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
-              Aligned with UN SDGs
-            </h2>
-            <p className="text-lg text-secondary-gray max-w-2xl mx-auto">
-              Our work contributes to the United Nations Sustainable Development Goals
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="inline-flex items-center space-x-2 text-sky-600 font-bold uppercase tracking-widest text-xs">
+                <Milestone className="h-4 w-4" />
+                <span>Our Heritage</span>
+              </div>
+              <h2 className="text-4xl font-black text-slate-900 leading-tight">Every Milestone Has a Face and a Story.</h2>
+              <div className="space-y-6 text-slate-600 leading-relaxed text-lg">
+                <p>
+                  Founded with a simple but powerful belief: that every person, regardless of their circumstances, deserves hope, dignity, and the opportunity to build a better future.
+                </p>
+                <p>
+                  What began as small community outreach has grown into a comprehensive organization serving thousands. We don't just provide aid; we build sustainable ecosystems for growth.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
+              {impactStats.map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ x: 10 }}
+                  className="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm flex items-center justify-between group"
+                >
+                  <div className="flex items-center space-x-6">
+                    <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center group-hover:bg-sky-600 transition-colors">
+                      <stat.icon className="h-6 w-6 text-sky-600 group-hover:text-white" />
+                    </div>
+                    <div>
+                      <div className="text-3xl font-black text-slate-900">{stat.value}</div>
+                      <div className="text-slate-500 font-medium">{stat.label}</div>
+                    </div>
+                  </div>
+                  <TrendingUp className="h-6 w-6 text-slate-200" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SDG Alignment */}
+      <section className="py-24 bg-white">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-black text-slate-900 mb-4">Aligned with Global Standards</h2>
+            <p className="text-slate-500 text-lg font-medium italic">Contributing to the United Nations Sustainable Development Goals</p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {sdgGoals.map((goal, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="bg-white rounded-lg p-4 text-center shadow-md hover:shadow-lg transition-shadow"
+                whileHover={{ y: -5 }}
+                className="bg-slate-50 rounded-2xl p-6 text-center border border-slate-100 hover:border-slate-200 transition-all shadow-sm"
               >
-                <div className={`w-16 h-16 ${goal.color} rounded-full flex items-center justify-center mx-auto mb-2 text-white font-bold text-2xl`}>
+                <div className={`w-14 h-14 ${goal.color} rounded-lg flex items-center justify-center mx-auto mb-4 text-white font-black text-xl shadow-lg`}>
                   {goal.number}
                 </div>
-                <p className="text-sm font-semibold text-secondary-dark">{goal.name}</p>
+                <p className="text-xs font-black text-slate-700 uppercase tracking-tight leading-tight">{goal.name}</p>
               </motion.div>
             ))}
           </div>
@@ -235,21 +207,18 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary-orange text-white">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Join Us in Making a Difference
+      <section className="py-20 bg-orange-600 relative overflow-hidden">
+        <div className="container-custom relative z-10 text-center">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-8">
+            Make an Institutional Impact.
           </h2>
-          <p className="text-lg mb-8 opacity-90">
-            Together, we can restore hope and transform more lives.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/volunteer" className="bg-white text-primary-orange px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-              Become a Volunteer
-            </a>
-            <a href="/donate" className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-orange transition">
-              Support Our Work
-            </a>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link to="/volunteer" className="bg-slate-950 text-white px-10 py-4 rounded-2xl font-bold hover:bg-slate-900 transition shadow-xl shadow-slate-900/20">
+              Join the Movement
+            </Link>
+            <Link to="/donate" className="bg-white text-orange-600 px-10 py-4 rounded-2xl font-bold hover:bg-slate-50 transition shadow-xl">
+              Partner via Donation
+            </Link>
           </div>
         </div>
       </section>

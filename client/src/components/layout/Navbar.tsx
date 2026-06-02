@@ -1,46 +1,38 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Heart, ChevronDown, Home, Info, Grid, BookOpen, Image, Users, DollarSign, Handshake, Newspaper, Mail, Target, HeartHandshake, GraduationCap, Utensils, Baby, Globe } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Menu, X, Heart, ChevronDown, Home, Info, Grid, Image,
+  Mail, Users, DollarSign, Handshake, Newspaper, BookOpen,
+  Target, HeartHandshake, GraduationCap, Utensils, Baby, Globe
+} from 'lucide-react'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const location = useLocation()
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setOpenDropdown(null)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  // Logic to determine if a group (About, Programs, etc) is active
+  const isGroupActive = (items: { path: string }[]) =>
+    items.some(item => location.pathname === item.path.split('#')[0])
 
-  // Close dropdown on route change
-  useEffect(() => {
-    setOpenDropdown(null)
-    setIsOpen(false)
-  }, [location])
-
-  const navItems = {
-    main: [
-      { name: 'Home', path: '/', icon: Home }
-    ],
-    about: {
-      label: 'About',
+  const navConfig = [
+    { name: 'Home', path: '/', icon: Home, type: 'link' },
+    {
+      name: 'About',
       icon: Info,
+      type: 'dropdown',
       items: [
         { name: 'Our Story', path: '/about', icon: HeartHandshake },
         { name: 'Mission & Vision', path: '/about#mission', icon: Target },
         { name: 'Leadership Team', path: '/about#team', icon: Users }
       ]
     },
-    programs: {
-      label: 'Programs',
+    {
+      name: 'Programs',
       icon: Grid,
+      type: 'dropdown',
       items: [
         { name: 'Youth Development', path: '/programs#youth', icon: GraduationCap },
         { name: 'Humanitarian Services', path: '/programs#humanitarian', icon: Utensils },
@@ -49,350 +41,197 @@ const Navbar = () => {
         { name: 'All Programs', path: '/programs', icon: Grid }
       ]
     },
-    media: {
-      label: 'Media',
+    {
+      name: 'Media',
       icon: Image,
+      type: 'dropdown',
       items: [
         { name: 'Success Stories', path: '/success-stories', icon: BookOpen },
         { name: 'Gallery', path: '/gallery', icon: Image },
         { name: 'News & Events', path: '/news-events', icon: Newspaper }
       ]
     },
-    getInvolved: {
-      label: 'Get Involved',
+    {
+      name: 'Get Involved',
       icon: Heart,
+      type: 'dropdown',
       items: [
         { name: 'Volunteer', path: '/volunteer', icon: Users },
         { name: 'Donate', path: '/donate', icon: DollarSign },
         { name: 'Partners', path: '/partners', icon: Handshake }
       ]
     },
-    contact: { name: 'Contact', path: '/contact', icon: Mail }
-  }
+    { name: 'Contact', path: '/contact', icon: Mail, type: 'link' }
+  ]
 
-  const isActive = (path: string) => {
-    if (path.includes('#')) {
-      const basePath = path.split('#')[0]
-      return location.pathname === basePath
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setActiveDropdown(null)
+      }
     }
-    return location.pathname === path
-  }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
-  const handleDropdownToggle = (dropdownName: string) => {
-    setOpenDropdown(openDropdown === dropdownName ? null : dropdownName)
-  }
+  useEffect(() => {
+    setIsOpen(false)
+    setActiveDropdown(null)
+  }, [location])
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="container-custom">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <Heart className="h-8 w-8 text-primary-orange group-hover:scale-110 transition-transform duration-300" />
-            <span className="font-poppins font-bold text-xl text-secondary-dark hidden sm:inline-block">
-              Hope for the Hopeless
-            </span>
-            <span className="font-poppins font-bold text-lg text-secondary-dark sm:hidden">
-              Hope Initiative
-            </span>
+    <nav className="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+
+          {/* Logo Section */}
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="bg-orange-100 p-2 rounded-xl group-hover:bg-orange-200 transition-colors">
+              <Heart className="h-7 w-7 text-orange-600 fill-orange-600" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl tracking-tight text-gray-900 leading-none">
+                Hope Initiative
+              </span>
+              <span className="text-[10px] uppercase tracking-widest text-orange-600 font-semibold">
+                For the Hopeless
+              </span>
+            </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-1" ref={dropdownRef}>
-            {/* Home */}
-            <Link
-              to="/"
-              className={`px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 ${isActive('/')
-                  ? 'text-primary-blue font-semibold bg-blue-50'
-                  : 'text-secondary-gray hover:text-primary-blue hover:bg-gray-50'
-                }`}
-            >
-              <Home className="h-4 w-4" />
-              <span>Home</span>
-            </Link>
-
-            {/* About Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => handleDropdownToggle('about')}
-                className={`px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 ${openDropdown === 'about' || location.pathname === '/about'
-                    ? 'text-primary-blue font-semibold bg-blue-50'
-                    : 'text-secondary-gray hover:text-primary-blue hover:bg-gray-50'
-                  }`}
+            {navConfig.map((nav) => (
+              <div
+                key={nav.name}
+                className="relative"
+                onMouseEnter={() => nav.type === 'dropdown' && setActiveDropdown(nav.name)}
+                onMouseLeave={() => nav.type === 'dropdown' && setActiveDropdown(null)}
               >
-                <Info className="h-4 w-4" />
-                <span>About</span>
-                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openDropdown === 'about' ? 'rotate-180' : ''}`} />
-              </button>
-
-              {openDropdown === 'about' && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50 animate-fade-in">
-                  {navItems.about.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                      onClick={() => setOpenDropdown(null)}
+                {nav.type === 'link' ? (
+                  <Link
+                    to={nav.path!}
+                    className={`flex items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${location.pathname === nav.path
+                        ? 'bg-blue-50 text-blue-600'
+                        : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                      }`}
+                  >
+                    <nav.icon className="h-4 w-4" />
+                    <span>{nav.name}</span>
+                  </Link>
+                ) : (
+                  <>
+                    <button
+                      className={`flex items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${activeDropdown === nav.name || isGroupActive(nav.items!)
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                        }`}
                     >
-                      <item.icon className="h-5 w-5 text-primary-blue" />
-                      <div>
-                        <div className="font-medium text-secondary-dark">{item.name}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                      <nav.icon className="h-4 w-4" />
+                      <span>{nav.name}</span>
+                      <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === nav.name ? 'rotate-180' : ''}`} />
+                    </button>
 
-            {/* Programs Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => handleDropdownToggle('programs')}
-                className={`px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 ${openDropdown === 'programs' || location.pathname === '/programs'
-                    ? 'text-primary-blue font-semibold bg-blue-50'
-                    : 'text-secondary-gray hover:text-primary-blue hover:bg-gray-50'
-                  }`}
-              >
-                <Grid className="h-4 w-4" />
-                <span>Programs</span>
-                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openDropdown === 'programs' ? 'rotate-180' : ''}`} />
-              </button>
+                    <AnimatePresence>
+                      {activeDropdown === nav.name && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className="absolute top-full left-0 mt-1 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50"
+                        >
+                          {nav.items?.map((item) => (
+                            <Link
+                              key={item.path}
+                              to={item.path}
+                              className="flex items-center space-x-3 px-4 py-3 hover:bg-blue-50/50 group transition-colors"
+                            >
+                              <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-white text-gray-500 group-hover:text-blue-600 transition-colors">
+                                <item.icon className="h-4 w-4" />
+                              </div>
+                              <span className="text-sm font-medium text-gray-700 group-hover:text-blue-600">
+                                {item.name}
+                              </span>
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                )}
+              </div>
+            ))}
 
-              {openDropdown === 'programs' && (
-                <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50 animate-fade-in">
-                  {navItems.programs.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      <item.icon className="h-5 w-5 text-primary-blue" />
-                      <div>
-                        <div className="font-medium text-secondary-dark">{item.name}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Media Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => handleDropdownToggle('media')}
-                className={`px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 ${openDropdown === 'media'
-                    ? 'text-primary-blue font-semibold bg-blue-50'
-                    : 'text-secondary-gray hover:text-primary-blue hover:bg-gray-50'
-                  }`}
-              >
-                <Image className="h-4 w-4" />
-                <span>Media</span>
-                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openDropdown === 'media' ? 'rotate-180' : ''}`} />
-              </button>
-
-              {openDropdown === 'media' && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50 animate-fade-in">
-                  {navItems.media.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      <item.icon className="h-5 w-5 text-primary-blue" />
-                      <div>
-                        <div className="font-medium text-secondary-dark">{item.name}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Get Involved Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => handleDropdownToggle('getInvolved')}
-                className={`px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 ${openDropdown === 'getInvolved'
-                    ? 'text-primary-blue font-semibold bg-blue-50'
-                    : 'text-secondary-gray hover:text-primary-blue hover:bg-gray-50'
-                  }`}
-              >
-                <Heart className="h-4 w-4" />
-                <span>Get Involved</span>
-                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${openDropdown === 'getInvolved' ? 'rotate-180' : ''}`} />
-              </button>
-
-              {openDropdown === 'getInvolved' && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50 animate-fade-in">
-                  {navItems.getInvolved.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      <item.icon className="h-5 w-5 text-primary-blue" />
-                      <div>
-                        <div className="font-medium text-secondary-dark">{item.name}</div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Contact */}
-            <Link
-              to="/contact"
-              className={`px-3 py-2 rounded-lg transition-all duration-200 flex items-center space-x-1 ${isActive('/contact')
-                  ? 'text-primary-blue font-semibold bg-blue-50'
-                  : 'text-secondary-gray hover:text-primary-blue hover:bg-gray-50'
-                }`}
-            >
-              <Mail className="h-4 w-4" />
-              <span>Contact</span>
-            </Link>
-
-            {/* Donate CTA Button */}
             <Link
               to="/donate"
-              className="ml-4 bg-primary-orange text-white px-5 py-2 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 shadow-md"
+              className="ml-6 bg-orange-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-orange-700 transition-all shadow-md hover:shadow-orange-200 active:scale-95"
             >
               Donate Now
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition"
+            className="lg:hidden p-2 rounded-xl bg-gray-50 text-gray-600"
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X /> : <Menu />}
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="lg:hidden py-4 border-t max-h-[calc(100vh-4rem)] overflow-y-auto">
-            {/* Home */}
-            <Link
-              to="/"
-              onClick={() => setIsOpen(false)}
-              className={`flex items-center space-x-3 py-3 px-4 rounded-lg transition ${isActive('/') ? 'bg-blue-50 text-primary-blue font-semibold' : 'hover:bg-gray-50'
-                }`}
-            >
-              <Home className="h-5 w-5" />
-              <span>Home</span>
-            </Link>
-
-            {/* About Section */}
-            <div className="mt-2">
-              <div className="flex items-center space-x-3 px-4 py-3 text-secondary-dark font-semibold">
-                <Info className="h-5 w-5" />
-                <span>About</span>
-              </div>
-              <div className="ml-8 space-y-1">
-                {navItems.about.items.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-50 transition"
-                  >
-                    <item.icon className="h-4 w-4 text-primary-blue" />
-                    <span className="text-sm">{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Programs Section */}
-            <div className="mt-2">
-              <div className="flex items-center space-x-3 px-4 py-3 text-secondary-dark font-semibold">
-                <Grid className="h-5 w-5" />
-                <span>Programs</span>
-              </div>
-              <div className="ml-8 space-y-1">
-                {navItems.programs.items.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-50 transition"
-                  >
-                    <item.icon className="h-4 w-4 text-primary-blue" />
-                    <span className="text-sm">{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Media Section */}
-            <div className="mt-2">
-              <div className="flex items-center space-x-3 px-4 py-3 text-secondary-dark font-semibold">
-                <Image className="h-5 w-5" />
-                <span>Media</span>
-              </div>
-              <div className="ml-8 space-y-1">
-                {navItems.media.items.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-50 transition"
-                  >
-                    <item.icon className="h-4 w-4 text-primary-blue" />
-                    <span className="text-sm">{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Get Involved Section */}
-            <div className="mt-2">
-              <div className="flex items-center space-x-3 px-4 py-3 text-secondary-dark font-semibold">
-                <Heart className="h-5 w-5" />
-                <span>Get Involved</span>
-              </div>
-              <div className="ml-8 space-y-1">
-                {navItems.getInvolved.items.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-50 transition"
-                  >
-                    <item.icon className="h-4 w-4 text-primary-blue" />
-                    <span className="text-sm">{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Contact */}
-            <Link
-              to="/contact"
-              onClick={() => setIsOpen(false)}
-              className={`flex items-center space-x-3 py-3 px-4 rounded-lg transition mt-2 ${isActive('/contact') ? 'bg-blue-50 text-primary-blue font-semibold' : 'hover:bg-gray-50'
-                }`}
-            >
-              <Mail className="h-5 w-5" />
-              <span>Contact</span>
-            </Link>
-
-            {/* Mobile Donate Button */}
-            <Link
-              to="/donate"
-              onClick={() => setIsOpen(false)}
-              className="block mt-4 bg-primary-orange text-white text-center px-5 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition"
-            >
-              Donate Now
-            </Link>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="lg:hidden border-t border-gray-100 bg-gray-50 overflow-hidden"
+          >
+            <div className="p-4 space-y-2">
+              {navConfig.map((nav) => (
+                <div key={nav.name} className="space-y-1">
+                  {nav.type === 'link' ? (
+                    <Link
+                      to={nav.path!}
+                      className="flex items-center space-x-3 p-3 rounded-xl hover:bg-white text-gray-700 font-medium"
+                    >
+                      <nav.icon className="h-5 w-5 text-blue-500" />
+                      <span>{nav.name}</span>
+                    </Link>
+                  ) : (
+                    <div className="bg-white/50 rounded-2xl p-2">
+                      <div className="flex items-center space-x-3 p-2 text-gray-400 text-xs font-bold uppercase tracking-wider">
+                        <nav.icon className="h-4 w-4" />
+                        <span>{nav.name}</span>
+                      </div>
+                      <div className="grid grid-cols-1 gap-1">
+                        {nav.items?.map((item) => (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            className="flex items-center space-x-3 p-3 rounded-xl hover:bg-white text-gray-700"
+                          >
+                            <item.icon className="h-4 w-4 text-blue-400" />
+                            <span className="text-sm">{item.name}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+              <Link
+                to="/donate"
+                className="block w-full bg-orange-600 text-white text-center p-4 rounded-2xl font-bold mt-4"
+              >
+                Donate Now
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }

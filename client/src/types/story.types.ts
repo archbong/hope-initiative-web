@@ -14,6 +14,10 @@ export interface Story extends BaseEntity {
   category: string
   featured?: boolean
   videoUrl?: string
+  author: string
+  authorImage?: string
+  content: string
+  excerpt: string
 }
 
 export interface StoryFilters {

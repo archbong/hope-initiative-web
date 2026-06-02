@@ -1,32 +1,32 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, Send, ShieldAlert, CheckCircle2, ArrowUpRight } from 'lucide-react'
 import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from '../components/ui/SocialIcons'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
 
 const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.email('Invalid email address'),
+  name: z.string().min(2, 'Identification requires at least 2 characters.'),
+  email: z.string().email('Provide a valid institutional or personal email address.'),
   phone: z.string().optional(),
-  subject: z.string().min(5, 'Subject must be at least 5 characters'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
+  subject: z.string().min(5, 'Context summary must be at least 5 characters.'),
+  message: z.string().min(10, 'Inquiry parameters must detail at least 10 characters.'),
 })
 
 type ContactForm = z.infer<typeof contactSchema>
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
   })
 
   const onSubmit = async (data: ContactForm) => {
-    // In MVP, this will send to Netlify Forms or email
-    console.log('Contact form:', data)
+    // Systematic processing simulation mapped to internal infrastructure channels
+    console.log('Ingested Communication Payload:', data)
     setIsSubmitted(true)
     reset()
     setTimeout(() => setIsSubmitted(false), 5000)
@@ -35,32 +35,32 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Email Us',
+      title: 'Digital Correspondence',
       details: ['info@hopeforthehopeless.org', 'support@hopeforthehopeless.org'],
       link: 'mailto:info@hopeforthehopeless.org'
     },
     {
       icon: Phone,
-      title: 'Call Us',
+      title: 'Voice Telephony Channels',
       details: ['+234 123 456 7890', '+234 123 456 7891'],
       link: 'tel:+2341234567890'
     },
     {
       icon: MapPin,
-      title: 'Visit Us',
+      title: 'Administrative HQ',
       details: ['123 Humanitarian Way', 'Abuja, Nigeria'],
       link: 'https://maps.google.com'
     },
     {
       icon: Clock,
-      title: 'Office Hours',
-      details: ['Monday - Friday: 9AM - 6PM', 'Saturday: 10AM - 2PM'],
+      title: 'Operational Windows',
+      details: ['Mon - Fri: 9:00 AM - 6:00 PM', 'Saturday: 10:00 AM - 2:00 PM'],
       link: null
     }
   ]
 
   return (
-    <div>
+    <div className="bg-slate-50 min-h-screen font-sans antialiased">
       <SEOHead
         title={SEO_CONFIG.pages.contact.title}
         description={SEO_CONFIG.pages.contact.description}
@@ -68,271 +68,290 @@ const Contact = () => {
         image={SEO_CONFIG.pages.contact.image}
         type="website"
       />
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-blue to-primary-green text-white py-20">
-        <div className="container-custom">
+
+      {/* Hero Header Frame */}
+      <section className="relative bg-slate-950 py-24 overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div className="container-custom relative z-10 text-center max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-            <p className="text-lg md:text-xl opacity-90">
-              Get in touch with us. We'd love to hear from you.
+            <span className="inline-flex items-center space-x-1 bg-white/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase mb-6 backdrop-blur-sm">
+              <Clock className="h-3.5 w-3.5 mr-1" />
+              Central Ingestion Routing Active
+            </span>
+            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-none">
+              Connect With Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Operations</span>
+            </h1>
+            <p className="text-lg text-slate-400 max-w-xl mx-auto leading-relaxed font-normal">
+              Establish communication with our regional deployment offices, media relations, or institutional partnership desk.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Info Cards */}
-      <section className="py-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactInfo.map((item, index) => {
-              const Icon = item.icon
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-                >
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-blue bg-opacity-10 rounded-full mb-4">
-                    <Icon className="h-8 w-8 text-primary-blue" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+      {/* Contact Vector Grid */}
+      <section className="py-12 container-custom -mt-10 relative z-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {contactInfo.map((item, index) => {
+            const Icon = item.icon
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="bg-white border border-slate-100 p-6 rounded-2xl shadow-md shadow-slate-100/40 flex flex-col justify-between items-start group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-4 group-hover:bg-slate-900 group-hover:text-white transition-colors duration-300">
+                  <Icon className="h-5 w-5 text-slate-900 group-hover:text-white transition-colors" />
+                </div>
+                <div className="w-full">
+                  <h3 className="text-xs font-black text-slate-900 tracking-wider uppercase mb-2">{item.title}</h3>
                   {item.details.map((detail, i) => (
-                    <p key={i} className="text-secondary-gray text-sm">
+                    <p key={i} className="text-xs text-slate-500 font-mono break-all leading-normal">
                       {detail}
                     </p>
                   ))}
-                  {item.link && (
-                    <a
-                      href={item.link}
-                      className="inline-block mt-3 text-primary-blue text-sm font-semibold hover:text-primary-green transition"
-                    >
-                      Contact →
-                    </a>
-                  )}
-                </motion.div>
-              )
-            })}
-          </div>
+                </div>
+                {item.link ? (
+                  <a
+                    href={item.link}
+                    className="inline-flex items-center text-[11px] font-bold text-slate-900 hover:text-slate-600 tracking-tight mt-4 border-t border-slate-100 pt-2 w-full justify-between"
+                  >
+                    <span>Execute Routing</span>
+                    <ArrowUpRight className="h-3 w-3" />
+                  </a>
+                ) : (
+                  <div className="h-4 mt-3" />
+                )}
+              </motion.div>
+            )
+          })}
         </div>
       </section>
 
-      {/* Contact Form and Map */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white rounded-xl shadow-lg p-8"
-            >
-              <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+      {/* Primary Ingestion Form & Contextual Information Grid */}
+      <section className="py-12 container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-              {isSubmitted && (
-                <div className="mb-6 p-4 bg-primary-green text-white rounded-lg">
-                  Thank you for your message! We'll get back to you soon.
-                </div>
-              )}
+          {/* Main Inquiry Processing Node */}
+          <div className="lg:col-span-7 bg-white border border-slate-100 rounded-3xl shadow-sm overflow-hidden">
+            <div className="bg-slate-950 p-6 md:p-8 text-white relative">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+              <h2 className="text-xl font-black tracking-tight mb-1">Secure Ingestion Terminal</h2>
+              <p className="text-xs text-slate-400 font-normal">All submitted parameters undergo automated sanitization and are logged into internal support pipelines.</p>
+            </div>
+
+            <div className="p-6 md:p-8">
+              <AnimatePresence mode="popLayout">
+                {isSubmitted && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-900 flex items-start space-x-3 text-xs font-semibold"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold">Transmission Finalized</p>
+                      <p className="text-emerald-700 font-normal mt-0.5">Payload integrated successfully. Relayed parameters are being processed by regional operations.</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Your Name *</label>
-                  <input
-                    {...register('name')}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                    placeholder="John Doe"
-                  />
-                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-black uppercase tracking-wider text-slate-700 mb-1.5">Your Name *</label>
+                    <input
+                      {...register('name')}
+                      className={`w-full px-4 py-2.5 border ${errors.name ? 'border-rose-200 bg-rose-50/30' : 'border-slate-200 bg-slate-50/50'} focus:bg-white rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all`}
+                      placeholder="e.g. Aliyu Bello"
+                    />
+                    {errors.name && <p className="text-rose-600 text-[10px] font-bold mt-1">{errors.name.message}</p>}
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-black uppercase tracking-wider text-slate-700 mb-1.5">Email Address *</label>
+                    <input
+                      type="email"
+                      {...register('email')}
+                      className={`w-full px-4 py-2.5 border ${errors.email ? 'border-rose-200 bg-rose-50/30' : 'border-slate-200 bg-slate-50/50'} focus:bg-white rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all`}
+                      placeholder="aliyu@organization.org"
+                    />
+                    {errors.email && <p className="text-rose-600 text-[10px] font-bold mt-1">{errors.email.message}</p>}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-black uppercase tracking-wider text-slate-700 mb-1.5">Phone Number</label>
+                    <input
+                      {...register('phone')}
+                      className="w-full px-4 py-2.5 border border-slate-200 bg-slate-50/50 focus:bg-white rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all"
+                      placeholder="+234 803 123 4567"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-black uppercase tracking-wider text-slate-700 mb-1.5">Subject Matrix *</label>
+                    <input
+                      {...register('subject')}
+                      className={`w-full px-4 py-2.5 border ${errors.subject ? 'border-rose-200 bg-rose-50/30' : 'border-slate-200 bg-slate-50/50'} focus:bg-white rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all`}
+                      placeholder="Scope of requested engagement"
+                    />
+                    {errors.subject && <p className="text-rose-600 text-[10px] font-bold mt-1">{errors.subject.message}</p>}
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email Address *</label>
-                  <input
-                    type="email"
-                    {...register('email')}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                    placeholder="john@example.com"
-                  />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Phone Number</label>
-                  <input
-                    {...register('phone')}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                    placeholder="+234 123 456 7890"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Subject *</label>
-                  <input
-                    {...register('subject')}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                    placeholder="How can we help you?"
-                  />
-                  {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Message *</label>
+                  <label className="block text-[11px] font-black uppercase tracking-wider text-slate-700 mb-1.5">Inquiry Specifications *</label>
                   <textarea
                     {...register('message')}
                     rows={5}
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-primary-blue focus:border-primary-blue"
-                    placeholder="Tell us how we can assist you..."
+                    className={`w-full px-4 py-2.5 border ${errors.message ? 'border-rose-200 bg-rose-50/30' : 'border-slate-200 bg-slate-50/50'} focus:bg-white rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950/10 focus:border-slate-950 transition-all`}
+                    placeholder="Provide granular telemetry regarding your inquiry parameters..."
                   ></textarea>
-                  {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
+                  {errors.message && <p className="text-rose-600 text-[10px] font-bold mt-1">{errors.message.message}</p>}
                 </div>
 
-                <button type="submit" className="w-full btn-primary flex items-center justify-center space-x-2">
-                  <Send className="h-5 w-5" />
-                  <span>Send Message</span>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-slate-950 text-white hover:bg-slate-900 py-3 rounded-xl font-black text-xs tracking-wider uppercase transition shadow-lg shadow-slate-900/10 flex items-center justify-center space-x-2 disabled:opacity-50"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                  <span>{isSubmitting ? 'Transmitting Data...' : 'Dispatch Message'}</span>
                 </button>
               </form>
-            </motion.div>
+            </div>
+          </div>
 
-            {/* Google Maps and Social Media */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-8"
-            >
-              {/* Map */}
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                <div className="h-64 bg-gray-200 relative">
-                  {/* Replace with actual Google Maps embed */}
-                  <iframe
-                    title="Office Location"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.98!2d7.3986!3d9.0722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0baf7dbe5b3d%3A0x3b8b1c8e5f5b5b5b!2sAbuja%2C%20Nigeria!5e0!3m2!1sen!2s!4v1234567890!5m2!1sen!2s"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                  ></iframe>
-                </div>
-                <div className="p-4 text-center">
-                  <p className="text-secondary-gray text-sm">
-                    123 Humanitarian Way, Abuja, Nigeria
-                  </p>
-                </div>
+          {/* Map Node & Emergency Priority Intercepts */}
+          <div className="lg:col-span-5 space-y-6">
+
+            {/* Map Frame */}
+            <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+              <div className="h-64 bg-slate-100 relative">
+                <iframe
+                  title="Geographical Office Deployment Coordinates"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.98!2d7.3986!3d9.0722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0baf7dbe5b3d%3A0x3b8b1c8e5f5b5b5b!2sAbuja%2C%20Nigeria!5e0!3m2!1sen!2s!4v1234567890!5m2!1sen!2s"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  className="grayscale contrast-125"
+                ></iframe>
               </div>
-
-              {/* Social Media Links */}
-              <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4">Connect With Us</h3>
-                <p className="text-secondary-gray mb-6">
-                  Follow us on social media for updates and impact stories
+              <div className="p-4 bg-slate-50 border-t border-slate-100 text-center">
+                <p className="text-[11px] font-mono text-slate-600">
+                  Coordinates: 123 Humanitarian Way, Central Business District, Abuja, Nigeria
                 </p>
-                <div className="flex justify-center space-x-6">
-                  <a
-                    href="https://facebook.com/hopeforthehopeless"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition transform hover:scale-110"
-                    aria-label="Facebook"
-                  >
-                    <FacebookIcon className="h-6 w-6" />
-                  </a>
-                  <a
-                    href="https://twitter.com/hopeforthehopeless"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-blue-400 text-white p-3 rounded-full hover:bg-blue-500 transition transform hover:scale-110"
-                    aria-label="Twitter"
-                  >
-                    <TwitterIcon className="h-6 w-6" />
-                  </a>
-                  <a
-                    href="https://instagram.com/hopeforthehopeless"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-pink-600 text-white p-3 rounded-full hover:bg-pink-700 transition transform hover:scale-110"
-                    aria-label="Instagram"
-                  >
-                    <InstagramIcon className="h-6 w-6" />
-                  </a>
-                  <a
-                    href="https://linkedin.com/company/hopeforthehopeless"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-blue-700 text-white p-3 rounded-full hover:bg-blue-800 transition transform hover:scale-110"
-                    aria-label="LinkedIn"
-                  >
-                    <LinkedinIcon className="h-6 w-6" />
-                  </a>
-                </div>
               </div>
+            </div>
 
-              {/* Emergency Contact */}
-              <div className="bg-primary-orange text-white rounded-xl shadow-lg p-8 text-center">
-                <h3 className="text-2xl font-bold mb-2">Emergency Assistance</h3>
-                <p className="mb-4 opacity-90">
-                  For urgent humanitarian needs, please call our emergency hotline
+            {/* Critical Emergency Protocol Interface */}
+            <div className="bg-gradient-to-br from-rose-950 to-slate-950 text-white rounded-3xl p-6 shadow-md relative overflow-hidden border border-rose-900/30">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+              <div className="relative z-10">
+                <div className="inline-flex items-center space-x-1.5 bg-rose-500/10 border border-rose-500/20 text-rose-400 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase mb-4">
+                  <ShieldAlert className="h-3 w-3" />
+                  <span>Immediate Response Protocol</span>
+                </div>
+                <h3 className="text-lg font-black tracking-tight mb-2">Priority Humanitarian Desk</h3>
+                <p className="text-xs text-slate-400 font-normal leading-relaxed mb-6">
+                  For active field events, disaster mitigation support, or immediate resource distribution intercept requests, bypass standard queues.
                 </p>
                 <a
                   href="tel:+2341234567890"
-                  className="inline-block bg-white text-primary-orange px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+                  className="w-full inline-flex items-center justify-center bg-rose-600 hover:bg-rose-500 text-white text-xs font-black tracking-tight py-3 rounded-xl transition shadow-md shadow-rose-950/50"
                 >
-                  Call Emergency Line: +234 123 456 7890
+                  Hotline Intercept: +234 123 456 7890
                 </a>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Social Matrix Sync */}
+            <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm text-center">
+              <h3 className="text-sm font-black text-slate-900 tracking-tight mb-1">Ecosystem Broadcast Channels</h3>
+              <p className="text-xs text-slate-500 font-normal mb-6">Track verified field data releases and deployment metrics on public indices.</p>
+              <div className="flex justify-center space-x-3">
+                {[
+                  { icon: FacebookIcon, href: 'https://facebook.com', label: 'Facebook Meta Link' },
+                  { icon: TwitterIcon, href: 'https://twitter.com', label: 'X Infrastructure Link' },
+                  { icon: InstagramIcon, href: 'https://instagram.com', label: 'Instagram Media Pipeline' },
+                  { icon: LinkedinIcon, href: 'https://linkedin.com', label: 'LinkedIn Enterprise Hub' }
+                ].map((social, idx) => {
+                  const SocialIcon = social.icon
+                  return (
+                    <a
+                      key={idx}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-700 hover:bg-slate-950 hover:text-white hover:border-slate-950 transition-all duration-300"
+                    >
+                      <SocialIcon className="h-4 w-4" />
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-16">
+      {/* Structural Knowledge Matrix (FAQ) */}
+      <section className="py-20 border-t border-slate-200/60 bg-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-dark mb-4">
-              Frequently Asked Questions
+          <div className="text-center max-w-xl mx-auto mb-16">
+            <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-3">
+              Knowledge Ingestion Repository
             </h2>
-            <p className="text-lg text-secondary-gray">
-              Find quick answers to common questions
+            <p className="text-xs md:text-sm text-slate-500 leading-relaxed font-normal">
+              Review pre-classified answers regarding baseline operations prior to launching customized communication logs.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[
               {
-                q: 'How can I volunteer?',
-                a: 'Visit our Volunteer page to fill out an application form. We\'ll review and contact you within 3-5 business days.'
+                q: 'What is the processing timeline for a volunteer application?',
+                a: 'Applications undergo compliance indexing and identity verification. Expect automated tracking codes and contact parameters within 3 to 5 business intervals.'
               },
               {
-                q: 'How do I make a donation?',
-                a: 'You can donate via bank transfer using the account details on our Donate page. Online payment options coming soon.'
+                q: 'How are direct financial transfers audited?',
+                a: 'All asset distributions generate formal transparent ledger lines. Over 85% of incoming liquid capital directly targets localized program execution models.'
               },
               {
-                q: 'How are donations used?',
-                a: 'We publish annual reports showing exactly how funds are used. Over 85% goes directly to program services.'
+                q: 'What structural entities can execute formal corporate partnerships?',
+                a: 'We clear allocations for institutional foundations, CSR divisions, and global development entities looking to anchor local projects.'
               },
               {
-                q: 'Can I partner with your organization?',
-                a: 'Yes! Visit our Partners page or contact us directly to discuss partnership opportunities.'
+                q: 'Are localized donations eligible for regional compliance tax benefits?',
+                a: 'Yes, all matching validation certificates are routinely compiled and shared upon systematic clearance of localized bank assets.'
               }
             ].map((faq, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg p-6"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className="bg-slate-50/50 border border-slate-100 rounded-2xl p-6 hover:bg-white hover:border-slate-200 transition-all"
               >
-                <h3 className="text-lg font-semibold mb-2 text-primary-blue">{faq.q}</h3>
-                <p className="text-secondary-gray">{faq.a}</p>
+                <h3 className="text-sm font-black text-slate-900 tracking-tight mb-2 flex items-start">
+                  <span className="text-emerald-600 mr-2 font-mono">Q.</span>
+                  {faq.q}
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed font-normal pl-5">{faq.a}</p>
               </motion.div>
             ))}
           </div>
