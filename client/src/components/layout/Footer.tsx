@@ -1,9 +1,46 @@
 import { Link } from 'react-router-dom'
-import { Heart, Mail, MapPin, ArrowRight, Send } from 'lucide-react'
+import { Heart, Mail, MapPin, ArrowRight, Send, Loader2 } from 'lucide-react'
 import { FacebookIcon, LinkedinIcon, InstagramIcon, TwitterIcon } from '../ui/SocialIcons'
+import { useState } from 'react'
+import { useEmail } from '../../hooks/useEmail'
+import ToastContainer from '../ui/ToastContainer'
+import { useToast } from '../../hooks/useToast'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { sendNewsletterSignup } = useEmail()
+  const { toasts, removeToast, success, error, warning } = useToast()
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!newsletterEmail || !emailRegex.test(newsletterEmail)) {
+      warning('Please enter a valid email address')
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const result = await sendNewsletterSignup(newsletterEmail)
+
+      if (result) {
+        success('🎉 Thank you for subscribing to our newsletter!')
+        setNewsletterEmail('')
+      } else {
+        error('Failed to subscribe. Please try again.')
+      }
+    } catch (err) {
+      error('Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+
+  }
 
   const footerLinks = {
     organization: [
@@ -23,6 +60,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-slate-950 text-slate-200 border-t border-white/5">
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
       <div className="max-w-7xl mx-auto px-4 pt-16 pb-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
 
@@ -106,21 +144,32 @@ const Footer = () => {
           <div className="lg:col-span-4 space-y-8">
             <div>
               <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-6">Stay Updated</h4>
-              <div className="relative">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-600 transition-colors"
-                />
-                <button className="absolute right-2 top-2 p-1.5 bg-orange-600 rounded-lg hover:bg-orange-700 transition-colors">
-                  <Send className="h-4 w-4 text-white" />
-                </button>
-              </div>
+              <form onSubmit={handleNewsletterSubmit} className="space-y-2">
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-600 transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="absolute right-2 top-2 p-1.5 bg-orange-600 rounded-lg hover:bg-orange-700 transition-colors">
+                    {isSubmitting ? (
+                      <Loader2 className="h-4 w-4 text-white animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4 text-white" />
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
             <div className="space-y-3">
               <div className="flex items-start space-x-3 text-sm text-slate-400">
                 <MapPin className="h-5 w-5 text-orange-600 shrink-0" />
-                <span>123 Hope Plaza, Central Business District, Abuja, Nigeria</span>
+                <span> No. 1 School Road Bue-Kpite Tai, Rivers State <br /> No.41 Okparanya Mini-Ewa Rumuobiokani, Port Harcourt, Rivers State</span>
               </div>
               <div className="flex items-center space-x-3 text-sm text-slate-400">
                 <Mail className="h-5 w-5 text-orange-600 shrink-0" />

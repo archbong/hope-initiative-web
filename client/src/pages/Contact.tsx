@@ -1,13 +1,14 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Mail, Phone, MapPin, Clock, Send, ShieldAlert, CheckCircle2, ArrowUpRight } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, Send, ShieldAlert, ArrowUpRight } from 'lucide-react'
 import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from '../components/ui/SocialIcons'
 import { useEmail } from '../hooks/useEmail'
-import toast from 'react-hot-toast'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
+import { useToast } from '../hooks/useToast'
+import ToastContainer from '../components/ui/ToastContainer'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Identification requires at least 2 characters.'),
@@ -20,6 +21,7 @@ const contactSchema = z.object({
 type ContactForm = z.infer<typeof contactSchema>
 
 const Contact = () => {
+  const { success, error, toasts, removeToast } = useToast()
   const { sending, sendContactEmail, resetStatus } = useEmail()
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
@@ -29,10 +31,10 @@ const Contact = () => {
     const result = await sendContactEmail(data)
     if (result) {
       reset()
-      toast.success('Message sent successfully! We\'ll get back to you soon.')
+      success('Message sent successfully! We\'ll get back to you soon.')
       setTimeout(() => resetStatus(), 3000)
     } else {
-      toast.error('Failed to send message. Please try again.')
+      error('Failed to send message. Please try again.')
     }
   }
 
@@ -150,7 +152,7 @@ const Contact = () => {
             </div>
 
             <div className="p-6 md:p-8">
-              <AnimatePresence mode="popLayout">
+              {/* <AnimatePresence mode="popLayout">
                 {sending && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -165,7 +167,7 @@ const Contact = () => {
                     </div>
                   </motion.div>
                 )}
-              </AnimatePresence>
+              </AnimatePresence> */}
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -229,7 +231,7 @@ const Contact = () => {
                   className="w-full bg-slate-950 text-white hover:bg-slate-900 py-3 rounded-xl font-black text-xs tracking-wider uppercase transition shadow-lg shadow-slate-900/10 flex items-center justify-center space-x-2 disabled:opacity-50"
                 >
                   <Send className="h-3.5 w-3.5" />
-                  <span>{sending ? 'Transmitting Data...' : 'Dispatch Message'}</span>
+                  <span>{sending ? 'Sending Message...' : 'Send Message'}</span>
                 </button>
               </form>
             </div>
@@ -254,7 +256,10 @@ const Contact = () => {
               </div>
               <div className="p-4 bg-slate-50 border-t border-slate-100 text-center">
                 <p className="text-[11px] font-mono text-slate-600">
-                  No. 1 School Road Bue-Kpite Tai, Rivers State  & No.41 Okparanya Mini-Ewa Rumuobiokani, Port Harcourt, Rivers State
+                  No. 1 School Road Bue-Kpite Tai, Rivers State
+                </p>
+                <p className="text-[11px] font-mono text-slate-600">
+                  No.41 Okparanya Mini-Ewa Rumuobiokani, Port Harcourt, Rivers State
                 </p>
               </div>
             </div>
@@ -361,6 +366,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   )
 }

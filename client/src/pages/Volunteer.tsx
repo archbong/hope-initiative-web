@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, Clock, Users, Award, Loader2, AlertCircle, CheckCircle2, ShieldCheck, Mail, Phone, User, MessageSquare, Calendar } from 'lucide-react'
+import { Heart, Clock, Users, Award, Loader2, ShieldCheck, Mail, Phone, User, MessageSquare, Calendar } from 'lucide-react'
 import { useVolunteer } from '../hooks/useVolunteer'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
 import { useEmail } from '../hooks/useEmail'
-import toast from 'react-hot-toast'
+import { useToast } from '../hooks/useToast'
+import ToastContainer from '../components/ui/ToastContainer'
 
 const volunteerSchema = z.object({
   fullName: z.string().min(2, 'Name must be at least 2 characters'),
@@ -22,8 +23,9 @@ const volunteerSchema = z.object({
 type VolunteerForm = z.infer<typeof volunteerSchema>
 
 const Volunteer = () => {
+  const { success, error, toasts, removeToast } = useToast()
   const { sending: emailSending, sendVolunteerEmail } = useEmail()
-  const { submitting, submitSuccess, error, getOpportunities, resetStatus } = useVolunteer()
+  const { submitting, getOpportunities, resetStatus } = useVolunteer()
   const [opportunities, setOpportunities] = useState<any[]>([])
   const [oppsLoading, setOppsLoading] = useState(true)
 
@@ -51,15 +53,15 @@ const Volunteer = () => {
   }, [getOpportunities])
 
   const onSubmit = async (data: VolunteerForm) => {
-    const success = await sendVolunteerEmail(data)
-    if (success) {
+    const result = await sendVolunteerEmail(data)
+    if (result) {
       reset()
-      toast.success('Application submitted successfully! We will contact you soon.')
+      success('Application submitted successfully! We will contact you soon.')
       setTimeout(() => {
         resetStatus()
       }, 5000)
     } else {
-      toast.error('Failed to submit application. Please try again.')
+      error('Failed to submit application. Please try again.')
     }
   }
 
@@ -193,39 +195,6 @@ const Volunteer = () => {
           </div>
 
           <div className="p-8 md:p-10">
-            {/* Context Feedback Elements */}
-            <AnimatePresence mode="popLayout">
-              {submitSuccess && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 flex items-start space-x-3 text-sm"
-                >
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold block">Transmission Authenticated Successfully</span>
-                    <span className="text-xs text-emerald-700/90 font-normal">Profile securely logged. Deployment review complete within 3–5 professional cycles.</span>
-                  </div>
-                </motion.div>
-              )}
-
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 flex items-start space-x-3 text-sm"
-                >
-                  <AlertCircle className="h-5 w-5 text-rose-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold block">System Transfer Conflict Intercepted</span>
-                    <span className="text-xs text-rose-700/90 font-normal">{error}</span>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Field Block - Full Name */}
               <div>
@@ -354,12 +323,12 @@ const Volunteer = () => {
                 {submitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin text-white" />
-                    <span>Synchronizing Application Payload...</span>
+                    <span>Sending Message...</span>
                   </>
                 ) : (
                   <>
                     <ShieldCheck className="h-4 w-4 text-orange-400" />
-                    <span>Commit Profile Record</span>
+                    <span>Send Message</span>
                   </>
                 )}
               </button>
@@ -367,6 +336,7 @@ const Volunteer = () => {
           </div>
         </div>
       </section>
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   )
 }
