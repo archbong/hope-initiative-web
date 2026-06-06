@@ -1,0 +1,49 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "retry": "إعادة المحاولة",
+    "back": "رجوع",
+    "next": "التالي",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "search": "بحث",
+    "filter": "تصفية",
+    "all": "الجميع",
+    "none": "لا شيء",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "programs": "البرامج",
+    "successStories": "قصص النجاح",
+    "gallery": "المعرض",
+    "volunteer": "تطوع",
+    "donate": "تبرع",
+    "partners": "شركاؤنا",
+    "newsEvents": "الأخبار والفعاليات",
+    "contact": "اتصل بنا",
+    "financialTransparency": "الشفافية المالية"
+  },
+  "donate": {
+    "title": "ادعم مهمتنا",
+    "subtitle": "تبرعك السخي يساعدنا في استعادة الأمل وتغيير الحياة",
+    "selectAmount": "اختر المبلغ",
+    "customAmount": "مبلغ مخصص",
+    "donorInfo": "معلومات المتبرع",
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "anonymous": "عرض اسمي علناً",
+    "anonymousNote": "إذا لم تختر، ستظهر كـ 'متبرع مجهول'",
+    "donateNow": "تبرع الآن",
+    "bankTransfer": "تحويل بنكي",
+    "cardPayment": "دفع ببطاقة"
+  }
+}

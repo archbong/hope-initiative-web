@@ -5,6 +5,8 @@ export interface BankAccount {
   accountName: string
   accountNumber: string
   sortCode: string
+  swiftAddress?: string
+  zenithBankSwift?: string
   currency?: string
 }
 
@@ -16,6 +18,7 @@ export interface Donation extends BaseEntity {
   paymentMethod: 'bank_transfer' | 'card' | 'cash'
   status: 'pending' | 'completed' | 'failed'
   transactionId?: string
+  isAnonymous?: boolean
 }
 
 export interface SponsorshipTier {

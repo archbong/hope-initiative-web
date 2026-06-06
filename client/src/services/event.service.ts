@@ -205,3 +205,40 @@ class EventService {
 }
 
 export const eventService = new EventService()
+// Add these exports at the bottom of the file, after the class definition
+
+export interface EmailData {
+  to: string
+  toName?: string
+  subject: string
+  message: string
+  replyTo?: string
+  template?: string
+  templateData?: Record<string, any>
+}
+
+export interface ContactFormData {
+  name: string
+  email: string
+  phone?: string
+  subject: string
+  message: string
+}
+
+export interface VolunteerFormData {
+  fullName: string
+  email: string
+  phone: string
+  interests: string[]
+  availability: string
+  message?: string
+}
+
+export interface DonationReceiptData {
+  donorName: string
+  donorEmail: string
+  amount: number
+  transactionId: string
+  date: string
+  paymentMethod: string
+}

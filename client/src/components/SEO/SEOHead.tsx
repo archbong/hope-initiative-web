@@ -1,18 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 import { SEO_CONFIG } from '../../config/seo.config'
+import type { SEOProps } from '../../interfaces/SEO/seo'
 
-interface SEOProps {
-  title?: string
-  description?: string
-  keywords?: string
-  image?: string
-  url?: string
-  type?: 'website' | 'article' | 'event'
-  publishedTime?: string
-  author?: string
-  tags?: string[]
-  noIndex?: boolean
-}
 
 const SEOHead: React.FC<SEOProps> = ({
   title,
@@ -96,7 +85,7 @@ const SEOHead: React.FC<SEOProps> = ({
 
       {/* Business Info */}
       <meta name="business:contact_data:street_address" content={SEO_CONFIG.address} />
-      <meta name="business:contact_data:locality" content="Abuja" />
+      <meta name="business:contact_data:locality" content="Rivers" />
       <meta name="business:contact_data:country_name" content="Nigeria" />
       <meta name="business:contact_data:email" content={SEO_CONFIG.email} />
       <meta name="business:contact_data:phone_number" content={SEO_CONFIG.phone} />

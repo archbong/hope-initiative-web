@@ -17,6 +17,10 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import CookiePolicy from './pages/CookiePolicy'
 import EventDetail from './pages/EventDetail'
+import PaymentSuccess from './pages/PaymentSuccess'
+import LeadershipTeam from './pages/LeadershipTeam'
+import MissionVision from './pages/MissionVision'
+import FinancialTransparency from './pages/FinancialTransparency'
 
 function App() {
   return (
@@ -24,6 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/about/mission-vision" element={<MissionVision />} />
+        <Route path="/about/leadership" element={<LeadershipTeam />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/programs/:programId" element={<ProgramDetail />} />
         <Route path="/success-stories" element={<SuccessStories />} />
@@ -31,6 +37,8 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/donate" element={<Donate />} />
+        <Route path="/financial-transparency" element={<FinancialTransparency />} />
+        <Route path="/donate/success" element={<PaymentSuccess />} />
         <Route path="/partners" element={<Partners />} />
         <Route path="/news-events" element={<NewsEvents />} />
         <Route path="/news-events/:slug" element={<EventDetail />} />

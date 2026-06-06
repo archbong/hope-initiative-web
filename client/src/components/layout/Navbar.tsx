@@ -6,6 +6,7 @@ import {
   Mail, Users, DollarSign, Handshake, Newspaper, BookOpen,
   Target, HeartHandshake, GraduationCap, Utensils, Baby, Globe
 } from 'lucide-react'
+import LanguageSwitcher from '../LanguageSwitcher'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -25,8 +26,8 @@ const Navbar = () => {
       type: 'dropdown',
       items: [
         { name: 'Our Story', path: '/about', icon: HeartHandshake },
-        { name: 'Mission & Vision', path: '/about#mission', icon: Target },
-        { name: 'Leadership Team', path: '/about#team', icon: Users }
+        { name: 'Mission & Vision', path: '/about/mission-vision', icon: Target },
+        { name: 'Leadership Team', path: '/about/leadership', icon: Users }
       ]
     },
     {
@@ -86,16 +87,30 @@ const Navbar = () => {
 
           {/* Logo Section */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="bg-orange-100 p-2 rounded-xl group-hover:bg-orange-200 transition-colors">
-              <Heart className="h-7 w-7 text-orange-600 fill-orange-600" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-xl tracking-tight text-gray-900 leading-none">
-                Hope Initiative
-              </span>
-              <span className="text-[10px] uppercase tracking-widest text-orange-600 font-semibold">
-                For the Hopeless
-              </span>
+            {/* Image Logo */}
+            <img
+              src="/logo.png"
+              alt="Hope for the Hopeless Initiative"
+              className="h-12 w-auto hidden sm:block"
+              onError={(e) => {
+                // If image fails to load, show text logo
+                (e.target as HTMLImageElement).style.display = 'none'
+              }}
+            />
+
+            {/* Text Fallback (shows if image fails) */}
+            <div className="sm:hidden flex items-center space-x-3">
+              <div className="bg-orange-100 p-2 rounded-xl group-hover:bg-orange-200 transition-colors">
+                <Heart className="h-7 w-7 text-orange-600 fill-orange-600" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xl tracking-tight text-gray-900 leading-none">
+                  Hope Initiative
+                </span>
+                <span className="text-[10px] uppercase tracking-widest text-orange-600 font-semibold">
+                  For the Hopeless
+                </span>
+              </div>
             </div>
           </Link>
 
@@ -112,8 +127,8 @@ const Navbar = () => {
                   <Link
                     to={nav.path!}
                     className={`flex items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${location.pathname === nav.path
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
                       }`}
                   >
                     <nav.icon className="h-4 w-4" />
@@ -123,8 +138,8 @@ const Navbar = () => {
                   <>
                     <button
                       className={`flex items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${activeDropdown === nav.name || isGroupActive(nav.items!)
-                          ? 'bg-blue-50 text-blue-600'
-                          : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                        ? 'bg-blue-50 text-blue-600'
+                        : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
                         }`}
                     >
                       <nav.icon className="h-4 w-4" />
@@ -161,7 +176,7 @@ const Navbar = () => {
                 )}
               </div>
             ))}
-
+            <LanguageSwitcher />
             <Link
               to="/donate"
               className="ml-6 bg-orange-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-orange-700 transition-all shadow-md hover:shadow-orange-200 active:scale-95"

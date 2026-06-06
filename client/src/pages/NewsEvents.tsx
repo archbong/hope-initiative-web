@@ -1,10 +1,14 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, MapPin, User, ChevronRight, Search, Heart, Clock, Loader2, AlertCircle, Sparkles, X, Megaphone } from 'lucide-react'
+import { Calendar, MapPin, User, ChevronRight, Search, Clock, Loader2, AlertCircle, Sparkles, X, Megaphone } from 'lucide-react'
 import { useEvents } from '../hooks/useEvent'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
+import MediaHero from '../components/pages/media/MediaHero'
+import Newletter from '../components/pages/media/Newletter'
+import OperationalMetrics from '../components/pages/media/OperationalMetrics'
+import UpcomingEvent from '../components/pages/media/UpcomingEvent'
 
 const NewsEvents = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -92,28 +96,13 @@ const NewsEvents = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-slate-950 py-24 overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        <div className="container-custom relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center space-x-2 bg-white/10 text-orange-400 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide uppercase mb-6 backdrop-blur-sm">
-              <Megaphone className="h-3.5 w-3.5" />
-              <span>Live Action Log</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-none tracking-tight">
-              News & Field <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">Briefings</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed">
-              Stay fully informed on live programmatic developments, tactical updates, structural announcements, and calendar listings.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <MediaHero
+        IconComponent={Megaphone}
+        iconText='Live Action Log'
+        header='News & Field'
+        title='Briefings'
+        description='Stay fully informed on live programmatic developments, tactical updates, structural announcements, and calendar listings.'
+      />
 
       {/* Premium Upcoming Events Ticker Banner */}
       {upcomingEvents.length > 0 && (
@@ -313,91 +302,12 @@ const NewsEvents = () => {
             <div className="lg:col-span-1 space-y-8 sticky top-36">
 
               {/* Upcoming Context Widget */}
-              <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm">
-                <h3 className="text-base font-black text-slate-900 mb-5 flex items-center tracking-tight">
-                  <Calendar className="h-4 w-4 mr-2 text-orange-500" />
-                  Upcoming Scheduling
-                </h3>
-                <div className="space-y-4">
-                  {upcomingEvents.length === 0 ? (
-                    <p className="text-slate-400 text-xs font-medium py-2">No future entries flagged at present phase.</p>
-                  ) : (
-                    upcomingEvents.slice(0, 3).map(event => (
-                      <Link
-                        key={event.id}
-                        to={`/news-events/${event.slug}`}
-                        className="group block border-b border-slate-100 last:border-0 pb-4 last:pb-0 hover:bg-slate-50/50 p-2 rounded-xl transition-all"
-                      >
-                        <h4 className="text-sm font-bold text-slate-800 mb-2 leading-tight group-hover:text-orange-500 transition-colors line-clamp-2">
-                          {event.title}
-                        </h4>
-                        <div className="flex items-center gap-3 text-[11px] font-bold text-slate-400">
-                          <span className="flex items-center">
-                            <Calendar className="h-3 w-3 mr-1 text-slate-300" />
-                            {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                          </span>
-                          <span className="flex items-center truncate">
-                            <MapPin className="h-3 w-3 mr-0.5 text-slate-300" />
-                            {event.location}
-                          </span>
-                        </div>
-                      </Link>
-                    ))
-                  )}
-                </div>
-              </div>
+              <UpcomingEvent />
 
               {/* Newsletter Structural Capture Card */}
-              <div className="bg-slate-950 rounded-3xl p-6 text-white relative overflow-hidden shadow-xl shadow-slate-950/10">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl"></div>
-
-                <Heart className="h-8 w-8 mb-4 text-orange-400 opacity-90" />
-                <h3 className="text-lg font-black tracking-tight mb-2">Subscribe to Field Briefs</h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-6 font-normal">
-                  Receive tactical status briefings, program execution announcements, and verified structural impact reports direct.
-                </p>
-                <form className="space-y-2 relative z-10" onSubmit={(e) => e.preventDefault()}>
-                  <input
-                    type="email"
-                    placeholder="Provide professional email..."
-                    className="w-full px-4 py-3 bg-white/10 rounded-xl text-xs text-white placeholder-slate-500 border border-white/5 focus:outline-none focus:ring-1 focus:ring-orange-400 focus:bg-white/10 transition-all"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="w-full bg-white text-slate-950 py-3 rounded-xl font-black text-xs tracking-tight hover:bg-slate-100 transition shadow-md"
-                  >
-                    Authorize Integration
-                  </button>
-                </form>
-                <p className="text-[10px] text-slate-500 font-medium text-center mt-3">
-                  Zero telemetry leakage. Opt-out anytime.
-                </p>
-              </div>
-
+              <Newletter />
               {/* Historical Global Metrics */}
-              <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-sm">
-                <h3 className="text-base font-black text-slate-900 mb-5 flex items-center tracking-tight">
-                  <Heart className="h-4 w-4 mr-2 text-orange-500" />
-                  Audited Operational Impact
-                </h3>
-                <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div className="text-lg font-black text-slate-950 tracking-tight">1.2k+</div>
-                    <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wide mt-0.5">Assisted</div>
-                  </div>
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div className="text-lg font-black text-slate-950 tracking-tight">8.7k+</div>
-                    <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wide mt-0.5">Supplies</div>
-                  </div>
-                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div className="text-lg font-black text-slate-950 tracking-tight">15+</div>
-                    <div className="text-[9px] font-bold text-slate-400 uppercase tracking-wide mt-0.5">Regions</div>
-                  </div>
-                </div>
-              </div>
-
+              <OperationalMetrics />
             </div>
           </div>
         </div>

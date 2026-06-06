@@ -1,14 +1,5 @@
 import { Helmet } from 'react-helmet-async'
-
-interface OrganizationSchemaProps {
-  name: string
-  url: string
-  logo: string
-  description: string
-  email: string
-  phone: string
-  address: string
-}
+import type { OrganizationSchemaProps } from '../../interfaces/SEO/seo'
 
 export const OrganizationSchema: React.FC<OrganizationSchemaProps> = ({
   name,

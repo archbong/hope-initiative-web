@@ -7,10 +7,12 @@ import { Heart, Clock, Users, Award, Loader2, AlertCircle, CheckCircle2, ShieldC
 import { useVolunteer } from '../hooks/useVolunteer'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
+import { useEmail } from '../hooks/useEmail'
+import toast from 'react-hot-toast'
 
 const volunteerSchema = z.object({
   fullName: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
+  email: z.email('Invalid email address'),
   phone: z.string().min(10, 'Valid phone number required'),
   interests: z.array(z.string()).min(1, 'Select at least one interest'),
   availability: z.string().min(1, 'Please select availability'),
@@ -20,7 +22,8 @@ const volunteerSchema = z.object({
 type VolunteerForm = z.infer<typeof volunteerSchema>
 
 const Volunteer = () => {
-  const { submitting, submitSuccess, error, submitApplication, getOpportunities, resetStatus } = useVolunteer()
+  const { sending: emailSending, sendVolunteerEmail } = useEmail()
+  const { submitting, submitSuccess, error, getOpportunities, resetStatus } = useVolunteer()
   const [opportunities, setOpportunities] = useState<any[]>([])
   const [oppsLoading, setOppsLoading] = useState(true)
 
@@ -48,12 +51,15 @@ const Volunteer = () => {
   }, [getOpportunities])
 
   const onSubmit = async (data: VolunteerForm) => {
-    const success = await submitApplication(data)
+    const success = await sendVolunteerEmail(data)
     if (success) {
       reset()
+      toast.success('Application submitted successfully! We will contact you soon.')
       setTimeout(() => {
         resetStatus()
-      }, 6000)
+      }, 5000)
+    } else {
+      toast.error('Failed to submit application. Please try again.')
     }
   }
 
@@ -343,7 +349,7 @@ const Volunteer = () => {
               <button
                 type="submit"
                 className="w-full bg-slate-950 text-white hover:bg-slate-900 py-3.5 rounded-xl font-black text-sm tracking-tight transition flex items-center justify-center space-x-2 shadow-lg disabled:opacity-60 disabled:pointer-events-none"
-                disabled={submitting}
+                disabled={submitting || emailSending}
               >
                 {submitting ? (
                   <>

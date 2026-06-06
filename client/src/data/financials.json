@@ -1,0 +1,241 @@
+{
+  "records": [
+    {
+      "id": "DON-00001",
+      "donorName": "Anonymous Donor",
+      "donorInitials": "***",
+      "amount": 50000,
+      "date": "2026-05-10",
+      "transactionId": "TXN-STATIC-001",
+      "isAnonymous": true,
+      "isTarget": false,
+      "message": "Keep up the good work!"
+    },
+    {
+      "id": "DON-00002",
+      "donorName": "Olufemi ******",
+      "donorInitials": "O. ******",
+      "amount": 250000,
+      "date": "2026-05-15",
+      "transactionId": "TXN-STATIC-002",
+      "isAnonymous": false,
+      "isTarget": true,
+      "message": "Supporting the youth program."
+    },
+    {
+      "id": "DON-00003",
+      "donorName": "Ngozi ******",
+      "donorInitials": "N. ******",
+      "amount": 100000,
+      "date": "2026-05-20",
+      "transactionId": "TXN-STATIC-003",
+      "isAnonymous": false,
+      "isTarget": false,
+      "message": "For the children's education fund"
+    },
+    {
+      "id": "DON-00004",
+      "donorName": "Anonymous Donor",
+      "donorInitials": "***",
+      "amount": 75000,
+      "date": "2026-05-25",
+      "transactionId": "TXN-STATIC-004",
+      "isAnonymous": true,
+      "isTarget": false,
+      "message": ""
+    },
+    {
+      "id": "DON-00005",
+      "donorName": "Chief ******",
+      "donorInitials": "C. ******",
+      "amount": 500000,
+      "date": "2026-05-28",
+      "transactionId": "TXN-STATIC-005",
+      "isAnonymous": false,
+      "isTarget": false,
+      "message": "Pleased to support this great cause"
+    },
+    {
+      "id": "DON-00006",
+      "donorName": "Anonymous Donor",
+      "donorInitials": "***",
+      "amount": 30000,
+      "date": "2026-06-01",
+      "transactionId": "TXN-STATIC-006",
+      "isAnonymous": true,
+      "isTarget": false,
+      "message": ""
+    },
+    {
+      "id": "DON-00007",
+      "donorName": "Amina ******",
+      "donorInitials": "A. ******",
+      "amount": 150000,
+      "date": "2026-06-02",
+      "transactionId": "TXN-STATIC-007",
+      "isAnonymous": false,
+      "isTarget": false,
+      "message": "From one Nigerian to another"
+    },
+    {
+      "id": "DON-00008",
+      "donorName": "Michael ******",
+      "donorInitials": "M. ******",
+      "amount": 200000,
+      "date": "2026-06-03",
+      "transactionId": "TXN-STATIC-008",
+      "isAnonymous": false,
+      "isTarget": true,
+      "message": ""
+    },
+    {
+      "id": "DON-00009",
+      "donorName": "Anonymous Donor",
+      "donorInitials": "***",
+      "amount": 85000,
+      "date": "2026-06-04",
+      "transactionId": "TXN-STATIC-009",
+      "isAnonymous": true,
+      "isTarget": false,
+      "message": "God bless this ministry"
+    },
+    {
+      "id": "DON-00010",
+      "donorName": "Grace ******",
+      "donorInitials": "G. ******",
+      "amount": 120000,
+      "date": "2026-06-05",
+      "transactionId": "TXN-STATIC-010",
+      "isAnonymous": false,
+      "isTarget": false,
+      "message": "Keep feeding the hungry"
+    },
+    {
+      "id": "DON-00011",
+      "donorName": "Anonymous Donor",
+      "donorInitials": "***",
+      "amount": 45000,
+      "date": "2026-06-06",
+      "transactionId": "TXN-STATIC-011",
+      "isAnonymous": true,
+      "isTarget": false,
+      "message": ""
+    },
+    {
+      "id": "DON-00012",
+      "donorName": "Samuel ******",
+      "donorInitials": "S. ******",
+      "amount": 300000,
+      "date": "2026-06-07",
+      "transactionId": "TXN-STATIC-012",
+      "isAnonymous": false,
+      "isTarget": true,
+      "message": "Proud to support this initiative"
+    },
+    {
+      "id": "DON-00013",
+      "donorName": "Anonymous Donor",
+      "donorInitials": "***",
+      "amount": 60000,
+      "date": "2026-06-08",
+      "transactionId": "TXN-STATIC-013",
+      "isAnonymous": true,
+      "isTarget": false,
+      "message": ""
+    },
+    {
+      "id": "DON-00014",
+      "donorName": "Fatima ******",
+      "donorInitials": "F. ******",
+      "amount": 180000,
+      "date": "2026-06-09",
+      "transactionId": "TXN-STATIC-014",
+      "isAnonymous": false,
+      "isTarget": false,
+      "message": "For the women and children"
+    },
+    {
+      "id": "DON-00015",
+      "donorName": "Anonymous Donor",
+      "donorInitials": "***",
+      "amount": 95000,
+      "date": "2026-06-10",
+      "transactionId": "TXN-STATIC-015",
+      "isAnonymous": true,
+      "isTarget": false,
+      "message": "Thank you for your service"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "EXP-001",
+      "description": "Food Distribution - Abuja Outreach",
+      "amount": 75000,
+      "date": "2026-05-20",
+      "category": "Food Program"
+    },
+    {
+      "id": "EXP-002",
+      "description": "Youth Empowerment Workshop - Lagos",
+      "amount": 150000,
+      "date": "2026-05-22",
+      "category": "Youth Program"
+    },
+    {
+      "id": "EXP-003",
+      "description": "Medical Outreach - Port Harcourt",
+      "amount": 50000,
+      "date": "2026-05-25",
+      "category": "Health Program"
+    },
+    {
+      "id": "EXP-004",
+      "description": "Operational Costs - May",
+      "amount": 35000,
+      "date": "2026-05-28",
+      "category": "Administrative"
+    },
+    {
+      "id": "EXP-005",
+      "description": "Orphan Support - Kano",
+      "amount": 60000,
+      "date": "2026-06-01",
+      "category": "Child Welfare"
+    },
+    {
+      "id": "EXP-006",
+      "description": "Counseling Services - Ibadan",
+      "amount": 40000,
+      "date": "2026-06-03",
+      "category": "Family Welfare"
+    },
+    {
+      "id": "EXP-007",
+      "description": "Anti-Cultism Campaign - Benin",
+      "amount": 45000,
+      "date": "2026-06-05",
+      "category": "Youth Program"
+    },
+    {
+      "id": "EXP-008",
+      "description": "Staff Training & Development",
+      "amount": 25000,
+      "date": "2026-06-06",
+      "category": "Administrative"
+    },
+    {
+      "id": "EXP-009",
+      "description": "Clothing Donation Drive",
+      "amount": 30000,
+      "date": "2026-06-08",
+      "category": "Humanitarian"
+    },
+    {
+      "id": "EXP-010",
+      "description": "Community Health Screening",
+      "amount": 55000,
+      "date": "2026-06-10",
+      "category": "Health Program"
+    }
+  ]
+}

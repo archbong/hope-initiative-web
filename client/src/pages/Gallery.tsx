@@ -4,6 +4,7 @@ import { X, ChevronLeft, ChevronRight, Image as ImageIcon, Calendar, MapPin, Cam
 import { useGallery } from '../hooks/useGallery'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
+import MediaHero from '../components/pages/media/MediaHero'
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
@@ -90,24 +91,14 @@ const Gallery = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-slate-950 py-24 overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        <div className="container-custom relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-none tracking-tight">
-              Field Operations <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">Gallery</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed">
-              Visual field records documenting tactical resource distributions, community assemblies, and active program developments across regional deployments.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <MediaHero
+        // IconComponent={ImageIcon}
+        header="Field Operations Gallery"
+        title="Gallery"
+        description="
+        Visual field records documenting tactical resource distributions, community assemblies, and active program developments across regional deployments.
+        "
+      />
 
       {/* Category Filter Tab Bar */}
       <section className="py-4 sticky top-16 z-40 bg-slate-50/80 backdrop-blur-md border-b border-slate-200/60">

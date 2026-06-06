@@ -1,0 +1,49 @@
+{
+  "common": {
+    "loading": "A carregar...",
+    "error": "Erro",
+    "retry": "Tentar novamente",
+    "back": "Voltar",
+    "next": "Seguinte",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Pesquisar",
+    "filter": "Filtrar",
+    "all": "Todos",
+    "none": "Nenhum",
+    "yes": "Sim",
+    "no": "Não"
+  },
+  "nav": {
+    "home": "Início",
+    "about": "Sobre Nós",
+    "programs": "Programas",
+    "successStories": "Histórias de Sucesso",
+    "gallery": "Galeria",
+    "volunteer": "Voluntariar-se",
+    "donate": "Doar",
+    "partners": "Parceiros",
+    "newsEvents": "Notícias & Eventos",
+    "contact": "Contacto",
+    "financialTransparency": "Transparência Financeira"
+  },
+  "donate": {
+    "title": "Apoie a Nossa Missão",
+    "subtitle": "A sua doação generosa ajuda-nos a restaurar a esperança e a transformar vidas",
+    "selectAmount": "Selecionar Valor",
+    "customAmount": "Valor Personalizado",
+    "donorInfo": "Informação do Doador",
+    "fullName": "Nome Completo",
+    "email": "Endereço de Email",
+    "phone": "Número de Telefone",
+    "anonymous": "Mostrar meu nome publicamente",
+    "anonymousNote": "Se não for selecionado, aparecerá como 'Doador Anónimo'",
+    "donateNow": "Doar Agora",
+    "bankTransfer": "Transferência Bancária",
+    "cardPayment": "Pagamento com Cartão"
+  }
+}

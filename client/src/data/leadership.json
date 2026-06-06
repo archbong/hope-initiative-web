@@ -1,0 +1,109 @@
+{
+  "leadership": [
+    {
+      "id": 1,
+      "name": "Sir. Chamberline",
+      "title": "Executive Director & Founder",
+      "bio": "Sir. Chamberline is a visionary leader with over 20 years of experience in social entrepreneurship and community development. He holds a Master's degree in Business Administration and has dedicated his career to empowering underserved communities across Nigeria. Under his leadership, Hope for the Hopeless has grown from a small community initiative to a nationally recognized organization.",
+      "image": "/images/team/sir-chimberlin.png",
+      "social": {
+        "linkedin": "https://linkedin.com/in/sirchamberline",
+        "twitter": "https://twitter.com/sirchamberline",
+        "email": "sirchamberline@hopeforthehopeless.org"
+      },
+      "order": 1,
+      "featured": true
+    },
+    {
+      "id": 2,
+      "name": "Michael Okafor",
+      "title": "Director of Programs",
+      "bio": "Michael brings extensive experience in program management and community development. Previously, he worked with international NGOs implementing youth empowerment and education programs across West Africa. He holds a Master's in International Development and is committed to creating sustainable impact.",
+      "image": "/images/team/michael-okafor.jpg",
+      "social": {
+        "linkedin": "https://linkedin.com/in/michaelokafor",
+        "twitter": "https://twitter.com/michaelokafor"
+      },
+      "order": 2,
+      "featured": true
+    },
+    {
+      "id": 3,
+      "name": "Dr. Amina Bello",
+      "title": "Head of Health & Welfare",
+      "bio": "Dr. Amina Bello is a medical doctor and public health specialist. She leads our health initiatives, including maternal health programs, mental health counseling, and community health awareness campaigns. Her compassionate approach has touched thousands of lives.",
+      "image": "/images/team/amina-bello.jpg",
+      "social": {
+        "linkedin": "https://linkedin.com/in/aminabello",
+        "email": "amina@hopeforthehopeless.org"
+      },
+      "order": 3,
+      "featured": true
+    },
+    {
+      "id": 4,
+      "name": "Emmanuel Adebayo",
+      "title": "Youth Programs Coordinator",
+      "bio": "Emmanuel is a youth development specialist who has worked extensively with at-risk youth across Nigeria. His experience includes designing and implementing anti-cultism campaigns, drug abuse awareness programs, and leadership development workshops. He is passionate about creating opportunities for young people to thrive.",
+      "image": "/images/team/emmanuel-adebayo.jpg",
+      "social": {
+        "linkedin": "https://linkedin.com/in/emmanueladebayo",
+        "twitter": "https://twitter.com/emmanueladebayo"
+      },
+      "order": 4,
+      "featured": false
+    },
+    {
+      "id": 5,
+      "name": "Grace Ogunlesi",
+      "title": "Family Services Director",
+      "bio": "Grace is a licensed counselor and family therapist with over a decade of experience. She leads our family welfare programs, providing counseling services, family planning education, and maternal support. Her gentle approach and expertise have helped hundreds of families find stability and hope.",
+      "image": "/images/team/grace-ogunlesi.jpg",
+      "social": {
+        "linkedin": "https://linkedin.com/in/graceogunlesi",
+        "email": "grace@hopeforthehopeless.org"
+      },
+      "order": 5,
+      "featured": false
+    }
+  ],
+  "boardMembers": [
+    {
+      "id": 1,
+      "name": "Chief Olu Adewale",
+      "title": "Board Chairman",
+      "bio": "Chief Olu Adewale is a renowned business leader and philanthropist. His strategic guidance has been instrumental in the organization's growth and sustainability.",
+      "image": "/images/board/olu-adewale.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Prof. Ngozi Okonkwo",
+      "title": "Board Member - Education",
+      "bio": "Professor of Education at University of Lagos, Dr. Okonkwo brings expertise in educational policy and youth development.",
+      "image": "/images/board/ngozi-okonkwo.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Alhaji Usman Ibrahim",
+      "title": "Board Member - Finance",
+      "bio": "Former Director at Central Bank of Nigeria, Alhaji Ibrahim provides financial oversight and strategic direction.",
+      "image": "/images/board/usman-ibrahim.jpg"
+    }
+  ],
+  "advisoryCouncil": [
+    {
+      "id": 1,
+      "name": "Dr. James Wilson",
+      "title": "International Advisor",
+      "organization": "UNICEF Nigeria",
+      "bio": "Dr. Wilson has over 20 years of experience in child welfare and international development."
+    },
+    {
+      "id": 2,
+      "name": "Mrs. Funke Adeyemi",
+      "title": "Policy Advisor",
+      "organization": "Ministry of Women's Affairs",
+      "bio": "Mrs. Adeyemi advises on policy matters affecting women and children in Nigeria."
+    }
+  ]
+}

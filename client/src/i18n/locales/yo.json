@@ -1,0 +1,49 @@
+{
+  "common": {
+    "loading": "N gba...",
+    "error": "Aṣiṣe",
+    "retry": "Tun gbiyanju",
+    "back": "Pada",
+    "next": "Atẹle",
+    "submit": "Firanṣẹ",
+    "cancel": "Fagilee",
+    "save": "Fipamọ",
+    "delete": "Paarẹ",
+    "edit": "Satunkọ",
+    "view": "Wo",
+    "search": "Wa",
+    "filter": "Sẹ",
+    "all": "Gbogbo",
+    "none": "Ko si",
+    "yes": "Bẹẹni",
+    "no": "Rara"
+  },
+  "nav": {
+    "home": "Ile",
+    "about": "Nipa Wa",
+    "programs": "Awọn Eto",
+    "successStories": "Awọn Itan Aṣeyọri",
+    "gallery": "Ibi ifihan",
+    "volunteer": "Oluyọọda",
+    "donate": "Ṣetọrẹ",
+    "partners": "Awọn Alabaṣepọ",
+    "newsEvents": "Awọn iroyin & Iṣẹlẹ",
+    "contact": "Kan si Wa",
+    "financialTransparency": "Akoyawo Owo"
+  },
+  "donate": {
+    "title": "Ṣe Atilẹyin Iṣẹ Wa",
+    "subtitle": "Ọrẹ rẹ oninurere n ṣe iranlọwọ fun wa lati mu ireti pada ati yi awọn igbesi aye pada",
+    "selectAmount": "Yan Iye Owo",
+    "customAmount": "Iye Owo Aṣa",
+    "donorInfo": "Alaye Oluranlọwọ",
+    "fullName": "Orukọ Ni Kikun",
+    "email": "Adirẹsi Imel",
+    "phone": "Nọmba Foonu",
+    "anonymous": "Fi orukọ mi han ni gbangba",
+    "anonymousNote": "Ti a ko ba yan, iwọ yoo han bi 'Oluranlọwọ Alailorukọ'",
+    "donateNow": "Ṣetọrẹ Ni bayi",
+    "bankTransfer": "Gbigbe Banki",
+    "cardPayment": "Isanwo Kaadi"
+  }
+}

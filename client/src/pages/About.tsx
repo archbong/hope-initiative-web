@@ -1,8 +1,15 @@
 import { motion } from 'framer-motion'
-import { Heart, Target, Eye, Users, Shield, TrendingUp, Globe, BookOpen, Sparkles, Milestone, HandHeart } from 'lucide-react'
+import {
+  Heart, Target, Eye, Users, Shield,
+  TrendingUp, Globe, BookOpen, Milestone, HandHeart,
+  ArrowRight
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { SEO_CONFIG } from '../config/seo.config'
 import SEOHead from '../components/SEO/SEOHead'
+import AboutHero from '../components/pages/about/AboutHero'
+import MissionCard from '../components/pages/about/MissionCard'
+import AboutCTA from '../components/pages/about/AboutCTA'
 
 const About = () => {
   const values = [
@@ -40,66 +47,42 @@ const About = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-slate-900 py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
-
-        <div className="container-custom relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sky-400 text-sm font-bold uppercase tracking-wider mb-6 border border-white/10">
-              <Sparkles className="h-4 w-4" />
-              <span>Restoring Dignity Since Inception</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-              Driven by <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">Hope</span>, Guided by Service.
-            </h1>
-            <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl">
-              We are a dedicated humanitarian initiative focused on breaking cycles of poverty and providing a safety net for the most vulnerable in our society.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <AboutHero />
 
       {/* Mission & Vision Section */}
       <section className="py-24 -mt-12">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-10 border border-slate-100 relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 p-8 opacity-5">
-                <Target className="h-24 w-24" />
-              </div>
-              <div className="w-14 h-14 bg-sky-100 rounded-2xl flex items-center justify-center mb-6">
-                <Target className="h-7 w-7 text-sky-600" />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Our Mission</h2>
-              <p className="text-slate-600 leading-relaxed text-lg">
-                To restore hope, dignity, and opportunity through humanitarian support, youth empowerment, and strategic partnerships that advance sustainable social impact.
-              </p>
-            </motion.div>
+            <MissionCard
+              IconComponent={Target}
+              title="Our Mission"
+              description="
+              To restore hope, dignity, and opportunity through humanitarian support, 
+              youth empowerment, and strategic partnerships that advance sustainable social impact."/>
 
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-10 border border-slate-100 relative overflow-hidden"
+            <MissionCard
+              IconComponent={Eye}
+              title="Our Vision"
+              description="
+              To become a leading humanitarian organization that transforms lives and contributes meaningfully to sustainable development across Nigeria and beyond.
+              "
+            />
+          </div>
+          <div className="flex justify-center gap-4 mt-8">
+            <Link
+              to="/about/mission-vision"
+              className="inline-flex items-center space-x-2 text-sky-600 font-semibold hover:text-sky-700 transition"
             >
-              <div className="absolute top-0 right-0 p-8 opacity-5">
-                <Eye className="h-24 w-24" />
-              </div>
-              <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6">
-                <Eye className="h-7 w-7 text-emerald-600" />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Our Vision</h2>
-              <p className="text-slate-600 leading-relaxed text-lg">
-                To become a leading humanitarian organization that transforms lives and contributes meaningfully to sustainable development across Nigeria and beyond.
-              </p>
-            </motion.div>
+              <span>Learn more about our mission</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              to="/about/leadership"
+              className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition"
+            >
+              <span>Meet our leadership team</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -207,7 +190,7 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-orange-600 relative overflow-hidden">
+      {/* <section className="py-20 bg-gradient-to-br from-orange-600 to-amber-500 relative overflow-hidden">
         <div className="container-custom relative z-10 text-center">
           <h2 className="text-3xl md:text-5xl font-black text-white mb-8">
             Make an Institutional Impact.
@@ -221,7 +204,12 @@ const About = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
+      <AboutCTA
+        title="Make an Institutional Impact."
+        volunteerButtonText="Join the Movement"
+        donateButtonText="Partner via Donation"
+      />
     </div>
   )
 }

@@ -15,18 +15,19 @@ import {
   Calendar,
   Handshake,
   Target,
-  ArrowUpRight,
   TrendingUp,
   Loader2
 } from 'lucide-react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { usePrograms } from '../hooks/usePrograms'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
+import MediaHero from '../components/pages/media/MediaHero'
+import { ProgramCard } from '../components/pages/home/ProgramCard'
 
 const Programs = () => {
   const [activeTab, setActiveTab] = useState('youth')
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { programs, loading, error } = usePrograms()
 
   const tabs = [
@@ -94,26 +95,12 @@ const Programs = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-slate-950 py-24 overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[4rem]">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        <div className="container-custom relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-none tracking-tight">
-              Our Strategic <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">Frameworks</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed">
-              Targeted pipelines and structured solutions built to tackle social imbalances across core impact clusters in Nigeria.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Tab Navigation */}
+      <MediaHero
+        // iconText="Programs"
+        header="Our Strategic"
+        title="Frameworks"
+        description="Targeted pipelines and structured solutions built to tackle social imbalances across core impact clusters in Nigeria."
+      />
       <section className="py-4 sticky top-16 z-40 bg-slate-50/80 backdrop-blur-md border-b border-slate-200/60">
         <div className="container-custom">
           <div className="flex items-center overflow-x-auto no-scrollbar justify-start lg:justify-center gap-2 py-2">
@@ -169,53 +156,14 @@ const Programs = () => {
                   {filteredPrograms.map((program, index) => {
                     const SpecificIcon = getIconComponent(program.icon || '')
                     return (
-                      <motion.div
-                        key={program.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.05 }}
-                        whileHover={{ y: -6 }}
-                        className="group bg-white rounded-3xl border border-slate-100 hover:border-slate-200 shadow-sm hover:shadow-xl shadow-slate-200/50 transition-all duration-300 flex flex-col overflow-hidden cursor-pointer"
-                        onClick={() => navigate(`/programs/${program.slug}`)}
-                      >
-                        <div className="aspect-video w-full overflow-hidden relative bg-slate-100">
-                          <img
-                            src={program.image}
-                            alt={program.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                            loading="lazy"
-                          />
-                          <div className="absolute top-4 left-4">
-                            <div className={`w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center text-${currentTheme.accent} shadow-md`}>
-                              <SpecificIcon className="h-5 w-5" />
-                            </div>
-                          </div>
-                        </div>
 
-                        <div className="p-6 flex flex-col flex-1 justify-between">
-                          <div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-2 tracking-tight group-hover:text-slate-800 transition-colors">
-                              {program.title}
-                            </h3>
-                            <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-2">
-                              {program.description}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                            <div className="flex flex-col">
-                              <span className="text-[11px] font-black uppercase text-slate-400 tracking-wider">Metrics Achieved</span>
-                              <span className={`text-sm font-bold text-${currentTheme.accent} tracking-tight`}>
-                                {program.impact.split(',')[0]}
-                              </span>
-                            </div>
-                            <div className={`w-8 h-8 rounded-xl ${currentTheme.bg} flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-0 -translate-x-2`}>
-                              <ArrowUpRight className={`h-4 w-4 ${currentTheme.text}`} />
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )
+                      <ProgramCard
+                        program={program}
+                        index={index}
+                        variant="program-page"
+                        accentColor={currentTheme.accent}
+                        IconComponent={SpecificIcon}
+                      />)
                   })}
                 </div>
               )}

@@ -1,16 +1,17 @@
-import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Mail, Phone, MapPin, Clock, Send, ShieldAlert, CheckCircle2, ArrowUpRight } from 'lucide-react'
 import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from '../components/ui/SocialIcons'
+import { useEmail } from '../hooks/useEmail'
+import toast from 'react-hot-toast'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Identification requires at least 2 characters.'),
-  email: z.string().email('Provide a valid institutional or personal email address.'),
+  email: z.email('Provide a valid institutional or personal email address.'),
   phone: z.string().optional(),
   subject: z.string().min(5, 'Context summary must be at least 5 characters.'),
   message: z.string().min(10, 'Inquiry parameters must detail at least 10 characters.'),
@@ -19,17 +20,20 @@ const contactSchema = z.object({
 type ContactForm = z.infer<typeof contactSchema>
 
 const Contact = () => {
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ContactForm>({
+  const { sending, sendContactEmail, resetStatus } = useEmail()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
   })
 
   const onSubmit = async (data: ContactForm) => {
-    // Systematic processing simulation mapped to internal infrastructure channels
-    console.log('Ingested Communication Payload:', data)
-    setIsSubmitted(true)
-    reset()
-    setTimeout(() => setIsSubmitted(false), 5000)
+    const result = await sendContactEmail(data)
+    if (result) {
+      reset()
+      toast.success('Message sent successfully! We\'ll get back to you soon.')
+      setTimeout(() => resetStatus(), 3000)
+    } else {
+      toast.error('Failed to send message. Please try again.')
+    }
   }
 
   const contactInfo = [
@@ -42,13 +46,13 @@ const Contact = () => {
     {
       icon: Phone,
       title: 'Voice Telephony Channels',
-      details: ['+234 123 456 7890', '+234 123 456 7891'],
-      link: 'tel:+2341234567890'
+      details: ['+234 802 905 5394', '+234 809 986 1182', '+234 807 721 8016'],
+      link: 'tel:+2348037819432'
     },
     {
       icon: MapPin,
       title: 'Administrative HQ',
-      details: ['123 Humanitarian Way', 'Abuja, Nigeria'],
+      details: ['No. 1 School Road Bue-Kpite Tai, Rivers State', 'No.41 Okparanya Mini-Ewa Rumuobiokani, Port Harcourt, Rivers State'],
       link: 'https://maps.google.com'
     },
     {
@@ -147,7 +151,7 @@ const Contact = () => {
 
             <div className="p-6 md:p-8">
               <AnimatePresence mode="popLayout">
-                {isSubmitted && (
+                {sending && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -221,11 +225,11 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={sending}
                   className="w-full bg-slate-950 text-white hover:bg-slate-900 py-3 rounded-xl font-black text-xs tracking-wider uppercase transition shadow-lg shadow-slate-900/10 flex items-center justify-center space-x-2 disabled:opacity-50"
                 >
                   <Send className="h-3.5 w-3.5" />
-                  <span>{isSubmitting ? 'Transmitting Data...' : 'Dispatch Message'}</span>
+                  <span>{sending ? 'Transmitting Data...' : 'Dispatch Message'}</span>
                 </button>
               </form>
             </div>
@@ -250,7 +254,7 @@ const Contact = () => {
               </div>
               <div className="p-4 bg-slate-50 border-t border-slate-100 text-center">
                 <p className="text-[11px] font-mono text-slate-600">
-                  Coordinates: 123 Humanitarian Way, Central Business District, Abuja, Nigeria
+                  No. 1 School Road Bue-Kpite Tai, Rivers State  & No.41 Okparanya Mini-Ewa Rumuobiokani, Port Harcourt, Rivers State
                 </p>
               </div>
             </div>
@@ -268,10 +272,10 @@ const Contact = () => {
                   For active field events, disaster mitigation support, or immediate resource distribution intercept requests, bypass standard queues.
                 </p>
                 <a
-                  href="tel:+2341234567890"
+                  href="tel:+2348037819432"
                   className="w-full inline-flex items-center justify-center bg-rose-600 hover:bg-rose-500 text-white text-xs font-black tracking-tight py-3 rounded-xl transition shadow-md shadow-rose-950/50"
                 >
-                  Hotline Intercept: +234 123 456 7890
+                  Hotline Intercept: +234 803 781 9432
                 </a>
               </div>
             </div>

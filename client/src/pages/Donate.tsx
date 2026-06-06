@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart, Building, Copy, Check, Shield, Target, Users, GraduationCap, CheckCircle, Wallet, Mail, AlertCircle, ArrowUpRight, HelpCircle } from 'lucide-react'
 import { useDonation } from '../hooks/useDonation'
+import { usePayment } from '../hooks/usePayment'
+import toast, { Toaster } from 'react-hot-toast'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
 
@@ -12,6 +14,8 @@ const Donate = () => {
   const [donorName, setDonorName] = useState('')
   const [donorEmail, setDonorEmail] = useState('')
   const [donorPhone, setDonorPhone] = useState('')
+  const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'failed' | 'cancelled'>('idle')
+  const [isAnonymous] = useState(false)
 
   const {
     bankAccounts,
@@ -19,9 +23,11 @@ const Donate = () => {
     loading,
     error,
     fetchBankAccounts,
-    fetchSponsorshipTiers
+    fetchSponsorshipTiers,
+    processDonation,
   } = useDonation()
 
+  const { processing, initiatePayment } = usePayment()
   useEffect(() => {
     fetchBankAccounts()
     fetchSponsorshipTiers()
@@ -35,18 +41,79 @@ const Donate = () => {
     setTimeout(() => setCopiedAccount(null), 2000)
   }
 
-  const handleDonateOnline = (e: React.FormEvent) => {
+  const handleCardPayment = async (e: React.FormEvent) => {
     e.preventDefault()
-    const amount = selectedAmount || parseInt(customAmount)
-    if (amount && amount > 0) {
-      alert(`Thank you for your ₦${amount.toLocaleString()} donation! Online payment integration coming soon. Please use bank transfer for now.`)
-    } else {
-      alert('Please select or enter a valid donation amount')
+
+    let amount = selectedAmount
+    if (customAmount && parseFloat(customAmount) > 0) {
+      amount = parseFloat(customAmount)
+    }
+
+    if (!amount || amount <= 0 || !donorName || !donorEmail) {
+      toast.error('Please configure all explicit parameters before authorizing submission.');
+      return;
+    }
+
+    // Store donation data for the success page
+    localStorage.setItem('lastDonationAmount', amount.toString())
+    localStorage.setItem('lastDonorEmail', donorEmail)
+    localStorage.setItem('lastDonorName', donorName)
+
+    setPaymentStatus('processing')
+
+    const response = await initiatePayment({
+      amount: amount,
+      email: donorEmail,
+      name: donorName,
+      phone: donorPhone,
+      purpose: `Donation of ₦${amount.toLocaleString()} to Hope for the Hopeless Initiative`,
+    });
+
+    if (response.status === 'success') {
+      setPaymentStatus('success')
+      toast.success(response.message)
+
+      await processDonation({
+        amount: amount,
+        donorName: donorName,
+        donorEmail: donorEmail,
+        donorPhone: donorPhone,
+        paymentMethod: 'card', // Match strict type framework literal assignment
+        transactionId: response.transactionId || `FLW-${Date.now()}`,
+        isAnonymous: isAnonymous
+      });
+
+    } else if (response.status === 'failed') {
+      setPaymentStatus('failed')
+      toast.error(response.message)
+      localStorage.removeItem('lastDonationAmount')
+      localStorage.removeItem('lastDonorEmail')
+      localStorage.removeItem('lastDonorName')
+      localStorage.removeItem('lastDonationDate')
+      setTimeout(() => setPaymentStatus('idle'), 3000)
+    } else if (response.status === 'cancelled') {
+      setPaymentStatus('idle')
+      toast('Payment was cancelled', { icon: '⚠️' })
+      localStorage.removeItem('lastDonationAmount')
+      localStorage.removeItem('lastDonorEmail')
+      localStorage.removeItem('lastDonorName')
     }
   }
 
+  if (loading && bankAccounts.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
+          <p className="text-secondary-gray">Loading donation information...</p>
+        </div>
+      </div>
+    )
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen font-sans antialiased">
+      <Toaster position="top-center" />
       <SEOHead
         title={SEO_CONFIG.pages.donate.title}
         description={SEO_CONFIG.pages.donate.description}
@@ -117,7 +184,7 @@ const Donate = () => {
               <p className="text-xs text-slate-400 font-normal">Configure your localized parameters for instant programmatic clearance.</p>
             </div>
 
-            <form onSubmit={handleDonateOnline} className="p-6 md:p-8 space-y-6">
+            <form onSubmit={handleCardPayment} className="p-6 md:p-8 space-y-6">
               <div>
                 <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-3">
                   Select Contribution Matrix (₦)
@@ -132,8 +199,8 @@ const Donate = () => {
                         setCustomAmount('')
                       }}
                       className={`py-2.5 rounded-xl text-xs font-black tracking-tight transition-all ${selectedAmount === amount
-                          ? 'bg-slate-950 text-white shadow-md shadow-slate-900/10 scale-[1.02]'
-                          : 'bg-slate-50 text-slate-600 border border-slate-100 hover:bg-slate-100'
+                        ? 'bg-slate-950 text-white shadow-md shadow-slate-900/10 scale-[1.02]'
+                        : 'bg-slate-50 text-slate-600 border border-slate-100 hover:bg-slate-100'
                         }`}
                     >
                       ₦{amount.toLocaleString()}
@@ -191,10 +258,23 @@ const Donate = () => {
 
               <button
                 type="submit"
-                className="w-full bg-slate-950 text-white hover:bg-slate-900 py-3.5 rounded-xl font-black text-sm tracking-tight transition shadow-lg shadow-slate-900/10 flex items-center justify-center space-x-2"
+                disabled={processing || paymentStatus === 'processing'}
+                className={`w-full py-3.5 rounded-xl font-black text-sm tracking-tight transition shadow-lg flex items-center justify-center space-x-2 ${processing || paymentStatus === 'processing'
+                  ? 'bg-slate-600 cursor-not-allowed'
+                  : 'bg-slate-950 hover:bg-slate-900 text-white shadow-slate-900/10'
+                  }`}
               >
-                <span>Authorize Transmission</span>
-                <ArrowUpRight className="h-4 w-4" />
+                {processing || paymentStatus === 'processing' ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                    <span>Processing Transaction...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Authorize Transmission</span>
+                    <ArrowUpRight className="h-4 w-4" />
+                  </>
+                )}
               </button>
 
               <div className="bg-amber-50 border border-amber-200/60 rounded-xl p-3.5 flex items-start space-x-2.5">
@@ -205,6 +285,33 @@ const Donate = () => {
               </div>
             </form>
           </div>
+
+          {/* Payment Status Banner */}
+          {paymentStatus === 'success' && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center space-x-2"
+            >
+              <CheckCircle className="h-4 w-4 text-emerald-600" />
+              <p className="text-xs text-emerald-800 font-medium">
+                Transaction completed successfully! A receipt has been sent to your email.
+              </p>
+            </motion.div>
+          )}
+
+          {paymentStatus === 'failed' && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center space-x-2"
+            >
+              <AlertCircle className="h-4 w-4 text-rose-600" />
+              <p className="text-xs text-rose-800 font-medium">
+                Transaction failed. Please try again or use bank transfer.
+              </p>
+            </motion.div>
+          )}
 
           {/* Secure Wire Transfer System */}
           <div className="lg:col-span-5 bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm">
@@ -258,9 +365,12 @@ const Donate = () => {
                       </button>
                     </div>
                     <div className="space-y-0.5 text-xs text-slate-500 font-medium">
-                      <p><span className="text-slate-400">Name:</span> {account.accountName}</p>
-                      <p className="font-mono text-slate-900 font-bold py-0.5">No: {account.accountNumber}</p>
+                      <p><span className="text-slate-400">Account Name:</span> {account.accountName}</p>
+                      <p className="font-mono text-slate-900 font-bold py-0.5">Account No: {account.accountNumber}</p>
+                      <p className="font-mono text-slate-900 font-bold py-0.5">Currency: {account.currency}</p>
                       <p><span className="text-slate-400">Sort Code:</span> {account.sortCode}</p>
+                      {/* <p><span className="text-slate-400">SWIFT Address:</span> {account.swiftAddress}</p>
+                      <p><span className="text-slate-400">Zenith Bank SWIFT:</span> {account.zenithBankSwift}</p> */}
                     </div>
                   </div>
                 ))

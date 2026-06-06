@@ -1,21 +1,13 @@
 import type { ApiResponse } from '../types'
 import type { VolunteerApplication, VolunteerFormData } from '../types/volunteer.types'
-import { API_CONFIG, simulateDelay } from './api.config'
+import { simulateDelay } from './api.config'
+import { emailService } from './email.service';
 
 class VolunteerService {
+  private contactEmail = import.meta.env.VITE_CONTACT_EMAIL || ''
+  private accessKey = import.meta.env.VITE_VOLUNTEER_FORM_ID || '';
   // Submit volunteer application
-  async submitApplication(data: VolunteerFormData): Promise<ApiResponse<VolunteerApplication>> {
-    if (API_CONFIG.USE_REAL_API) {
-      // Future: Replace with actual API call
-      // const response = await apiRequest<ApiResponse<VolunteerApplication>>('/volunteer', {
-      //   method: 'POST',
-      //   body: JSON.stringify(data)
-      // })
-      // return response
-    }
-
-    await simulateDelay(1000) // Simulate form submission delay
-
+  async submitApplication(data: VolunteerFormData) {
     // Create application record
     const application: VolunteerApplication = {
       id: Date.now().toString(),
@@ -30,14 +22,15 @@ class VolunteerService {
     applications.push(application)
     localStorage.setItem('volunteer_applications', JSON.stringify(applications))
 
-    // In a real scenario, this would send an email
-    console.log('Volunteer Application Submitted:', application)
+    const formData = new FormData()
+    formData.append('access_key', this.accessKey);
+    formData.append('subject', `New Volunteer: ${data.fullName} `);
+    formData.append('from_name', data.fullName);
+    formData.append('email', data.email);
+    formData.append('message', `Interests: ${data.interests.join(', ')}\nAvailability: ${data.availability}\nMessage: ${data.message || 'N/A'}`);
+    formData.append('to_email', this.contactEmail);
 
-    return {
-      success: true,
-      data: application,
-      message: 'Application submitted successfully! We will contact you soon.'
-    }
+    return await emailService.sendEmail(formData)
   }
 
   // Get all applications (for admin - future use)

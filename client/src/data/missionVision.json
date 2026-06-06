@@ -1,0 +1,68 @@
+{
+  "mission": {
+    "title": "Our Mission",
+    "description": "To restore hope, dignity, and opportunity to vulnerable individuals and communities through humanitarian support, youth empowerment, counseling services, entrepreneurial development, and strategic partnerships that advance sustainable social impact.",
+    "icon": "Target",
+    "color": "text-blue-600",
+    "bgColor": "bg-blue-50"
+  },
+  "vision": {
+    "title": "Our Vision",
+    "description": "To become a leading humanitarian organization that transforms lives, empowers communities, supports vulnerable children and families, and contributes meaningfully to sustainable development across Nigeria and beyond.",
+    "icon": "Eye",
+    "color": "text-emerald-600",
+    "bgColor": "bg-emerald-50"
+  },
+  "coreObjectives": [
+    {
+      "title": "Youth Empowerment",
+      "description": "Equip young people with skills, knowledge, and opportunities for productive futures.",
+      "icon": "Users",
+      "color": "text-blue-600"
+    },
+    {
+      "title": "Humanitarian Relief",
+      "description": "Provide immediate and long-term support to vulnerable individuals and families.",
+      "icon": "Heart",
+      "color": "text-rose-600"
+    },
+    {
+      "title": "Sustainable Development",
+      "description": "Create lasting solutions through community-driven initiatives and partnerships.",
+      "icon": "Globe",
+      "color": "text-emerald-600"
+    },
+    {
+      "title": "Advocacy & Awareness",
+      "description": "Raise awareness on critical issues affecting vulnerable populations.",
+      "icon": "Megaphone",
+      "color": "text-orange-600"
+    }
+  ],
+  "strategicPillars": [
+    {
+      "title": "Community Engagement",
+      "description": "Working directly with communities to identify needs and co-create solutions.",
+      "icon": "Handshake",
+      "stat": "15+ Communities"
+    },
+    {
+      "title": "Capacity Building",
+      "description": "Strengthening local organizations and individuals to drive their own development.",
+      "icon": "TrendingUp",
+      "stat": "500+ Trained"
+    },
+    {
+      "title": "Partnership Development",
+      "description": "Building strategic alliances with government, private sector, and civil society.",
+      "icon": "Building2",
+      "stat": "25+ Partners"
+    },
+    {
+      "title": "Innovation & Research",
+      "description": "Using data-driven approaches to maximize impact and efficiency.",
+      "icon": "Lightbulb",
+      "stat": "10+ Innovations"
+    }
+  ]
+}

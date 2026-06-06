@@ -8,9 +8,10 @@ const Footer = () => {
   const footerLinks = {
     organization: [
       { name: 'Our Story', path: '/about' },
-      { name: 'Leadership', path: '/about#team' },
+      { name: 'Leadership', path: '/about/leadership' },
       { name: 'Impact Report', path: '/media' },
       { name: 'Success Stories', path: '/success-stories' },
+      { name: 'Financial Transparency', path: '/financial-transparency' }
     ],
     support: [
       { name: 'Volunteer', path: '/volunteer' },
@@ -28,12 +29,26 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-4 space-y-6">
             <Link to="/" className="flex items-center space-x-2 group">
-              <div className="bg-orange-600 p-1.5 rounded-lg group-hover:rotate-12 transition-transform">
-                <Heart className="h-6 w-6 text-white fill-white" />
-              </div>
+              <img
+                src="/footer-logo.png"
+                alt="Hope for the Hopeless Initiative"
+                className="h-10 w-auto hidden sm:block"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none'
+                }}
+              />
               <span className="font-bold text-xl tracking-tight text-white">
                 Hope Initiative
               </span>
+              {/* Fallback text logo */}
+              <div className="sm:hidden flex items-center space-x-2">
+                <div className="bg-orange-600 p-1.5 rounded-lg group-hover:rotate-12 transition-transform">
+                  <Heart className="h-6 w-6 text-white fill-white" />
+                </div>
+                <span className="font-bold text-xl tracking-tight text-white">
+                  Hope Initiative
+                </span>
+              </div>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
               Dedicated to restoring dignity and providing sustainable solutions for underprivileged communities. Join us in making a lasting impact.

@@ -1,45 +1,27 @@
-import { useState, useCallback } from 'react'
-import { volunteerService } from '../services/volunteer.service'
-// import type { ApiResponse } from '../types'
-import type { VolunteerApplication, VolunteerFormData } from '../types/volunteer.types'
+// useVolunteer.ts
+import { useState, useCallback } from 'react';
+import { volunteerService } from '../services/volunteer.service';
+import type { VolunteerApplication, VolunteerFormData } from '../types/volunteer.types';
 
-interface UseVolunteerReturn {
-  submitting: boolean
-  submitSuccess: boolean
-  error: string | null
-  submitApplication: (data: VolunteerFormData) => Promise<boolean>
-  getApplications: () => Promise<VolunteerApplication[]>
-  getOpportunities: () => Promise<any[]>
-  resetStatus: () => void
-}
+export const useVolunteer = () => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-export const useVolunteer = (): UseVolunteerReturn => {
-  const [submitting, setSubmitting] = useState<boolean>(false)
-  const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
+  const submitApplication = useCallback(async (data: VolunteerFormData) => {
+    setSubmitting(true);
+    setError(null);
 
-  const submitApplication = useCallback(async (data: VolunteerFormData): Promise<boolean> => {
-    setSubmitting(true)
-    setError(null)
-    setSubmitSuccess(false)
+    const result = await volunteerService.submitApplication(data);
 
-    try {
-      const response = await volunteerService.submitApplication(data)
-      if (response.success) {
-        setSubmitSuccess(true)
-        return true
-      } else {
-        setError(response.message || 'Failed to submit application')
-        return false
-      }
-    } catch (err) {
-      setError('An error occurred while submitting your application')
-      console.error(err)
-      return false
-    } finally {
-      setSubmitting(false)
+    if (result.success) {
+      setSubmitSuccess(true);
+    } else {
+      setError(result.message);
     }
-  }, [])
+    setSubmitting(false);
+    return result.success;
+  }, []);
 
   const getApplications = useCallback(async (): Promise<VolunteerApplication[]> => {
     try {
@@ -49,7 +31,7 @@ export const useVolunteer = (): UseVolunteerReturn => {
       console.error('Failed to fetch applications:', err)
       return []
     }
-  }, [])
+  }, []);
 
   const getOpportunities = useCallback(async (): Promise<any[]> => {
     try {
@@ -59,20 +41,12 @@ export const useVolunteer = (): UseVolunteerReturn => {
       console.error('Failed to fetch opportunities:', err)
       return []
     }
-  }, [])
+  }, []);
 
   const resetStatus = useCallback(() => {
     setSubmitSuccess(false)
     setError(null)
   }, [])
 
-  return {
-    submitting,
-    submitSuccess,
-    error,
-    submitApplication,
-    getApplications,
-    getOpportunities,
-    resetStatus
-  }
-}
+  return { submitting, submitSuccess, error, submitApplication, getApplications, getOpportunities, resetStatus };
+};
