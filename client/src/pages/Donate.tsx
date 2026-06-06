@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, Building, Copy, Check, Shield, Target, Users, GraduationCap, CheckCircle, Wallet, Mail, AlertCircle, ArrowUpRight, HelpCircle } from 'lucide-react'
+import { Heart, Building, Copy, Check, Shield, Target, Users, GraduationCap, CheckCircle, Wallet, Mail, AlertCircle, ArrowUpRight } from 'lucide-react'
 import { useDonation } from '../hooks/useDonation'
 import { usePayment } from '../hooks/usePayment'
 import toast, { Toaster } from 'react-hot-toast'
@@ -179,9 +179,9 @@ const Donate = () => {
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
               <h2 className="text-xl font-black tracking-tight mb-1 flex items-center">
                 <Wallet className="h-5 w-5 mr-2 text-emerald-400" />
-                Digital Transaction Terminal
+                Every Gift Brings Hope
               </h2>
-              <p className="text-xs text-slate-400 font-normal">Configure your localized parameters for instant programmatic clearance.</p>
+              <p className="text-xs text-slate-400 font-normal">Your generosity puts food on tables, children in school, and hope in hearts.</p>
             </div>
 
             <form onSubmit={handleCardPayment} className="p-6 md:p-8 space-y-6">
@@ -267,22 +267,15 @@ const Donate = () => {
                 {processing || paymentStatus === 'processing' ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                    <span>Processing Transaction...</span>
+                    <span>Processing donation...</span>
                   </>
                 ) : (
                   <>
-                    <span>Authorize Transmission</span>
+                    <span>Impact a Life</span>
                     <ArrowUpRight className="h-4 w-4" />
                   </>
                 )}
               </button>
-
-              <div className="bg-amber-50 border border-amber-200/60 rounded-xl p-3.5 flex items-start space-x-2.5">
-                <HelpCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-                <p className="text-[11px] leading-relaxed text-amber-800 font-medium">
-                  <strong>Notice:</strong> Online network routing tunnels are updating. If live validation checks fail, please leverage our direct clearing accounts on the right side.
-                </p>
-              </div>
             </form>
           </div>
 
