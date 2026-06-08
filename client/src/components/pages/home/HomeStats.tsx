@@ -1,10 +1,17 @@
 import { motion } from "framer-motion";
 import { Award, Heart, TrendingUp, Users } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 
 
 const HomeStats = () => {
+  const { t } = useTranslation()
+
+  const childrenSupport = `${t('about.childrenSupported')}`
+  const mealsDistributed = `${t('about.mealsDistributed')}`
+  const communitiesImpacted = `${t('about.communitiesImpacted')}`
+
   const [stats, setStats] = useState({
     childrenSupported: 0,
     mealsDistributed: 0,
@@ -43,10 +50,10 @@ const HomeStats = () => {
   }, [])
 
   const statItems = [
-    { icon: Users, label: 'Children Supported', value: stats.childrenSupported, color: 'bg-blue-500/10 text-blue-600' },
-    { icon: Heart, label: 'Meals Distributed', value: stats.mealsDistributed, color: 'bg-red-500/10 text-red-600' },
+    { icon: Users, label: childrenSupport, value: stats.childrenSupported, color: 'bg-blue-500/10 text-blue-600' },
+    { icon: Heart, label: mealsDistributed, value: stats.mealsDistributed, color: 'bg-red-500/10 text-red-600' },
     { icon: TrendingUp, label: 'Youth Reached', value: stats.youthReached, color: 'bg-emerald-500/10 text-emerald-600' },
-    { icon: Award, label: 'Communities Impacted', value: stats.communitiesImpacted, color: 'bg-amber-500/10 text-amber-600' },
+    { icon: Award, label: communitiesImpacted, value: stats.communitiesImpacted, color: 'bg-amber-500/10 text-amber-600' },
   ]
 
   return (

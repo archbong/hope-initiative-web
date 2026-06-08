@@ -10,30 +10,69 @@ import SEOHead from '../components/SEO/SEOHead'
 import AboutHero from '../components/pages/about/AboutHero'
 import MissionCard from '../components/pages/about/MissionCard'
 import AboutCTA from '../components/pages/about/AboutCTA'
+import { useTranslation } from 'react-i18next'
 
 const About = () => {
+  const { t } = useTranslation();
+  // values
+  const compassion = `${t('about.compassion')}`
+  const compassionDescription = `${t('about.compassionDescription')}`
+  const integrity = `${t('about.integrity')}`
+  const integrityDescription = `${t('about.integrityDescription')}`
+  const empowerment = `${t('about.empowerment')}`
+  const empowermentDescription = `${t('about.empowermentDescription')}`
+  const service = `${t('about.service')}`
+  const serviceDescription = `${t('about.serviceDescription')}`
+  const collaboration = `${t('about.collaboration')}`
+  const collaborationDescription = `${t('about.collaborationDescription')}`
+  const sustainability = `${t('about.sustainability')}`
+  const sustainabilityDescription = `${t('about.sustainabilityDescription')}`
+  // sdgGoals
+  const noPoverty = `${t('about.noPoverty')}`
+  const zeroHunger = `${t('about.zeroHunger')}`
+  const goodHealth = `${t('about.goodHealth')}`
+  const qualityEducation = `${t('about.qualityEducation')}`
+  const genderEquality = `${t('about.genderEquality')}`
+  const partnerShip = `${t('about.partnership')}`
+  // impact stats
+  const childrenSupport = `${t('about.childrenSupported')}`
+  const mealsDistributed = `${t('about.mealsDistributed')}`
+  const communitiesImpacted = `${t('about.communitiesImpacted')}`
+
+  const ourMission = `${t('about.ourMission')}`
+  const toRestoreHope = `${t('about.toRestoreHope')}`
+  const ourVission = `${t('about.ourVision')}`
+  const becomingLeading = `${t('about.becomeLeading')}`
+  const learnMore = `${t('about.learnMore')}`
+  const leaderShip = `${t('about.leaderShip')}`
+  const value = `${t('about.values')}`
+
+  // CTA
+  const title = `${t('about.institutionalImpact')}`
+  const volunteerButtonText = `${t('about.join')}`
+  const donateButtonText = `${t('about.partner')}`
   const values = [
-    { icon: Heart, title: 'Compassion', description: 'We serve with empathy and care for every individual we encounter.', color: 'text-rose-500' },
-    { icon: Shield, title: 'Integrity', description: 'We uphold transparency and accountability in all our actions.', color: 'text-blue-600' },
-    { icon: TrendingUp, title: 'Empowerment', description: 'We equip people with opportunities and knowledge for self-sufficiency.', color: 'text-emerald-600' },
-    { icon: Users, title: 'Service', description: 'We place community impact first in everything we do.', color: 'text-orange-600' },
-    { icon: Globe, title: 'Collaboration', description: 'We believe in the power of partnerships for greater impact.', color: 'text-indigo-600' },
-    { icon: BookOpen, title: 'Sustainability', description: 'We focus on long-term impact and lasting solutions.', color: 'text-teal-600' }
+    { icon: Heart, title: compassion, description: compassionDescription, color: 'text-rose-500' },
+    { icon: Shield, title: integrity, description: integrityDescription, color: 'text-blue-600' },
+    { icon: TrendingUp, title: empowerment, description: empowermentDescription, color: 'text-emerald-600' },
+    { icon: Users, title: service, description: serviceDescription, color: 'text-orange-600' },
+    { icon: Globe, title: collaboration, description: collaborationDescription, color: 'text-indigo-600' },
+    { icon: BookOpen, title: sustainability, description: sustainabilityDescription, color: 'text-teal-600' }
   ]
 
   const sdgGoals = [
-    { number: 1, name: 'No Poverty', color: 'bg-[#E5243B]' },
-    { number: 2, name: 'Zero Hunger', color: 'bg-[#DDA63A]' },
-    { number: 3, name: 'Good Health', color: 'bg-[#4C9F38]' },
-    { number: 4, name: 'Quality Education', color: 'bg-[#C5192D]' },
-    { number: 5, name: 'Gender Equality', color: 'bg-[#FF3A21]' },
-    { number: 17, name: 'Partnerships', color: 'bg-[#19486A]' }
+    { number: 1, name: noPoverty, color: 'bg-[#E5243B]' },
+    { number: 2, name: zeroHunger, color: 'bg-[#DDA63A]' },
+    { number: 3, name: goodHealth, color: 'bg-[#4C9F38]' },
+    { number: 4, name: qualityEducation, color: 'bg-[#C5192D]' },
+    { number: 5, name: genderEquality, color: 'bg-[#FF3A21]' },
+    { number: 17, name: partnerShip, color: 'bg-[#19486A]' }
   ]
 
   const impactStats = [
-    { label: 'Children Supported', value: '1,250+', icon: HandHeart },
-    { label: 'Meals Distributed', value: '8,750+', icon: Heart },
-    { label: 'Communities Impacted', value: '15+', icon: Globe },
+    { label: childrenSupport, value: '1,250+', icon: HandHeart },
+    { label: mealsDistributed, value: '8,750+', icon: Heart },
+    { label: communitiesImpacted, value: '15+', icon: Globe },
   ]
 
   return (
@@ -55,17 +94,14 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <MissionCard
               IconComponent={Target}
-              title="Our Mission"
-              description="
-              To restore hope, dignity, and opportunity through humanitarian support, 
-              youth empowerment, and strategic partnerships that advance sustainable social impact."/>
+              title={ourMission}
+              description={toRestoreHope}
+            />
 
             <MissionCard
               IconComponent={Eye}
-              title="Our Vision"
-              description="
-              To become a leading humanitarian organization that transforms lives and contributes meaningfully to sustainable development across Nigeria and beyond.
-              "
+              title={ourVission}
+              description={becomingLeading}
             />
           </div>
           <div className="flex justify-center gap-4 mt-8">
@@ -73,14 +109,14 @@ const About = () => {
               to="/about/mission-vision"
               className="inline-flex items-center space-x-2 text-sky-600 font-semibold hover:text-sky-700 transition"
             >
-              <span>Learn more about our mission</span>
+              <span>{learnMore}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               to="/about/leadership"
               className="inline-flex items-center space-x-2 text-emerald-600 font-semibold hover:text-emerald-700 transition"
             >
-              <span>Meet our leadership team</span>
+              <span>{leaderShip}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -91,7 +127,7 @@ const About = () => {
       <section className="py-20 bg-slate-950 text-white rounded-[3rem] mx-4 sm:mx-8">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black mb-6">The Values We Live By</h2>
+            <h2 className="text-3xl md:text-5xl font-black mb-6">{value}</h2>
             <div className="w-24 h-1.5 bg-sky-500 mx-auto rounded-full"></div>
           </div>
 
@@ -127,15 +163,15 @@ const About = () => {
             <div className="space-y-8">
               <div className="inline-flex items-center space-x-2 text-sky-600 font-bold uppercase tracking-widest text-xs">
                 <Milestone className="h-4 w-4" />
-                <span>Our Heritage</span>
+                <span>{t('about.ourHeritage')}</span>
               </div>
-              <h2 className="text-4xl font-black text-slate-900 leading-tight">Every Milestone Has a Face and a Story.</h2>
+              <h2 className="text-4xl font-black text-slate-900 leading-tight">{t('about.milestone')}</h2>
               <div className="space-y-6 text-slate-600 leading-relaxed text-lg">
                 <p>
-                  Founded with a simple but powerful belief: that every person, regardless of their circumstances, deserves hope, dignity, and the opportunity to build a better future.
+                  {t('about.founder')}
                 </p>
                 <p>
-                  What began as small community outreach has grown into a comprehensive organization serving thousands. We don't just provide aid; we build sustainable ecosystems for growth.
+                  {t('about.smallCommunity')}
                 </p>
               </div>
             </div>
@@ -168,8 +204,8 @@ const About = () => {
       <section className="py-24 bg-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-black text-slate-900 mb-4">Aligned with Global Standards</h2>
-            <p className="text-slate-500 text-lg font-medium italic">Contributing to the United Nations Sustainable Development Goals</p>
+            <h2 className="text-3xl font-black text-slate-900 mb-4">{t('about.allignedWith')}</h2>
+            <p className="text-slate-500 text-lg font-medium italic">{t('about.contributing')}</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -190,25 +226,10 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      {/* <section className="py-20 bg-gradient-to-br from-orange-600 to-amber-500 relative overflow-hidden">
-        <div className="container-custom relative z-10 text-center">
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-8">
-            Make an Institutional Impact.
-          </h2>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/volunteer" className="bg-slate-950 text-white px-10 py-4 rounded-2xl font-bold hover:bg-slate-900 transition shadow-xl shadow-slate-900/20">
-              Join the Movement
-            </Link>
-            <Link to="/donate" className="bg-white text-orange-600 px-10 py-4 rounded-2xl font-bold hover:bg-slate-50 transition shadow-xl">
-              Partner via Donation
-            </Link>
-          </div>
-        </div>
-      </section> */}
       <AboutCTA
-        title="Make an Institutional Impact."
-        volunteerButtonText="Join the Movement"
-        donateButtonText="Partner via Donation"
+        title={title}
+        volunteerButtonText={volunteerButtonText}
+        donateButtonText={donateButtonText}
       />
     </div>
   )

@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const AboutHero = () => {
+  const { t } = useTranslation();
 
   return (
     <section className="relative bg-slate-900 py-24 overflow-hidden">
@@ -17,13 +19,13 @@ const AboutHero = () => {
         >
           <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sky-400 text-sm font-bold uppercase tracking-wider mb-6 border border-white/10">
             <Sparkles className="h-4 w-4" />
-            <span>Restoring Dignity Since Inception</span>
+            <span>{t('about.restoringDiginity')}</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-            Driven by <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">Hope</span>, Guided by Service.
+            {t('about.drivenBy')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">{t('about.hope')}</span>, {t('about.guidedByService')}
           </h1>
           <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl">
-            We are a dedicated humanitarian initiative focused on breaking cycles of poverty and providing a safety net for the most vulnerable in our society.
+            {t('about.dedicated')}
           </p>
         </motion.div>
       </div>

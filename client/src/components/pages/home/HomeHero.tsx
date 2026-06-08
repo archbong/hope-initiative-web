@@ -21,7 +21,7 @@ const HomeHero = () => {
             className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide text-sky-300 uppercase mb-6 border border-white/10"
           >
             <Sparkles className="h-3.5 w-3.5 text-amber-400 fill-amber-400" />
-            <span>Making a visible difference in Nigeria</span>
+            <span>{t('home.makeADifference')}</span>
           </motion.div>
 
           <motion.h1
@@ -30,8 +30,8 @@ const HomeHero = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-[1.1]"
           >
-            Restoring <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">Hope</span>,<br />
-            Transforming Lives.
+            {t('home.restoring')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">{t('home.hope')}</span>,<br />
+            {t('home.transformingLives')}
           </motion.h1>
 
           <motion.p
@@ -40,7 +40,7 @@ const HomeHero = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg sm:text-xl mb-10 text-slate-300 font-medium leading-relaxed max-w-2xl"
           >
-            Empowering vulnerable individuals and communities through tactical humanitarian support, foundational youth development programs, and sustainable execution frameworks.
+            {t('home.heroSubtitle')}
           </motion.p>
 
           <motion.div
@@ -50,7 +50,7 @@ const HomeHero = () => {
             className="flex flex-col sm:flex-row gap-4"
           >
             <LinkButton to="/donate" variant="primary">{t('donate.donateNow')}</LinkButton>
-            <LinkButton to="/volunteer" variant="secondary">{t('home.volunteerNow')}</LinkButton>
+            <LinkButton to="/volunteer" variant="secondary">{t('home.becomeVolunteer')}</LinkButton>
           </motion.div>
         </div>
       </div>

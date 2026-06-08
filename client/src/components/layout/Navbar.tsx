@@ -7,8 +7,10 @@ import {
   Target, HeartHandshake, GraduationCap, Utensils, Baby, Globe
 } from 'lucide-react'
 import LanguageSwitcher from '../LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
 
 const Navbar = () => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const location = useLocation()
@@ -18,10 +20,20 @@ const Navbar = () => {
   const isGroupActive = (items: { path: string }[]) =>
     items.some(item => location.pathname === item.path.split('#')[0])
 
+  const home = `${t('nav.home')}`;
+  const about = `${t('nav.about')}`
+  const programs = `${t('nav.programs')}`
+  const gallery = `${t('nav.gallery')}`
+  const successStories = `${t('nav.successStories')}`
+  const volunteer = `${t('nav.volunteer')}`
+  const donate = `${t('nav.donate')}`
+  const partners = `${t('nav.partners')}`
+  const contact = `${t('nav.contact')}`
+
   const navConfig = [
-    { name: 'Home', path: '/', icon: Home, type: 'link' },
+    { name: home, path: '/', icon: Home, type: 'link' },
     {
-      name: 'About',
+      name: about,
       icon: Info,
       type: 'dropdown',
       items: [
@@ -31,7 +43,7 @@ const Navbar = () => {
       ]
     },
     {
-      name: 'Programs',
+      name: programs,
       icon: Grid,
       type: 'dropdown',
       items: [
@@ -47,8 +59,8 @@ const Navbar = () => {
       icon: Image,
       type: 'dropdown',
       items: [
-        { name: 'Success Stories', path: '/success-stories', icon: BookOpen },
-        { name: 'Gallery', path: '/gallery', icon: Image },
+        { name: successStories, path: '/success-stories', icon: BookOpen },
+        { name: gallery, path: '/gallery', icon: Image },
         { name: 'News & Events', path: '/news-events', icon: Newspaper }
       ]
     },
@@ -57,12 +69,12 @@ const Navbar = () => {
       icon: Heart,
       type: 'dropdown',
       items: [
-        { name: 'Volunteer', path: '/volunteer', icon: Users },
-        { name: 'Donate', path: '/donate', icon: DollarSign },
-        { name: 'Partners', path: '/partners', icon: Handshake }
+        { name: volunteer, path: '/volunteer', icon: Users },
+        { name: donate, path: '/donate', icon: DollarSign },
+        { name: partners, path: '/partners', icon: Handshake }
       ]
     },
-    { name: 'Contact', path: '/contact', icon: Mail, type: 'link' }
+    { name: contact, path: '/contact', icon: Mail, type: 'link' }
   ]
 
   useEffect(() => {
@@ -181,7 +193,7 @@ const Navbar = () => {
               to="/donate"
               className="ml-6 bg-orange-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-orange-700 transition-all shadow-md hover:shadow-orange-200 active:scale-95"
             >
-              Donate Now
+              {t('nav.donate')}
             </Link>
           </div>
 

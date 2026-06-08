@@ -54,10 +54,10 @@ const Home = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <h2 className="text-xs uppercase tracking-widest text-orange-600 font-bold mb-3 flex items-center">
-              <span className="w-8 h-px bg-orange-600 mr-2" /> {t('home.strategicIntervention')}
+              <span className="w-8 h-px bg-orange-600 mr-2" /> {t('home.strategicInterventions')}
             </h2>
             <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              {t('home.corePrograms')}
+              {t('home.ourPrograms')}
             </p>
           </div>
           <p className="text-slate-500 font-medium text-base max-w-md md:text-right">
@@ -94,7 +94,7 @@ const Home = () => {
             <h2 className="text-xs uppercase tracking-widest text-emerald-600 font-bold mb-3 flex items-center justify-center">
               <MessageSquare className="h-4 w-4 mr-2" /> {t('home.voiceOfChange')}
             </h2>
-            <p className="text-3xl font-extrabold text-slate-900 tracking-tight">Impact Stories</p>
+            <p className="text-3xl font-extrabold text-slate-900 tracking-tight">{t('home.impactStories')}</p>
           </div>
 
           {storiesLoading ? (
@@ -117,9 +117,9 @@ const Home = () => {
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-xs uppercase tracking-widest text-sky-600 font-bold mb-3 flex items-center justify-center">
-            <ImageIcon className="h-4 w-4 mr-2" /> Transparency in Action
+            <ImageIcon className="h-4 w-4 mr-2" /> {t('home.transparency')}
           </h2>
-          <p className="text-3xl font-extrabold text-slate-900 tracking-tight">Recent Gallery</p>
+          <p className="text-3xl font-extrabold text-slate-900 tracking-tight">{t('home.recentGallery')}</p>
         </div>
 
         {galleryLoading ? (

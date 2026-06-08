@@ -6,8 +6,10 @@ import { usePayment } from '../hooks/usePayment'
 import toast, { Toaster } from 'react-hot-toast'
 import SEOHead from '../components/SEO/SEOHead'
 import { SEO_CONFIG } from '../config/seo.config'
+import { useTranslation } from 'react-i18next'
 
 const Donate = () => {
+  const { t } = useTranslation()
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null)
   const [selectedAmount, setSelectedAmount] = useState<number | null>(5000)
   const [customAmount, setCustomAmount] = useState('')
@@ -105,7 +107,7 @@ const Donate = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-blue mx-auto mb-4"></div>
-          <p className="text-secondary-gray">Loading donation information...</p>
+          <p className="text-secondary-gray">{t('common.loading')} donation information...</p>
         </div>
       </div>
     )

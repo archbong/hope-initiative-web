@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom'
 import SEOHead from '../components/SEO/SEOHead'
 import { useFinancials } from '../hooks/useFinancials'
 import TransactionTable from '../components/financial/DonationTable'
+import { useTranslation } from 'react-i18next'
 
 const FinancialTransparency = () => {
+  const { t } = useTranslation()
   const [filterMode, setFilterMode] = useState<'all' | 'credit' | 'debit'>('all')
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -88,17 +90,14 @@ const FinancialTransparency = () => {
           >
             <div className="flex items-center space-x-3 mb-4">
               <Shield className="h-8 w-8 text-emerald-400" />
-              <span className="text-emerald-400 font-semibold uppercase tracking-wider">Complete Transparency</span>
+              <span className="text-emerald-400 font-semibold uppercase tracking-wider">{t('financial.title')}</span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 leading-tight">
-              Financial Ledger
+              {t('financial.transactionLedger')}
             </h1>
             <p className="text-lg text-slate-300 leading-relaxed">
               Every Naira is tracked. Every transaction is recorded. Full accountability from donation to impact.
             </p>
-            {/* <div className="mt-4 inline-flex items-center px-3 py-1 bg-slate-800 rounded-lg text-xs text-slate-400">
-              <span>All figures shown in '000s Naira (1.00 = ₦1,000)</span>
-            </div> */}
           </motion.div>
         </div>
       </section>
@@ -114,13 +113,13 @@ const FinancialTransparency = () => {
               className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-slate-500 font-medium text-sm uppercase tracking-wider">Total Credit</h3>
+                <h3 className="text-slate-500 font-medium text-sm uppercase tracking-wider">{t('financial.totalCredit')}</h3>
                 <ArrowUpRight className="h-5 w-5 text-emerald-600" />
               </div>
               <div className="text-3xl font-black text-slate-900">
                 ₦{(stats.totalCredit * 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </div>
-              <p className="text-xs text-slate-400 mt-2">{stats.totalCredit.toLocaleString()} in '000s</p>
+              {/* <p className="text-xs text-slate-400 mt-2">{stats.totalCredit.toLocaleString()} in '000s</p> */}
             </motion.div>
 
             <motion.div
@@ -130,13 +129,12 @@ const FinancialTransparency = () => {
               className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-slate-500 font-medium text-sm uppercase tracking-wider">Total Debit</h3>
+                <h3 className="text-slate-500 font-medium text-sm uppercase tracking-wider">{t('financial.totalDebit')}</h3>
                 <ArrowDownRight className="h-5 w-5 text-rose-600" />
               </div>
               <div className="text-3xl font-black text-slate-900">
                 ₦{(stats.totalDebit * 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </div>
-              <p className="text-xs text-slate-400 mt-2">{stats.totalDebit.toLocaleString()} in '000s</p>
             </motion.div>
 
             <motion.div
@@ -146,13 +144,12 @@ const FinancialTransparency = () => {
               className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-6 shadow-lg text-white"
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-white/80 font-medium text-sm uppercase tracking-wider">Current Balance</h3>
+                <h3 className="text-white/80 font-medium text-sm uppercase tracking-wider">{t('financial.currentBalance')}</h3>
                 <Shield className="h-5 w-5 text-white/80" />
               </div>
               <div className="text-3xl font-black">
                 ₦{(stats.currentBalance * 1000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </div>
-              <p className="text-emerald-200 text-xs mt-2">{stats.currentBalance.toLocaleString()} in '000s</p>
             </motion.div>
           </div>
         </div>
@@ -163,9 +160,9 @@ const FinancialTransparency = () => {
         <div className="container-custom">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <div>
-              <h2 className="text-2xl font-black text-slate-900 mb-2">Transaction Ledger</h2>
+              <h2 className="text-2xl font-black text-slate-900 mb-2">{t('financial.transactionLedger')}</h2>
               <p className="text-slate-500">
-                Complete record of all financial activities • {total} transactions
+                {t('financial.subtitle')} • {total} transactions
               </p>
             </div>
             <div className="flex items-center space-x-3 mt-4 sm:mt-0">
@@ -174,7 +171,7 @@ const FinancialTransparency = () => {
                 className="flex items-center space-x-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition"
               >
                 <Download className="h-4 w-4" />
-                <span>Export CSV</span>
+                <span>{t('financial.exportCSV')}</span>
               </button>
             </div>
           </div>
@@ -188,7 +185,7 @@ const FinancialTransparency = () => {
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
                 }`}
             >
-              All Transactions
+              {t('financial.allTransactions')}
             </button>
             <button
               onClick={() => handleFilterChange('credit')}
@@ -198,7 +195,7 @@ const FinancialTransparency = () => {
                 }`}
             >
               <ArrowUpRight className="h-3 w-3" />
-              <span>Credits Only</span>
+              <span>{t('financial.creditsOnly')}</span>
             </button>
             <button
               onClick={() => handleFilterChange('debit')}
@@ -208,7 +205,7 @@ const FinancialTransparency = () => {
                 }`}
             >
               <ArrowDownRight className="h-3 w-3" />
-              <span>Debits Only</span>
+              <span>{t('financial.debitOnly')}</span>
             </button>
           </div>
 
@@ -219,13 +216,6 @@ const FinancialTransparency = () => {
             onPageChange={handlePageChange}
             loading={loading}
           />
-
-          <div className="mt-6 text-center">
-            <p className="text-xs text-slate-400">
-              📊 All amounts are displayed in '000s Naira. To get actual Naira value, multiply by 1,000.
-              Example: 100.00 = ₦100,000
-            </p>
-          </div>
         </div>
       </section>
 

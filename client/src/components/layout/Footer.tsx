@@ -5,8 +5,10 @@ import { useState } from 'react'
 import { useEmail } from '../../hooks/useEmail'
 import ToastContainer from '../ui/ToastContainer'
 import { useToast } from '../../hooks/useToast'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
+  const { t } = useTranslation()
   const currentYear = new Date().getFullYear()
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -42,18 +44,24 @@ const Footer = () => {
 
   }
 
+  const successStories = `${t('nav.successStories')}`
+  const financialTransparency = `${t('nav.financialTransparency')}`
+  const donate = `${t('nav.donate')}`
+  const partners = `${t('nav.partners')}`
+  const volunteer = `${t('nav.volunteer')}`
+
   const footerLinks = {
     organization: [
       { name: 'Our Story', path: '/about' },
       { name: 'Leadership', path: '/about/leadership' },
       { name: 'Impact Report', path: '/media' },
-      { name: 'Success Stories', path: '/success-stories' },
-      { name: 'Financial Transparency', path: '/financial-transparency' }
+      { name: successStories, path: '/success-stories' },
+      { name: financialTransparency, path: '/financial-transparency' }
     ],
     support: [
-      { name: 'Volunteer', path: '/volunteer' },
-      { name: 'Donate Now', path: '/donate' },
-      { name: 'Partnerships', path: '/partners' },
+      { name: volunteer, path: '/volunteer' },
+      { name: donate, path: '/donate' },
+      { name: partners, path: '/partners' },
       { name: 'Contact Support', path: '/contact' },
     ]
   }
@@ -76,7 +84,7 @@ const Footer = () => {
                 }}
               />
               <span className="font-bold text-xl tracking-tight text-white">
-                Hope Initiative
+                {t('about.hopeInitiative')}
               </span>
               {/* Fallback text logo */}
               <div className="sm:hidden flex items-center space-x-2">
@@ -84,12 +92,12 @@ const Footer = () => {
                   <Heart className="h-6 w-6 text-white fill-white" />
                 </div>
                 <span className="font-bold text-xl tracking-tight text-white">
-                  Hope Initiative
+                  {t('about.hopeInitiative')}
                 </span>
               </div>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              Dedicated to restoring dignity and providing sustainable solutions for underprivileged communities. Join us in making a lasting impact.
+              {t('about.dedicatedTo')}
             </p>
             <div className="flex items-center space-x-3">
               {[
@@ -181,11 +189,11 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-slate-500 uppercase tracking-widest">
-          <p>&copy; {currentYear} Hope for the Hopeless Initiative.</p>
+          <p>&copy; {currentYear} {t('about.hopeFor')}</p>
           <div className="flex space-x-6">
-            <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
-            <Link to="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+            <Link to="/privacy" className="hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link>
+            <Link to="/terms" className="hover:text-white transition-colors">{t('footer.termsOfService')}</Link>
+            <Link to="/cookies" className="hover:text-white transition-colors">{t('footer.cookiePolicy')}</Link>
           </div>
         </div>
       </div>
