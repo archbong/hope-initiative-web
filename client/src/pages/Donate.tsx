@@ -381,7 +381,7 @@ const Donate = () => {
                   <a href="mailto:donations@hopeforthehopeless.org" className="font-bold text-white underline hover:text-emerald-300 transition">
                     donations@hopeforthehopeless.org
                   </a>{' '}
-                  for systematic tax logging.
+                  for financial transparency.
                 </p>
               </div>
             </div>

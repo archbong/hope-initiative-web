@@ -8,7 +8,7 @@ import { useToast } from '../../hooks/useToast'
 import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation(['nav', 'about'])
   const currentYear = new Date().getFullYear()
   const [newsletterEmail, setNewsletterEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -44,11 +44,11 @@ const Footer = () => {
 
   }
 
-  const successStories = `${t('nav.successStories')}`
-  const financialTransparency = `${t('nav.financialTransparency')}`
-  const donate = `${t('nav.donate')}`
-  const partners = `${t('nav.partners')}`
-  const volunteer = `${t('nav.volunteer')}`
+  const successStories = `${t('nav:successStories')}`
+  const financialTransparency = `${t('nav:financialTransparency')}`
+  const donate = `${t('nav:donate')}`
+  const partners = `${t('nav:partners')}`
+  const volunteer = `${t('nav:volunteer')}`
 
   const footerLinks = {
     organization: [
@@ -84,7 +84,7 @@ const Footer = () => {
                 }}
               />
               <span className="font-bold text-xl tracking-tight text-white">
-                {t('about.hopeInitiative')}
+                {t('about:hopeInitiative')}
               </span>
               {/* Fallback text logo */}
               <div className="sm:hidden flex items-center space-x-2">
@@ -92,12 +92,12 @@ const Footer = () => {
                   <Heart className="h-6 w-6 text-white fill-white" />
                 </div>
                 <span className="font-bold text-xl tracking-tight text-white">
-                  {t('about.hopeInitiative')}
+                  {t('about:hopeInitiative')}
                 </span>
               </div>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              {t('about.dedicatedTo')}
+              {t('about:dedicatedTo')}
             </p>
             <div className="flex items-center space-x-3">
               {[
@@ -181,7 +181,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3 text-sm text-slate-400">
                 <Mail className="h-5 w-5 text-orange-600 shrink-0" />
-                <span>hello@hopeinitiative.org</span>
+                <span>info@hopeforthehopelessandorphans.org</span>
               </div>
             </div>
           </div>

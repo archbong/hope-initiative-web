@@ -1,0 +1,19 @@
+{
+  "loading": "A carregar...",
+  "error": "Ocorreu um erro",
+  "retry": "Tentar novamente",
+  "back": "Voltar",
+  "next": "Seguinte",
+  "submit": "Enviar",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "delete": "Eliminar",
+  "edit": "Editar",
+  "view": "Ver",
+  "search": "Pesquisar",
+  "filter": "Filtrar",
+  "all": "Todos",
+  "none": "Nenhum",
+  "yes": "Sim",
+  "no": "Não"
+}

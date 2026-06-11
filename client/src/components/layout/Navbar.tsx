@@ -10,7 +10,7 @@ import LanguageSwitcher from '../LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
 
 const Navbar = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('nav')
   const [isOpen, setIsOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const location = useLocation()
@@ -20,15 +20,17 @@ const Navbar = () => {
   const isGroupActive = (items: { path: string }[]) =>
     items.some(item => location.pathname === item.path.split('#')[0])
 
-  const home = `${t('nav.home')}`;
-  const about = `${t('nav.about')}`
-  const programs = `${t('nav.programs')}`
-  const gallery = `${t('nav.gallery')}`
-  const successStories = `${t('nav.successStories')}`
-  const volunteer = `${t('nav.volunteer')}`
-  const donate = `${t('nav.donate')}`
-  const partners = `${t('nav.partners')}`
-  const contact = `${t('nav.contact')}`
+  const home = `${t('home')}`;
+  const about = `${t('about')}`
+  const programs = `${t('programs')}`
+  const media = `${t('media')}`
+  const gallery = `${t('gallery')}`
+  const successStories = `${t('successStories')}`
+  const getInvolved = `${t('getInvolved')}`
+  const volunteer = `${t('volunteer')}`
+  const donate = `${t('donate')}`
+  const partners = `${t('partners')}`
+  const contact = `${t('contact')}`
 
   const navConfig = [
     { name: home, path: '/', icon: Home, type: 'link' },
@@ -55,7 +57,7 @@ const Navbar = () => {
       ]
     },
     {
-      name: 'Media',
+      name: media,
       icon: Image,
       type: 'dropdown',
       items: [
@@ -65,7 +67,7 @@ const Navbar = () => {
       ]
     },
     {
-      name: 'Get Involved',
+      name: getInvolved,
       icon: Heart,
       type: 'dropdown',
       items: [
@@ -193,7 +195,7 @@ const Navbar = () => {
               to="/donate"
               className="ml-6 bg-orange-600 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-orange-700 transition-all shadow-md hover:shadow-orange-200 active:scale-95"
             >
-              {t('nav.donate')}
+              {t('donate')}
             </Link>
           </div>
 
@@ -253,7 +255,7 @@ const Navbar = () => {
                 to="/donate"
                 className="block w-full bg-orange-600 text-white text-center p-4 rounded-2xl font-bold mt-4"
               >
-                Donate Now
+                {t('donate')}
               </Link>
             </div>
           </motion.div>

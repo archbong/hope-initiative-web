@@ -2,9 +2,9 @@
   "leadership": [
     {
       "id": 1,
-      "name": "Sir. Chamberline",
+      "name": "Sir Evang. Barisere Chamberline Friday",
       "title": "Executive Director & Founder",
-      "bio": "Sir. Chamberline is a visionary leader with over 20 years of experience in social entrepreneurship and community development. He holds a Master's degree in Business Administration and has dedicated his career to empowering underserved communities across Nigeria. Under his leadership, Hope for the Hopeless has grown from a small community initiative to a nationally recognized organization.",
+      "bio": "Sir Evang. Barisere Chamberline Friday is the Founder and Chairman of Hope for the Hopeless, Orphans and Entrepreneurial Initiatives. He is a Nigerian humanitarian and social development advocate from Bue-Gbor community of Kpite Tai in Tai Local Government Area of Rivers State, Nigeria. He established the organization in response to the growing challenges faced by vulnerable groups including orphans, widows, underprivileged families, and at-risk youth. His vision is centered on restoring hope, dignity, and opportunity to disadvantaged individuals through structured humanitarian intervention. The organization provides support through the distribution of food items, clothing, and other essential relief materials to vulnerable communities, alongside initiatives aimed at social welfare and youth support. His guiding philosophy is reflected in the organization’s motto: 'Our Name… Our Concern'.",
       "image": "/images/team/sir-chimberlin.png",
       "social": {
         "linkedin": "https://linkedin.com/in/sirchamberline",
@@ -13,58 +13,6 @@
       },
       "order": 1,
       "featured": true
-    },
-    {
-      "id": 2,
-      "name": "Michael Okafor",
-      "title": "Director of Programs",
-      "bio": "Michael brings extensive experience in program management and community development. Previously, he worked with international NGOs implementing youth empowerment and education programs across West Africa. He holds a Master's in International Development and is committed to creating sustainable impact.",
-      "image": "/images/team/michael-okafor.jpg",
-      "social": {
-        "linkedin": "https://linkedin.com/in/michaelokafor",
-        "twitter": "https://twitter.com/michaelokafor"
-      },
-      "order": 2,
-      "featured": true
-    },
-    {
-      "id": 3,
-      "name": "Dr. Amina Bello",
-      "title": "Head of Health & Welfare",
-      "bio": "Dr. Amina Bello is a medical doctor and public health specialist. She leads our health initiatives, including maternal health programs, mental health counseling, and community health awareness campaigns. Her compassionate approach has touched thousands of lives.",
-      "image": "/images/team/amina-bello.jpg",
-      "social": {
-        "linkedin": "https://linkedin.com/in/aminabello",
-        "email": "amina@hopeforthehopeless.org"
-      },
-      "order": 3,
-      "featured": true
-    },
-    {
-      "id": 4,
-      "name": "Emmanuel Adebayo",
-      "title": "Youth Programs Coordinator",
-      "bio": "Emmanuel is a youth development specialist who has worked extensively with at-risk youth across Nigeria. His experience includes designing and implementing anti-cultism campaigns, drug abuse awareness programs, and leadership development workshops. He is passionate about creating opportunities for young people to thrive.",
-      "image": "/images/team/emmanuel-adebayo.jpg",
-      "social": {
-        "linkedin": "https://linkedin.com/in/emmanueladebayo",
-        "twitter": "https://twitter.com/emmanueladebayo"
-      },
-      "order": 4,
-      "featured": false
-    },
-    {
-      "id": 5,
-      "name": "Grace Ogunlesi",
-      "title": "Family Services Director",
-      "bio": "Grace is a licensed counselor and family therapist with over a decade of experience. She leads our family welfare programs, providing counseling services, family planning education, and maternal support. Her gentle approach and expertise have helped hundreds of families find stability and hope.",
-      "image": "/images/team/grace-ogunlesi.jpg",
-      "social": {
-        "linkedin": "https://linkedin.com/in/graceogunlesi",
-        "email": "grace@hopeforthehopeless.org"
-      },
-      "order": 5,
-      "featured": false
     }
   ],
   "boardMembers": [

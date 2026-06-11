@@ -190,8 +190,8 @@ const Volunteer = () => {
         <div className="max-w-3xl mx-auto bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-100 overflow-hidden">
           <div className="bg-slate-950 px-8 py-10 text-white relative">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-            <h2 className="text-2xl font-black tracking-tight mb-2">Secure Deployment Terminal</h2>
-            <p className="text-slate-400 text-xs font-normal">Complete your secure structural application payload profile. Marked values are strictly required fields.</p>
+            <h2 className="text-2xl font-black tracking-tight mb-2">Apply to Volunteer</h2>
+            <p className="text-slate-400 text-xs font-normal">Join the fight of a greater future for the next generation, build and support the future.</p>
           </div>
 
           <div className="p-8 md:p-10">

@@ -6,11 +6,11 @@ import { useTranslation } from "react-i18next";
 
 
 const HomeStats = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('about')
 
-  const childrenSupport = `${t('about.childrenSupported')}`
-  const mealsDistributed = `${t('about.mealsDistributed')}`
-  const communitiesImpacted = `${t('about.communitiesImpacted')}`
+  const childrenSupport = `${t('childrenSupported')}`
+  const mealsDistributed = `${t('mealsDistributed')}`
+  const communitiesImpacted = `${t('communitiesImpacted')}`
 
   const [stats, setStats] = useState({
     childrenSupported: 0,

@@ -152,23 +152,6 @@ const Contact = () => {
             </div>
 
             <div className="p-6 md:p-8">
-              {/* <AnimatePresence mode="popLayout">
-                {sending && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-900 flex items-start space-x-3 text-xs font-semibold"
-                  >
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-bold">Transmission Finalized</p>
-                      <p className="text-emerald-700 font-normal mt-0.5">Payload integrated successfully. Relayed parameters are being processed by regional operations.</p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence> */}
-
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
