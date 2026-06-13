@@ -274,9 +274,9 @@ const Contact = () => {
               <p className="text-xs text-slate-500 font-normal mb-6">Track verified field data releases and deployment metrics on public indices.</p>
               <div className="flex justify-center space-x-3">
                 {[
-                  { icon: FacebookIcon, href: 'https://facebook.com', label: 'Facebook Meta Link' },
-                  { icon: TwitterIcon, href: 'https://twitter.com', label: 'X Infrastructure Link' },
-                  { icon: InstagramIcon, href: 'https://instagram.com', label: 'Instagram Media Pipeline' },
+                  { icon: FacebookIcon, href: 'https://web.facebook.com/profile.php?id=100069968125775&_rdc=1&_rdr#', label: 'Facebook Meta Link' },
+                  { icon: TwitterIcon, href: 'https://x.com/hfthoei', label: 'X Infrastructure Link' },
+                  { icon: InstagramIcon, href: 'https://www.instagram.com/hfthoei/', label: 'Instagram Media Pipeline' },
                   { icon: LinkedinIcon, href: 'https://linkedin.com', label: 'LinkedIn Enterprise Hub' }
                 ].map((social, idx) => {
                   const SocialIcon = social.icon

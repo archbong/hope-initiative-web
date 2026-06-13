@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail } from 'lucide-react'
+import { ChevronDown, ChevronUp, Mail } from 'lucide-react'
 import { LinkedinIcon, TwitterIcon } from '../../ui/SocialIcons'
+
 
 interface LeadershipCardProps {
   name: string
@@ -25,8 +27,11 @@ const LeadershipCard: React.FC<LeadershipCardProps> = ({
   delay = 0,
   featured = false
 }) => {
+  const [isExpanded, setIsExpanded] = useState<Boolean>(false);
+  const isLongBio = bio.length > 250;
   return (
     <motion.div
+      layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -50,7 +55,26 @@ const LeadershipCard: React.FC<LeadershipCardProps> = ({
       <div className={`p-6 ${featured ? 'lg:w-3/5 lg:p-8' : ''}`}>
         <h3 className="text-xl font-bold text-slate-900 mb-1">{name}</h3>
         <p className="text-sky-600 font-semibold text-sm mb-3">{title}</p>
-        <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{bio}</p>
+        <motion.p
+          layout="position"
+          className={`text-slate-500 text-sm leading-relaxed transition-all duration-300 ${isExpanded ? '' : 'line-clamp-3'
+            }`}
+        >
+          {bio}
+        </motion.p>
+        {isLongBio && (
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="mt-2 text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1 focus:outline-none focus:underline"
+          >
+            {isExpanded ? (
+              <>Read Less <ChevronUp className="h-3 w-3" /></>
+            ) : (
+              <>Read More <ChevronDown className="h-3 w-3" /></>
+            )}
+          </button>
+        )}
+        {/* <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{bio}</p> */}
 
         {social && (
           <div className="flex items-center space-x-3 mt-4 pt-4 border-t border-slate-100">

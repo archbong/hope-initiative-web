@@ -14,15 +14,15 @@ const iconMap: Record<string, any> = {
 }
 
 const MissionVision = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('mission');
   const { mission, vision, coreObjectives, strategicPillars } = missionVisionData
 
-  const purposeDirection = `${t('mission.purposeDirection')}`
-  const title = `${t('mission.ourMissionVision')}`
-  const subtitle = `${t('mission.guidedBy')}`
-  const coreObjective = `${t('mission.ourCoreObjective')}`
-  const ctaTitle = `${t('mission.joinUs')}`
-  const ctaDescription = `${t('mission.joinUsDescription')}`
+  const purposeDirection = `${t('purposeDirection')}`
+  const title = `${t('ourMissionVision')}`
+  const subtitle = `${t('guidedBy')}`
+  const coreObjective = `${t('ourCoreObjective')}`
+  const ctaTitle = `${t('joinUs')}`
+  const ctaDescription = `${t('joinUsDescription')}`
   mission.title = `${t('about.ourMission')}`
   vision.title = `${t('about.ourVision')}`
 
@@ -36,6 +36,7 @@ const MissionVision = () => {
       />
 
       <MissionVisionHero
+        header={purposeDirection}
         title={title}
         subtitle={subtitle}
       />
@@ -45,7 +46,7 @@ const MissionVision = () => {
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <MissionCard
-              title={mission.title}
+              title={title}
               description={mission.description}
               IconComponent={Target}
             />
@@ -65,7 +66,7 @@ const MissionVision = () => {
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">{coreObjective}</h2>
             <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full"></div>
             <p className="text-slate-500 mt-4 max-w-2xl mx-auto">
-              {t('mission.weFocusOn')}
+              {t('weFocusOn')}
             </p>
           </div>
 
@@ -97,10 +98,10 @@ const MissionVision = () => {
       <section className="py-20 bg-slate-900 text-white">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black mb-4">{t('mission.ourStrategicPillars')}</h2>
+            <h2 className="text-3xl md:text-4xl font-black mb-4">{t('ourStrategicPillars')}</h2>
             <div className="w-20 h-1 bg-sky-400 mx-auto rounded-full"></div>
             <p className="text-slate-300 mt-4 max-w-2xl mx-auto">
-              {t('mission.buildingSustainable')}
+              {t('buildingSustainable')}
             </p>
           </div>
 

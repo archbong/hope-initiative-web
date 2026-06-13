@@ -6,10 +6,17 @@ import MissionVisionHero from '../components/pages/about/MissionVisionHero'
 import LeadershipCard from '../components/pages/about/LeadershipCard'
 import BoardMemberCard from '../components/pages/about/BoardMemberCard'
 import leadershipData from '../data/leadership.json'
+import { useTranslation } from 'react-i18next'
 
 const LeadershipTeam = () => {
+  const { t } = useTranslation('leadership');
+  const purposeDirection = `${t('purposeDirection')}`
+  const title = `${t('title')}`
+  const subtitle = `${t('subtitle')}`
   const { leadership, boardMembers, advisoryCouncil } = leadershipData
   const featuredLeaders = leadership.filter(l => l.featured)
+  console.log(featuredLeaders)
+
   const otherLeaders = leadership.filter(l => !l.featured)
 
   return (
@@ -22,20 +29,20 @@ const LeadershipTeam = () => {
       />
 
       <MissionVisionHero
-        title="Our Leadership Team"
-        subtitle="Meet the passionate individuals driving change and leading our mission"
+        header={purposeDirection}
+        title={title}
+        subtitle={subtitle}
       />
 
       {/* Executive Leadership (Featured) */}
       <section className="py-24 bg-white border-b border-slate-100">
         <div className="container-custom max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="text-sky-600 font-semibold uppercase tracking-wider text-xs block mb-2">Governance & Strategy</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">Executive Leadership</h2>
+            <span className="text-sky-600 font-semibold uppercase tracking-wider text-xs block mb-2">{t('governanceStrategy')}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">{t('executiveLeadership')}</h2>
             <div className="h-1 w-12 bg-sky-600 mx-auto mb-4 rounded-full"></div>
             <p className="text-slate-500 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-              Our executive team brings decades of experience in humanitarian work,
-              program management, and community development.
+              {t('executiveLeadershipDescription')}
             </p>
           </div>
 

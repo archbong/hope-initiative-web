@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import { Target, Eye } from 'lucide-react';
 
 interface MissionVisionHeroProps {
+  header: string;
   title: string;
   subtitle: string;
 }
 
-const MissionVisionHero: React.FC<MissionVisionHeroProps> = ({ title, subtitle }) => {
+const MissionVisionHero: React.FC<MissionVisionHeroProps> = ({ header, title, subtitle }) => {
   return (
     <section className="relative bg-slate-950 text-white py-28 lg:py-36 overflow-hidden">
       {/* Background Layering */}
@@ -40,7 +41,7 @@ const MissionVisionHero: React.FC<MissionVisionHeroProps> = ({ title, subtitle }
               </div>
             </div>
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-300">
-              Purpose & Direction
+              {header}
             </span>
           </motion.div>
 

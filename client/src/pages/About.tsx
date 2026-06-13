@@ -13,44 +13,44 @@ import AboutCTA from '../components/pages/about/AboutCTA'
 import { useTranslation } from 'react-i18next'
 
 const About = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('about');
   // values
-  const compassion = `${t('about.compassion')}`
-  const compassionDescription = `${t('about.compassionDescription')}`
-  const integrity = `${t('about.integrity')}`
-  const integrityDescription = `${t('about.integrityDescription')}`
-  const empowerment = `${t('about.empowerment')}`
-  const empowermentDescription = `${t('about.empowermentDescription')}`
-  const service = `${t('about.service')}`
-  const serviceDescription = `${t('about.serviceDescription')}`
-  const collaboration = `${t('about.collaboration')}`
-  const collaborationDescription = `${t('about.collaborationDescription')}`
-  const sustainability = `${t('about.sustainability')}`
-  const sustainabilityDescription = `${t('about.sustainabilityDescription')}`
+  const compassion = `${t('compassion')}`
+  const compassionDescription = `${t('compassionDescription')}`
+  const integrity = `${t('integrity')}`
+  const integrityDescription = `${t('integrityDescription')}`
+  const empowerment = `${t('empowerment')}`
+  const empowermentDescription = `${t('empowermentDescription')}`
+  const service = `${t('service')}`
+  const serviceDescription = `${t('serviceDescription')}`
+  const collaboration = `${t('collaboration')}`
+  const collaborationDescription = `${t('collaborationDescription')}`
+  const sustainability = `${t('sustainability')}`
+  const sustainabilityDescription = `${t('sustainabilityDescription')}`
   // sdgGoals
-  const noPoverty = `${t('about.noPoverty')}`
-  const zeroHunger = `${t('about.zeroHunger')}`
-  const goodHealth = `${t('about.goodHealth')}`
-  const qualityEducation = `${t('about.qualityEducation')}`
-  const genderEquality = `${t('about.genderEquality')}`
-  const partnerShip = `${t('about.partnership')}`
+  const noPoverty = `${t('noPoverty')}`
+  const zeroHunger = `${t('zeroHunger')}`
+  const goodHealth = `${t('goodHealth')}`
+  const qualityEducation = `${t('qualityEducation')}`
+  const genderEquality = `${t('genderEquality')}`
+  const partnerShip = `${t('partnership')}`
   // impact stats
-  const childrenSupport = `${t('about.childrenSupported')}`
-  const mealsDistributed = `${t('about.mealsDistributed')}`
-  const communitiesImpacted = `${t('about.communitiesImpacted')}`
+  const childrenSupport = `${t('childrenSupported')}`
+  const mealsDistributed = `${t('mealsDistributed')}`
+  const communitiesImpacted = `${t('communitiesImpacted')}`
 
-  const ourMission = `${t('about.ourMission')}`
-  const toRestoreHope = `${t('about.toRestoreHope')}`
-  const ourVission = `${t('about.ourVision')}`
-  const becomingLeading = `${t('about.becomeLeading')}`
-  const learnMore = `${t('about.learnMore')}`
-  const leaderShip = `${t('about.leaderShip')}`
-  const value = `${t('about.values')}`
+  const ourMission = `${t('ourMission')}`
+  const toRestoreHope = `${t('toRestoreHope')}`
+  const ourVission = `${t('ourVision')}`
+  const becomingLeading = `${t('becomeLeading')}`
+  const learnMore = `${t('learnMore')}`
+  const leaderShip = `${t('leaderShip')}`
+  const value = `${t('values')}`
 
   // CTA
-  const title = `${t('about.institutionalImpact')}`
-  const volunteerButtonText = `${t('about.join')}`
-  const donateButtonText = `${t('about.partner')}`
+  const title = `${t('institutionalImpact')}`
+  const volunteerButtonText = `${t('join')}`
+  const donateButtonText = `${t('partner')}`
   const values = [
     { icon: Heart, title: compassion, description: compassionDescription, color: 'text-rose-500' },
     { icon: Shield, title: integrity, description: integrityDescription, color: 'text-blue-600' },
@@ -163,15 +163,15 @@ const About = () => {
             <div className="space-y-8">
               <div className="inline-flex items-center space-x-2 text-sky-600 font-bold uppercase tracking-widest text-xs">
                 <Milestone className="h-4 w-4" />
-                <span>{t('about.ourHeritage')}</span>
+                <span>{t('ourHeritage')}</span>
               </div>
-              <h2 className="text-4xl font-black text-slate-900 leading-tight">{t('about.milestone')}</h2>
+              <h2 className="text-4xl font-black text-slate-900 leading-tight">{t('milestone')}</h2>
               <div className="space-y-6 text-slate-600 leading-relaxed text-lg">
                 <p>
-                  {t('about.founder')}
+                  {t('founder')}
                 </p>
                 <p>
-                  {t('about.smallCommunity')}
+                  {t('smallCommunity')}
                 </p>
               </div>
             </div>
@@ -204,8 +204,8 @@ const About = () => {
       <section className="py-24 bg-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-black text-slate-900 mb-4">{t('about.allignedWith')}</h2>
-            <p className="text-slate-500 text-lg font-medium italic">{t('about.contributing')}</p>
+            <h2 className="text-3xl font-black text-slate-900 mb-4">{t('allignedWith')}</h2>
+            <p className="text-slate-500 text-lg font-medium italic">{t('contributing')}</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
